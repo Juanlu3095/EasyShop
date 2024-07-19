@@ -1,4 +1,5 @@
-<div class="header-container">
+<!-- DESKTOP -->
+<header class="header-container">
 
     <mat-toolbar class="container-up">
         <div class="rrss">
@@ -12,8 +13,90 @@
         </nav>
     </mat-toolbar>
 
-    <div class="container-center"></div>
-    <div class="container-bottom"></div>
+    <div class="container-center">
+        <h1>EasyShop</h1>
+        <div class="search-control">
+            <input class="search-input" type="text" placeholder="Buscar producto..." #searchbar>
+            <input class="search-submit" type="submit" value="Buscar">
+        </div>
+        
+        <div class="icon-action">
+            <div class="icon-action-item">
+                <mat-icon aria-label="Icon account" fontIcon="account_circle"></mat-icon>
+                <span>Entrar</span>
 
-</div>
+                <mat-icon aria-label="Icon wishlist" fontIcon="favorite"></mat-icon>
+                <span>Favoritos</span>
+                
+                <mat-icon aria-label="Icon cart" fontIcon="shopping_cart" matBadge="15"></mat-icon>    
+            </div>
+        </div>
+    </div>
 
+    <div class="container-bottom">
+        <a class="category-item" href="#">Ordenadores</a>
+        <a class="category-item" href="#">Tablets</a>
+        <a class="category-item" href="#">Teléfonos</a>
+        <a class="category-item" href="#">Periféricos</a>
+        <a class="category-item" href="#">Televisiones</a>
+        <a class="category-item" href="#">Audio</a>
+        <a class="category-item" href="#">Cámaras</a>
+    </div>
+
+</header>
+
+<!-- MOBILE -->
+<header class="header-container-mobile">
+
+    <mat-toolbar class="container-up-mobile">
+        <div class="rrss-mobile">
+            <mat-icon class="rrss-item" aria-hidden="false" aria-label="Icon Facebook" fontIcon="facebook"></mat-icon>
+            <mat-icon class="rrss-item" aria-hidden="false" aria-label="Icon Twitter" svgIcon="twitter"></mat-icon>
+            <mat-icon class="rrss-item" aria-hidden="false" aria-label="Icon Instagram" svgIcon="instagram"></mat-icon>
+        </div>
+
+        <div class="icon-action-mobile">
+            <mat-icon aria-label="Icon account" fontIcon="account_circle"></mat-icon>
+            <mat-icon aria-label="Icon wishlist" fontIcon="favorite"></mat-icon>
+            <mat-icon aria-label="Icon cart" fontIcon="shopping_cart" matBadge="15"></mat-icon>    
+        </div>
+    </mat-toolbar>
+
+    <div class="container-center-mobile">
+        <h1>EasyShop</h1>
+
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon aria-label="Icon menu">menu</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
+            <button mat-menu-item>
+                <a>Ordenadores</a>
+            </button>
+            <button mat-menu-item disabled>
+                <a>Tablets</a>
+            </button>
+            <button mat-menu-item>
+                <a>Teléfonos</a>
+            </button>
+            <button mat-menu-item>
+                <a>Periféricos</a>
+            </button>
+            <button mat-menu-item>
+                <a>Televisiones</a>
+            </button>
+            <button mat-menu-item>
+                <a>Audio</a>
+            </button>
+            <button mat-menu-item>
+                <a>Cámaras</a>
+            </button>
+          </mat-menu>
+    </div>
+
+    <div class="container-bottom-mobile">
+        <div class="search-control-mobile">
+            <input class="search-input-mobile" type="text" placeholder="Inserte su búsqueda..." #searchbar>
+            <input class="search-submit-mobile" type="submit" value="Buscar">
+        </div>
+    </div>
+</header>

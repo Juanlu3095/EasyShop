@@ -1,0 +1,214 @@
+// DESKTOP
+@media only screen and (min-width:1367px){
+    .header-container-mobile{
+        display: none;
+    }
+
+    .container-up{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 2rem;
+    }
+    
+    .rrss{
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        line-height: 0;
+    }
+
+    .rrss mat-icon{
+        cursor: pointer;
+    }
+    
+    .menu{
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+    }
+    
+    .menu-item{
+        font-size: var(--lengthMd1);
+        text-decoration: none;
+    }
+    
+    .container-center{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+    
+    .search-input{
+        width: 300px;
+        padding: 9px;
+        border: 1px solid #ccc;
+        border-radius: 5px 0 0 5px;
+    }
+    
+    .search-submit{
+        background-color: var(--darkblue);
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 0 5px 5px 0;
+    }
+    
+    .icon-action-item{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    .icon-action-item mat-icon, .icon-action-item span{
+        cursor: pointer;
+    }
+    
+    .container-bottom{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        background-color: black;
+        padding: 1rem 2rem;
+        gap: 5rem;
+    }
+    
+    .category-item{
+        color: white;
+        text-decoration: none;
+    }
+}
+
+/* TABLET */
+@media screen and (min-width:768px) and (max-width: 1366px){
+    .header-container{
+        display: none;
+    }
+    
+    .search-control-mobile{
+        margin-top: -3rem;
+        margin-bottom: 1rem;
+    }
+
+    .container-up-mobile{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+    }
+
+    .rrss-mobile{
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        line-height: 0;
+    }
+    
+    .icon-action-mobile{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .container-center-mobile{
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 0.5rem 2rem 0rem 2rem;
+    }
+
+    .container-bottom-mobile{
+        text-align: center;
+        padding: 0 2rem;
+    }
+
+    .search-input-mobile{
+        width: 200px;
+        padding: 9px;
+        border: 1px solid #ccc;
+        border-radius: 5px 0 0 5px;
+    }
+    
+    .search-submit-mobile{
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 0 5px 5px 0;
+    }
+    
+    .icon-action-item-mobile{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.4rem;
+    }
+}
+
+// MOBILE
+@media only screen and (max-width:767px){
+    .header-container{
+        display: none;
+    }
+
+    .container-up-mobile{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+    }
+
+    .rrss-mobile{
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        line-height: 0;
+    }
+    
+    .icon-action-mobile{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .container-center-mobile{
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 0.5rem 2rem 0rem 2rem;
+    }
+
+    .container-bottom-mobile{
+        text-align: center;
+        padding: 0 2rem;
+    }
+
+    .search-control-mobile{
+        margin-bottom: 1rem;
+    }
+
+    .search-input-mobile{
+        width: 200px;
+        padding: 9px;
+        border: 1px solid #ccc;
+        border-radius: 5px 0 0 5px;
+    }
+    
+    .search-submit-mobile{
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 0 5px 5px 0;
+    }
+    
+    .icon-action-item-mobile{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.4rem;
+    }
+}

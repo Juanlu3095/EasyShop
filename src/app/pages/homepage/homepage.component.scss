@@ -1,0 +1,420 @@
+.home-container{
+    background-color: var(--lightgray);
+    padding-bottom: 5rem;
+}
+
+mat-icon{
+    overflow: visible;
+}
+
+// DESKTOP
+@media screen and (min-width:1367px){ 
+    /* CAROUSEL */
+    .carousel-item img{
+        height: 35rem;
+        object-fit: cover;
+    }
+
+    .ofertas{
+        margin: 3rem;
+        gap: 2.5rem;
+    }
+
+    /* BENEFICIOS */
+    .beneficios{
+        margin: 3rem;
+        padding: 3rem;
+        gap: 3rem;
+    }
+
+    .beneficio-icon{
+        width: auto;
+        font-size: 4rem;
+    }
+
+    .beneficio-description{
+        font-size: var(--lengthMd2);
+        margin-top: 1.5rem;
+    }
+
+    .beneficio-item{
+        display: flex;
+        gap: 1rem;
+    }
+
+    /* LOS MÁS VENDIDOS Y CATEGORIAS*/
+    .superventas, .categorias, .marcas{
+        margin: 3rem;
+        padding: 2rem;
+    }
+
+    .superventas-title, .categorias-title, .marcas-title{
+        font-size: var(--lengthMd3);
+        margin-bottom: 3rem;
+    }
+
+    .superventas-card{
+        width: 18%;
+    }
+
+    .superventas-card mat-card-title, .categoria-card mat-card-title{
+        font-size: var(--lengthMd2);
+        margin:0 0 0.5rem 0;
+    }
+
+    .superventas-card mat-card-subtitle{
+        font-size: var(--lengthMd1);
+    }
+
+    /* CATEGORÍAS */
+    .categoria-card{
+        width: 20%;
+    }
+
+    /* MARCAS */
+    .marcas-list{
+        flex-direction: row;
+        gap: 1.5rem;
+    }
+
+    /* NEWSLETTER */
+    .newsletterForm{
+        padding: 1rem 15rem;  
+    }
+
+    .newsletter-title{
+        font-size: var(--lengthMd3);
+    }
+
+}
+
+// TABLET
+@media screen and (min-width:768px) and (max-width: 1366px){
+    /* CAROUSEL */
+    .carousel-item img{
+        height: 20rem;
+        object-fit: cover;
+    }
+
+    .ofertas, .beneficios{
+        margin: 2rem;
+        gap: 2rem;
+    }
+
+    /* BENEFICIOS */
+    .beneficios{
+        gap: 2rem;
+    }
+
+    .beneficio-icon{
+        width: auto;
+        font-size: 2rem;
+    }
+
+    .beneficio-description{
+        font-size: var(--lengthSm3);
+        margin-top: 1.5rem;
+    }
+
+    .beneficio-item{
+        justify-content: center;
+        align-items: center;
+        width: 25%;
+        padding: 1rem;
+        gap: 0.5rem;
+    }
+
+    /* LOS MÁS VENDIDOS Y CATEGORIAS*/
+    .superventas, .categorias, .marcas{
+        margin: 2rem;
+        padding: 2rem;
+    }
+
+    .superventas-title, .categorias-title, .marcas-title{
+        font-size: var(--lengthMd2);
+        margin-bottom: 2rem;
+    }
+
+    .superventas-card{
+        width: 30%;
+    }
+
+    .superventas-card mat-card-title, .categoria-card mat-card-title{
+        font-size: var(--lengthMd1);
+        margin:0;
+    }
+
+    .superventas-card mat-card-subtitle{
+        font-size: var(--lengthSm3);
+    }
+
+    .btn-addtocart span{
+        font-size: var(--lengthSm3);
+    }
+
+    .btn-addtocart mat-icon{
+        font-size: 1.25rem;
+    }
+
+    .btn-more-superventas button{
+        font-size: var(--lengthSm3);
+    }
+
+    /* MARCAS */
+    .marcas-list{
+        gap: 1rem;
+        flex-direction: row;
+    }
+
+    /* CATEGORÍAS */
+    .categoria-card{
+        width: 20%;
+    }
+
+    /* NEWSLETTER */
+    .newsletterForm{
+        padding: 1rem 3rem;  
+    }
+
+    .newsletter-title{
+        font-size: var(--lengthMd3);
+    }
+}
+
+// MOBILE
+@media screen and (max-width:767px){ 
+    /* BENEFICIOS */
+    .beneficios{
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .beneficio-item{
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* LOS MÁS VENDIDOS */
+    .superventas-card img{
+        width: 100%;
+    }
+
+    .superventas, .categorias, .marcas{
+        padding: 1rem;
+    }
+
+    .superventas-card mat-card-title{
+        font-size: var(--lengthMd1);
+    }
+
+    /* CATEGORÍAS */
+    .categoria-card{
+        width: 35%;
+    }
+
+    .categorias mat-card-title{
+        font-size: var(--lengthMd1);
+    }
+
+    /* MARCAS */
+    .marcas-list{
+        gap: 1rem;
+    }
+
+    .marcas-list mat-card{
+        width: 80%;
+        text-align: center;
+    }
+
+    /* NEWSLETTER */
+    .newsletter-title{
+        font-size: var(--lengthMd2);
+    }
+
+    .form-control{
+        width: 65%;
+        font-size: var(--lengthSm3);
+    }
+
+    .inputs .submit{
+        width: 35%;
+    }
+
+    .submit{
+        font-size: var(--lengthSm3);
+    }
+}
+
+/* OFERTAS */
+.ofertas{
+    display: flex;
+    flex-direction: row;
+}
+
+.oferta-item{
+    width: 50%;
+}
+
+/* BENEFICIOS */
+.beneficios{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;  
+    background-color: white;
+}
+
+.beneficio-item{
+    display: flex
+}
+
+.beneficio-description{
+    text-align: right;
+}
+
+/* LOS MÁS VENDIDOS Y CATEGORIAS*/
+.superventas, .categorias, .marcas{
+    background-color: white;
+}
+
+.superventas-title, .categorias-title, .marcas-title{
+    text-align: center;
+    font-weight: bold;
+}
+
+.superventas-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.superventas-card{
+    text-align: center;
+}
+
+.superventas-card mat-card-header, .categoria-card mat-card-header{
+    justify-content: center;
+}
+
+.superventas-card mat-card-subtitle{
+    font-weight: 400;
+    color: var(--darkblue);
+}
+
+.btn-addtocart{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: var(--darkblue);
+    color: var(--white);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0;
+    margin: 1rem 3rem;
+    border: none;
+}
+
+.btn-more-superventas{
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.more-superventas{
+    background-color: var(--darkblue) !important;
+    color: var(--white) !important;
+    padding: 0 5rem;
+}
+
+.categorias-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.categoria-card{
+    text-align: center;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.categoria-card img{
+    border-radius: 50%;
+}
+
+/* MARCAS */
+.marcas-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.marca-card{
+    width:18%;
+}
+
+/* NEWSLETTER */
+.newsletter{
+    background-color: var(--darkblue);
+    //margin: 3rem 3rem 0;
+    padding: 3rem 2rem;
+}
+
+.newsletter-title{
+    color: var(--white);
+    text-align: center;
+    font-weight: bold;
+}
+
+.newsletter-description{
+    color: var(--white);
+    text-align: center;
+    font-size: var(--lengthMd1);
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.newsletterConfirm{
+    text-align: center;
+    color: var(--white);
+    font-size: var(--lengthMd1);
+}
+
+.newsletterForm .form-label{
+    font-size: var(--lengthMd1);
+    color: var(--white);
+    margin-bottom: 1.5rem;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: row;
+    vertical-align: baseline;
+    
+}
+
+.inputs input{
+    border-radius: 2rem 0 0 2rem;
+    border: none;
+}
+
+.inputs button{
+    width: 20%;
+    border: solid var(--black);
+    color: var(--white);
+    background-color: var(--black);
+    border-radius: 0 2rem 2rem 0;
+    box-shadow: 1rem;
+}
+
+.form-sending{
+    color: var(--orangered);
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    padding-top: 1rem;
+}
+
