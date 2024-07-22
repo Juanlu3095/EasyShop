@@ -1,0 +1,94 @@
+<!-- HEADER -->
+<app-header></app-header>
+
+<main>
+    <section class="fichaproducto">
+        <div class="fichaproducto-container">
+            <div class="fichaproducto-col">
+                <mat-card class="producto-img">
+                    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                </mat-card>
+            </div>
+            <div class="fichaproducto-col">
+                <h1 class="titulo-producto">Perro bonito Mastodonte</h1>
+                <span class="precio">150€</span>
+                <br><br>
+                <form>
+                    <label for="cantidad" class="form-label">Cantidad:</label>
+                    <input type="number" class="form-control" id="cantidad" min="1" value="{{ quantity || 1}}" required>
+                    <button mat-stroked-button type="submit" class="submit addtocart" >Agregar al carrito</button>
+                    <button mat-mini-fab class="btn-fav">
+                        <mat-icon aria-hidden="false">favorite</mat-icon>
+                    </button>
+                    <br><br>
+                    <button mat-flat-button class="btn-checkout">Finalizar compra</button>
+                </form>
+                <br><br>
+                <mat-accordion>
+                    <!-- Información del producto-->
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Información del producto</mat-panel-title>  
+                        </mat-expansion-panel-header>
+                        <p>Detalle del producto. Lugar ideal para agregar más información sobre tu producto como su tamaño, materiales, instrucciones de uso y mantenimiento. También es un buen espacio para explicar lo especial que es tu producto y sus beneficios.</p>
+                    </mat-expansion-panel>
+                    <br>
+                    <!-- Detalles técnicos -->
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Detalles técnicos</mat-panel-title>  
+                        </mat-expansion-panel-header>
+                        <p>Detalles técnicos del producto. Lugar ideal para agregar más información sobre tu producto como su tamaño, materiales, instrucciones de uso y mantenimiento. También es un buen espacio para explicar lo especial que es tu producto y sus beneficios.</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTOS RELACIONADOS -->
+    <section class="productos-relacionados">
+        <div class="relacionados-container">
+            <h2>Productos relacionados</h2>
+            <div class="relacionados-list">
+                <mat-card class="relacionados-card" appearance="outlined">
+                    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                    <mat-card-header>
+                      <mat-card-title>Shiba Inu</mat-card-title>
+                      <mat-card-subtitle>150€</mat-card-subtitle>
+                    </mat-card-header>
+                    <button class="btn-addtocart">
+                      <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
+                      <span>Añadir</span>
+                    </button>
+                </mat-card>
+
+                <mat-card class="relacionados-card" appearance="outlined">
+                    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                    <mat-card-header>
+                      <mat-card-title>Shiba Inu</mat-card-title>
+                      <mat-card-subtitle>150€</mat-card-subtitle>
+                    </mat-card-header>
+                    <button class="btn-addtocart">
+                      <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
+                      <span>Añadir</span>
+                    </button>
+                </mat-card>
+
+                <mat-card class="relacionados-card" appearance="outlined">
+                    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                    <mat-card-header>
+                      <mat-card-title>Shiba Inu</mat-card-title>
+                      <mat-card-subtitle>150€</mat-card-subtitle>
+                    </mat-card-header>
+                    <button class="btn-addtocart">
+                      <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
+                      <span>Añadir</span>
+                    </button>
+                </mat-card>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<app-footer></app-footer>
