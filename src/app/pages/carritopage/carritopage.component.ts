@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { RouterLink } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-carritopage',
@@ -15,7 +16,13 @@ import { RouterLink } from '@angular/router';
   templateUrl: './carritopage.component.html',
   styleUrl: './carritopage.component.scss'
 })
-export class CarritopageComponent {
+export class CarritopageComponent implements OnInit{
+
+  constructor(private title: Title) {}
+
+  ngOnInit(): void {
+    this.title.setTitle('Carrito');
+  }
 
   displayedColumns = [
     'name',

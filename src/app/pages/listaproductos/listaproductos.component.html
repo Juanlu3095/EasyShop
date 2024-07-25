@@ -1,0 +1,123 @@
+<!-- HEADER -->
+<app-header></app-header>
+
+<main>
+    <section class="lista-productos">
+        @if (categoria) {
+            <h1>{{ categoria | titlecase }}</h1>
+        } @else {
+            <h1>Todos los productos</h1>
+        }
+
+        <div class="lista-productos-container">
+
+            <!-- FILTROS -->
+            <div class="lista-productos-column filtros">
+                <h2>Filtrar por</h2>
+                <mat-divider></mat-divider>
+                
+                <h3>Categorías</h3>
+                <mat-list role="list" class="categoria-list">
+                    <mat-list-item role="listitem"><a href="/productos">Todas</a></mat-list-item>
+                    <mat-list-item role="listitem"><a href="/productos/categoria/ordenadores">Ordenadores</a></mat-list-item>
+                    <mat-list-item role="listitem"><a href="/productos/categoria/tablets">Tablets</a></mat-list-item>
+                    <mat-list-item role="listitem"><a href="/productos/categoria/telefonos">Teléfonos</a></mat-list-item>
+                    <mat-list-item role="listitem"><a href="/productos/categoria/perifericos">Periféricos</a></mat-list-item>
+                    <mat-list-item role="listitem"><a href="/productos//categoria/televisiones">Televisiones</a></mat-list-item>
+                    <mat-list-item role="listitem"><a href="/productos/categoria/audio">Audio</a></mat-list-item>
+                    <mat-list-item role="listitem"><a href="/productos/categoria/camaras">Cámaras</a></mat-list-item>
+                </mat-list>
+
+                <h3>Precio</h3>
+
+                <p>Precio mínimo</p>
+
+                <p>Precio máximo</p>
+
+            </div>
+
+            <!-- LISTADO DE PRODUCTOS -->
+            <div class="lista-productos-column listado">
+                <div class="productos-list">
+
+                    <mat-card class="producto-card" appearance="outlined">
+                        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                        <mat-card-header>
+                          <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
+                          <mat-card-subtitle>150€</mat-card-subtitle>
+                        </mat-card-header>
+                        <button class="btn-addtocart">
+                          <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
+                          <span>Añadir</span>
+                        </button>
+                    </mat-card>
+
+                    <mat-card class="producto-card" appearance="outlined">
+                        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                        <mat-card-header>
+                          <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
+                          <mat-card-subtitle>150€</mat-card-subtitle>
+                        </mat-card-header>
+                        <button class="btn-addtocart">
+                          <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
+                          <span>Añadir</span>
+                        </button>
+                    </mat-card>
+
+                    <mat-card class="producto-card" appearance="outlined">
+                        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                        <mat-card-header>
+                          <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
+                          <mat-card-subtitle>150€</mat-card-subtitle>
+                        </mat-card-header>
+                        <button class="btn-addtocart">
+                          <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
+                          <span>Añadir</span>
+                        </button>
+                    </mat-card>
+
+                    <mat-card class="producto-card" appearance="outlined">
+                        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                        <mat-card-header>
+                          <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
+                          <mat-card-subtitle>150€</mat-card-subtitle>
+                        </mat-card-header>
+                        <button class="btn-addtocart">
+                          <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
+                          <span>Añadir</span>
+                        </button>
+                    </mat-card>
+
+                    <mat-card class="producto-card" appearance="outlined">
+                        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                        <mat-card-header>
+                          <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
+                          <mat-card-subtitle>150€</mat-card-subtitle>
+                        </mat-card-header>
+                        <button class="btn-addtocart">
+                          <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
+                          <span>Añadir</span>
+                        </button>
+                    </mat-card>
+
+                    <mat-card class="producto-card" appearance="outlined">
+                      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                      <mat-card-header>
+                        <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
+                        <mat-card-subtitle>150€</mat-card-subtitle>
+                      </mat-card-header>
+                      <button class="btn-addtocart">
+                        <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
+                        <span>Añadir</span>
+                      </button>
+                  </mat-card>
+
+                </div>
+            </div>
+        </div>
+        
+    </section>
+</main>
+
+<!-- FOOTER -->
+<app-footer></app-footer>

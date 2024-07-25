@@ -327,6 +327,7 @@ mat-icon{
     padding: 0 5rem;
 }
 
+/* CATEGORÍAS */
 .categorias-list{
     display: flex;
     flex-direction: row;
@@ -343,6 +344,11 @@ mat-icon{
 
 .categoria-card img{
     border-radius: 50%;
+}
+
+.categoria-card mat-card-title a{
+    color: var(--darkblue);
+    text-decoration: none;
 }
 
 /* MARCAS */

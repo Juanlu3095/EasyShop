@@ -1,2 +1,28 @@
+<mat-sidenav-container class="sidenav-cart">
+    <mat-sidenav>Start</mat-sidenav>
+    <mat-sidenav #sidenav mode="over" position="end">
+        <button class="close" (click)="closeSidenav()">X</button>
+        <br><br>
+        <mat-card class="producto-card" appearance="outlined">
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+            <mat-card-header>
+              <mat-card-title>Shiba Inu</mat-card-title>
+              <mat-card-subtitle>5 x 150€</mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
 
-<router-outlet></router-outlet>
+        <p class="subtotal"><strong>Subtotal:</strong> 750.00€</p>
+
+        <div class="botones-carrito">
+            <button mat-stroked-button class="btn-carrito-item ver-carrito"><a class="txt-carrito" href="/carrito">Ver carrito</a></button>
+            <button mat-flat-button class="btn-carrito-item finalizar-compra"><a class="txt-finalizar-compra" href="/finalizar-compra">Finalizar compra</a></button>
+        </div>
+    </mat-sidenav>
+    
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>
+
+

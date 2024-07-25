@@ -16,8 +16,10 @@
     <div class="container-center">
         <h1><a href="">EasyShop</a></h1>
         <div class="search-control">
-            <input class="search-input" type="text" placeholder="Buscar producto..." #searchbar>
-            <input class="search-submit" type="submit" value="Buscar">
+            <form>
+                <input class="search-input" type="text" placeholder="Buscar producto..." #searchbar>
+                <input class="search-submit" type="submit" value="Buscar">
+            </form>
         </div>
         
         <div class="icon-action">
@@ -28,19 +30,20 @@
                 <mat-icon aria-label="Icon wishlist" aria-hidden="false" fontIcon="favorite"></mat-icon>
                 <span>Favoritos</span>
                 
-                <mat-icon aria-label="Icon cart" aria-hidden="false" fontIcon="shopping_cart" matBadge="15"></mat-icon>    
+                <mat-icon aria-label="Icon cart" aria-hidden="false" fontIcon="shopping_cart" matBadge="15" (click)="openSidenav()"></mat-icon>    
             </div>
         </div>
     </div>
 
     <div class="container-bottom">
-        <a class="category-item" href="#">Ordenadores</a>
-        <a class="category-item" href="#">Tablets</a>
-        <a class="category-item" href="#">Teléfonos</a>
-        <a class="category-item" href="#">Periféricos</a>
-        <a class="category-item" href="#">Televisiones</a>
-        <a class="category-item" href="#">Audio</a>
-        <a class="category-item" href="#">Cámaras</a>
+        <a class="category-item" href="/productos">Ver todo</a>
+        <a class="category-item" href="/productos/ordenadores">Ordenadores</a>
+        <a class="category-item" href="/productos/tablets">Tablets</a>
+        <a class="category-item" href="/productos/telefonos">Teléfonos</a>
+        <a class="category-item" href="/productos/perifericos">Periféricos</a>
+        <a class="category-item" href="/productos/televisiones">Televisiones</a>
+        <a class="category-item" href="/productos/audio">Audio</a>
+        <a class="category-item" href="/productos/camaras">Cámaras</a>
     </div>
 
 </header>
@@ -70,25 +73,28 @@
           </button>
           <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
             <button mat-menu-item>
-                <a>Ordenadores</a>
-            </button>
-            <button mat-menu-item disabled>
-                <a>Tablets</a>
+                <a href="/productos">Ver todo</a>
             </button>
             <button mat-menu-item>
-                <a>Teléfonos</a>
+                <a href="/productos/ordenadores">Ordenadores</a>
             </button>
             <button mat-menu-item>
-                <a>Periféricos</a>
+                <a href="/productos/tablets">Tablets</a>
             </button>
             <button mat-menu-item>
-                <a>Televisiones</a>
+                <a href="/productos/telefonos">Teléfonos</a>
             </button>
             <button mat-menu-item>
-                <a>Audio</a>
+                <a href="/productos/perifericos">Periféricos</a>
             </button>
             <button mat-menu-item>
-                <a>Cámaras</a>
+                <a href="/productos/televisiones">Televisiones</a>
+            </button>
+            <button mat-menu-item>
+                <a href="/productos/audio">Audio</a>
+            </button>
+            <button mat-menu-item>
+                <a href="/productos/camaras">Cámaras</a>
             </button>
           </mat-menu>
     </div>
