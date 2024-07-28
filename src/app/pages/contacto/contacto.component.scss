@@ -1,0 +1,49 @@
+.contacto{
+    margin: 5rem 10rem;
+    
+}
+
+h1{
+    text-align: center;
+    font-weight: bold;
+}
+
+.contacto-container{
+    display: flex;
+    flex-direction: row;
+    margin-top: 4rem;
+}
+
+.datos-contacto, .formulario-contacto{
+    width: 50%;
+}
+
+.datos-contacto-item{
+    margin-bottom: 3rem;
+}
+
+// Formulario contacto
+.encabezado-form{
+    margin-left: 1rem;
+}
+
+.form-field{
+    margin: 0 1rem;
+}
+
+.codigopostal-input textarea {
+    resize: vertical; // Permite que el usuario cambie el tamaño manualmente
+    overflow: hidden; // Oculta la barra de desplazamiento
+}
+
+.form-contacto{
+    margin-top: 4rem;
+}
+
+.form-contacto button{
+    width: 30%;
+    margin: 2rem 2rem 1rem 2rem;
+    text-align: center;
+    color: var(--white);
+    background-color: var(--darkblue);
+}

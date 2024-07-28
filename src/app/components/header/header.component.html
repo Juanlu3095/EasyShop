@@ -8,24 +8,24 @@
             <mat-icon class="rrss-item" aria-hidden="false" aria-hidden="false" aria-label="Icon Instagram" svgIcon="instagram"></mat-icon>
         </div>
         <nav class="menu">
-            <a class="menu-item" href="#">Nosotros</a>
-            <a class="menu-item" href="#">Contacto</a>
+            <a class="menu-item" href="/nosotros">Nosotros</a>
+            <a class="menu-item" href="/contacto">Contacto</a>
         </nav>
     </mat-toolbar>
 
     <div class="container-center">
         <h1><a href="">EasyShop</a></h1>
         <div class="search-control">
-            <form>
-                <input class="search-input" type="text" placeholder="Buscar producto..." #searchbar>
-                <input class="search-submit" type="submit" value="Buscar">
+            <form [formGroup]="searchForm" class="searchForm" (ngSubmit)="searchproduct()" ngNativeValidate>
+                <input class="search-input" type="text" placeholder="Buscar producto..." #searchbar formControlName="searchFormControl" required>
+                <button class="search-submit" type="submit">Buscar</button>
             </form>
         </div>
         
         <div class="icon-action">
             <div class="icon-action-item">
                 <mat-icon aria-label="Icon account" aria-hidden="false" fontIcon="account_circle"></mat-icon>
-                <span>Entrar</span>
+                <span><a href="/iniciosesion">Cuenta</a></span>
 
                 <mat-icon aria-label="Icon wishlist" aria-hidden="false" fontIcon="favorite"></mat-icon>
                 <span>Favoritos</span>
@@ -61,7 +61,7 @@
         <div class="icon-action-mobile">
             <mat-icon aria-label="Icon account" aria-hidden="false" fontIcon="account_circle"></mat-icon>
             <mat-icon aria-label="Icon wishlist" aria-hidden="false" fontIcon="favorite"></mat-icon>
-            <mat-icon aria-label="Icon cart" aria-hidden="false" fontIcon="shopping_cart" matBadge="15"></mat-icon>    
+            <mat-icon aria-label="Icon cart" aria-hidden="false" fontIcon="shopping_cart" matBadge="15" (click)="openSidenav()"></mat-icon>    
         </div>
     </mat-toolbar>
 
@@ -95,6 +95,12 @@
             </button>
             <button mat-menu-item>
                 <a href="/productos/camaras">Cámaras</a>
+            </button>
+            <button mat-menu-item>
+                <a href="/nosotros">Nosotros</a>
+            </button>
+            <button mat-menu-item>
+                <a href="/contacto">Contacto</a>
             </button>
           </mat-menu>
     </div>

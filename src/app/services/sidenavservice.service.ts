@@ -8,14 +8,17 @@ export class SidenavserviceService {
 
   private sidenav: MatSidenav;
 
+  // Permite seleccionar el sidenav sobre el que se va trabajar
   public setSidenav(sidenav: MatSidenav) {
     this.sidenav = sidenav;
   }
 
+  // Permite mostrar el sidenav seleccionado
   public open() {
     return this.sidenav.open();
   }
 
+  // Permite ocultar el sidenav seleccionado
   public close() {
     return this.sidenav.close();
   }

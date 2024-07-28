@@ -1,0 +1,45 @@
+.resultados-busqueda{
+    margin: 5rem;
+}
+
+.resultados-busqueda h1{
+    text-align: center;
+    font-weight: bold;
+}
+
+.productos-busqueda{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 2.5rem;
+    margin-top: 3rem;
+}
+
+.producto-card{
+    text-align: center;
+    width: 18%;
+}
+
+.producto-card mat-card-header{
+    justify-content: center;
+}
+
+.producto-card mat-card-subtitle{
+    font-weight: 400;
+    color: var(--darkblue);
+}
+
+.btn-addtocart{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: var(--darkblue);
+    color: var(--white);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0;
+    margin: 1rem 3rem;
+    border: none;
+}

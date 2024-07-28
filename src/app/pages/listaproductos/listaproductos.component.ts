@@ -26,6 +26,7 @@ export class ListaproductosComponent implements OnInit{
   ngOnInit(): void {
     this.categoria = this.activatedroute.snapshot.firstChild?.params['categoria']; // Obtenemos la categoría de la ruta (se usa firstChild por ser una ruta child)
 
+    // Hay que comprobar que la categoría contenida en la variable 'categoria' existe en el back-end
     if(this.categoria) {
       console.log('La categoría es:', this.categoria);
       let titulopage = this.toCamelCaseWithoutSpaces(this.categoria);
