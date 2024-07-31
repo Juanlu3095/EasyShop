@@ -1,0 +1,109 @@
+<!-- HEADER -->
+<app-header></app-header>
+
+<main>
+    <section class="canal-empleo">
+        <h1>Ofertas de empleo</h1>
+
+        <div class="ofertas">
+            <!-- FILTROS -->
+            <div class="filtros">
+                
+                    <form class="filtroForm">
+                        <select name="provincia" class="form-control provincia" id="provincia" placeholder="Provincia" formControlName="provinciaFormControl" matNativeControl>
+                            <option value="" disabled selected>Provincia</option>
+                            <option value="programacion">Málaga</option>
+                            <option value="jaen">Jaén</option>
+                            <option value="granada">Granada</option>
+                        </select>
+
+                        <select name="categoria" class="form-control categoria" id="categoria" placeholder="Categoría" formControlName="categoriaFormControl" matNativeControl>
+                            <option value="" disabled selected>Categoría</option>
+                            <option value="programacion">Programación</option>
+                            <option value="ambientologo">Ambientólogo</option>
+                            <option value="100tifiko">100tifiko</option>
+                        </select>
+
+                        <input type="text" class="form-control puesto" id="puesto" placeholder="Puesto" formControlName="puestoFormControl">
+
+                        <button mat-flat-button type="submit" class="submit">Filtrar</button>
+                    </form>
+                
+            </div>
+
+            <!-- LISTADO DE OFERTAS DE EMPLEO -->
+            <div class="ofertas-list">
+                @if (ofertasempleo) {
+                    <mat-grid-list cols="2" rowHeight="5:1">
+
+                        @for (oferta of ofertasempleo; track oferta.id) {
+                            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                                <mat-card appearance="outlined" class="oferta-item">
+                                    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        
+                                    <div class="oferta-content">
+                                        <mat-card-header>
+                                            <mat-card-subtitle>{{oferta.jobcategory}}</mat-card-subtitle>
+                                            <mat-card-title>{{oferta.puesto}}</mat-card-title>
+                                            <mat-card-subtitle>{{oferta.province}}</mat-card-subtitle>
+                                        </mat-card-header>
+                    
+                                        <mat-card-footer>
+                                            
+                                            <button mat-flat-button class="btn-inscribir" routerLink="{{oferta.id}}">Ver oferta</button>
+                                        </mat-card-footer>
+                                    </div>
+                                    
+                                </mat-card>
+                            </mat-grid-tile>
+                        }
+                        
+                    </mat-grid-list>
+                }
+                <!-- <mat-grid-list cols="2" rowHeight="5:1">
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-card appearance="outlined" class="oferta-item">
+                            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+
+                            <div class="oferta-content">
+                                <mat-card-header>
+                                    <mat-card-subtitle>Informática y telecomunicaciones</mat-card-subtitle>
+                                    <mat-card-title>Programador/a web</mat-card-title>
+                                    <mat-card-subtitle>Málaga</mat-card-subtitle>
+                                </mat-card-header>
+            
+                                <mat-card-footer>
+                                    
+                                    <button mat-flat-button class="btn-inscribir" routerLink="oferta">Ver oferta</button>
+                                </mat-card-footer>
+                            </div>
+                            
+                        </mat-card>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                        <mat-card appearance="outlined" class="oferta-item">
+                            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                            
+                            <div class="oferta-content">
+                                <mat-card-header>
+                                    <mat-card-subtitle>Informática y telecomunicaciones</mat-card-subtitle>
+                                    <mat-card-title>Programador/a web</mat-card-title>
+                                    <mat-card-subtitle>Málaga</mat-card-subtitle>
+                                </mat-card-header>
+            
+                                <mat-card-footer>
+                                    <button mat-flat-button class="btn-inscribir" routerLink="oferta">Ver oferta</button>
+                                </mat-card-footer>
+                            </div>
+                        </mat-card>
+                    </mat-grid-tile>
+                    
+                </mat-grid-list> -->
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<app-footer></app-footer>

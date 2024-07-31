@@ -1,0 +1,58 @@
+.canal-empleo{
+    margin: 5rem; 
+}
+
+h1{
+    text-align: center;
+    font-weight: bold;
+}
+
+.ofertas{
+    margin: 4rem 5rem
+}
+
+.filtroForm{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.filtroForm button{
+    color: var(--white);
+    background-color: var(--darkblue);
+    width: 30%;
+}
+
+.filtroForm select{
+    background: #fff url('https://www.freeiconspng.com/uploads/arrow-up-icon-23.png') no-repeat;
+    background-size: 15px;
+    background-position:  right 10px center;
+
+}
+
+// Listado de ofertas
+.ofertas-list{
+    margin: 5rem 0;
+}
+
+.oferta-item{
+    display: flex;
+    flex-direction: row;
+    margin: 0 1rem;
+}
+
+.oferta-item img{
+    width: 20%;
+}
+
+.oferta-content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.oferta-content button{
+    margin-left: 12rem;
+    color: var(--white);
+    background-color: var(--darkblue);
+}

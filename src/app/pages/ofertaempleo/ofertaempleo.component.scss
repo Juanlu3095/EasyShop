@@ -1,0 +1,36 @@
+.oferta-empleo{
+    margin: 5rem 10rem; 
+}
+
+/* OFERTA*/
+.oferta{
+    display: flex;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+// Cuerpo oferta
+.cuerpo-oferta{
+    width: 80%;
+}
+
+.cuerpo-oferta h2{
+    margin: 1rem 0;
+}
+
+// Detalles oferta
+.detalles-oferta{
+    width: 20%;
+}
+
+.detalles-card mat-card-title{
+    margin-bottom: 1rem;
+}
+
+.detalle-item{
+    line-height: 1rem;
+}
+
+.detalle-item p{
+    font-weight: 500;
+}

@@ -56,6 +56,14 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/contacto/contacto.component').then((m) => m.ContactoComponent),
     },
     {
+        path: 'empleos',
+        loadComponent: () => import('./pages/canalempleo/canalempleo.component').then((m) => m.CanalempleoComponent),
+    },
+    {
+        path: 'empleos/:idoferta',
+        loadComponent: () => import('./pages/ofertaempleo/ofertaempleo.component').then((m) => m.OfertaempleoComponent),
+    },
+    {
         path: '**',
         loadComponent: () => import('./pages/error404page/error404page.component').then((m) => m.Error404pageComponent),
     },
