@@ -1,0 +1,19 @@
+/* SIDEBAR */
+/* .menupanel{
+    //transform: translate(0px, 32px); 
+    background-color: black !important;
+    margin-top: 90px;
+} */
+
+
+
+/* CONTENIDO */
+mat-sidenav-content{
+    padding: 2rem;
+}
+
+// Ruta activa
+.active-link{
+    background-color: var(--lightgray) !important; /* Cambia a tu color deseado */
+    font-weight: bold;
+}

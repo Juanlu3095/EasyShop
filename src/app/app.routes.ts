@@ -16,6 +16,20 @@ export const routes: Routes = [
     {
         path: 'dashboard',
         loadComponent: () => import('./pages/dashboard/dashboard.component').then((m) => m.DashboardComponent),
+        children: [
+            {
+                path: '',
+                loadComponent: () => import('./pages/panelcontrol/panelcontrol.component').then((m) => m.PanelcontrolComponent),
+            },
+            {
+                path: 'productos',
+                loadComponent: () => import('./pages/productospage/productospage.component').then((m) => m.ProductospageComponent),
+            },
+            {
+                path: 'empleos',
+                loadComponent: () => import('./pages/dashboardempleos/dashboardempleos.component').then((m) => m.DashboardempleosComponent),
+            },
+        ]
     },
     {
         path: 'productos',

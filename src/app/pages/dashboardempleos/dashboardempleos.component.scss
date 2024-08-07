@@ -1,0 +1,29 @@
+.encabezado-empleo{
+    display: flex;
+    gap: 1rem; 
+    margin-bottom: 1rem;
+}
+
+.encabezado-empleo button{
+    border-color: var(--darkblue);
+}
+
+.dangerAll{
+    margin: 0 2rem;
+    background-color: red;
+    color: var(--white);
+}
+
+.productos p{
+    margin-bottom: 2rem;
+}
+
+
+td button{
+    margin-right: 1rem;
+}
+
+button.danger{
+    background-color: red;
+    color: var(--white);
+}

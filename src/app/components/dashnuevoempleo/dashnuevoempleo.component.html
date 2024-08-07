@@ -1,0 +1,83 @@
+<h2 mat-dialog-title>Añadir oferta de empleo</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="crearEmpleoForm" class="example-form">
+        <mat-form-field class="example-full-width">
+            <mat-label>Puesto</mat-label>
+            <input matInput placeholder="Ejemplo: programador/a web" value="" formControlName="puesto" required ngDefaultControl>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Categoría</mat-label>
+            <mat-select required formControlName="jobcategory_id" ngDefaultControl>
+                @if (categorias) {
+                    @for (categoria of categorias; track categoria.id) {
+                        <mat-option [value]="categoria.id">{{ categoria.nombre }}</mat-option>
+                    }
+                }
+                </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Provincia</mat-label>
+            <mat-select required formControlName="province_id" ngDefaultControl>
+                @if (provincias) {
+                    @for (provincia of provincias; track provincia.id) {
+                        <mat-option [value]="provincia.id">{{ provincia.nombre }}</mat-option>
+                    }
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Jornada</mat-label>
+            <mat-select required formControlName="jornada" ngDefaultControl>
+                <mat-option value="Completa">Completa</mat-option>
+                <mat-option value="Parcial">Parcial</mat-option>
+                <mat-option value="Por horas">Por horas</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Nivel profesional</mat-label>
+            <mat-select required formControlName="nivel_profesional" ngDefaultControl>
+                <mat-option value="Empleado">Empleado</mat-option>
+                <mat-option value="Freelance">Freelance</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Modalidad</mat-label>
+            <mat-select required formControlName="modalidad" ngDefaultControl>
+                <mat-option value="Presencial">Presencial</mat-option>
+                <mat-option value="Teletrabajo">Teletrabajo</mat-option>
+                <mat-option value="Híbrido">Híbrido</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Salario</mat-label>
+            <input matInput placeholder="Ejemplo: 1500€/mes" formControlName="salario" ngDefaultControl required>
+        </mat-form-field>
+      
+        <mat-form-field class="example-full-width">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput placeholder="Descripción de la oferta de trabajo" formControlName="descripcion" ngDefaultControl required></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Requisitos</mat-label>
+            <textarea matInput placeholder="Qué tiene que cumplir el candidato para postular" formControlName="requisitos" ngDefaultControl required></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Beneficios</mat-label>
+            <textarea matInput placeholder="Las ventajas de trabajar con nosotros" formControlName="beneficios" ngDefaultControl required></textarea>
+        </mat-form-field>
+      </form>
+      
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button [mat-dialog-close]="true" (click)="crearOferta()" cdkFocusInitial>Guardar</button>
+</mat-dialog-actions>
