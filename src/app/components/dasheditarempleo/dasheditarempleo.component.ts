@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OfertasempleoService } from '../../services/ofertasempleo.service';
 import { Ofertaempleo } from '../../models/ofertaempleo';
@@ -26,7 +27,7 @@ export class DasheditarempleoComponent implements OnInit{
   empleo: Ofertaempleo;
   provincias: Provincias[];
   categorias: Jobcategory[];
-  constructor(@Inject(MAT_DIALOG_DATA) public data: {id: number}, private ofertaservice: OfertasempleoService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {id: number}, private ofertaservice: OfertasempleoService, private _snackBar: MatSnackBar) { }
 
   editarEmpleoForm = new FormGroup({
     puesto: new FormControl('', Validators.required),
@@ -96,7 +97,8 @@ export class DasheditarempleoComponent implements OnInit{
       console.log('Estos son los datos del formulario:', this.editarEmpleoForm.value);
       this.ofertaservice.updateOferta(this.data.id, this.editarEmpleoForm.value).subscribe({
         next: (response) => {
-          console.log('Los datos se han actualizado correctamente', response)
+          console.log('Los datos se han actualizado correctamente', response);
+          this._snackBar.open('Oferta de empleo editada.', 'Aceptar');
         },
         error: (error) => {
           console.error('Ha ocurrido un error:', error);
@@ -104,4 +106,5 @@ export class DasheditarempleoComponent implements OnInit{
       })
     }
   }
+
 }

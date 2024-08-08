@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { OfertasempleoService } from '../../services/ofertasempleo.service';
 import { Ofertaempleo } from '../../models/ofertaempleo';
 import { Jobcategory } from '../../models/jobcategory';
@@ -23,7 +24,7 @@ export class DashnuevoempleoComponent implements OnInit{
   empleo: Ofertaempleo;
   provincias: Provincias[];
   categorias: Jobcategory[];
-  constructor(private ofertaService: OfertasempleoService) {}
+  constructor(private ofertaService: OfertasempleoService, private _snackBar: MatSnackBar) {}
 
   crearEmpleoForm = new FormGroup({
     puesto: new FormControl('', Validators.required),
@@ -68,7 +69,8 @@ export class DashnuevoempleoComponent implements OnInit{
       console.log('Estos son los datos del formulario:', this.crearEmpleoForm.value);
       this.ofertaService.postOferta(this.crearEmpleoForm.value).subscribe({
         next: (response) => {
-          console.log('La oferta se ha creado correctamente', response)
+          console.log('La oferta se ha creado correctamente', response);
+          this._snackBar.open('Oferta de empleo creada.', 'Aceptar')
         },
         error: (error) => {
           console.error('Ha ocurrido un error:', error);

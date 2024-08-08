@@ -16,7 +16,6 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 export class DashboardComponent implements OnInit{
 
   ngOnInit(): void {
-    //this.activo.activated = true;
-    console.log('hola')
+    
   }
 }
