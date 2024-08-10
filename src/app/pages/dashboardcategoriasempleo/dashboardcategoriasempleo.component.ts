@@ -1,8 +1,6 @@
-import { Component, OnInit, OnDestroy, inject, ViewChild, LOCALE_ID } from '@angular/core';
-import { registerLocaleData, CommonModule } from '@angular/common';
-import { Title } from '@angular/platform-browser';
-import { MatButton } from '@angular/material/button';
+import { Component, OnInit, OnDestroy, inject, ViewChild } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButton } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
@@ -11,95 +9,90 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { DashnuevoempleoComponent } from '../../modals/dashempleos/dashnuevoempleo/dashnuevoempleo.component';
-import { DasheditarempleoComponent } from '../../modals/dashempleos/dasheditarempleo/dasheditarempleo.component';
-import { DasheliminarempleoComponent } from '../../modals/dashempleos/dasheliminarempleo/dasheliminarempleo.component';
-import { DasheliminarseleccionempleoComponent } from '../../modals/dashempleos/dasheliminarseleccionempleo/dasheliminarseleccionempleo.component';
+import { Title } from '@angular/platform-browser';
 import { OfertasempleoService } from '../../services/ofertasempleo.service';
-import { Ofertaempleo } from '../../models/ofertaempleo';
-import localeEs from '@angular/common/locales/es';
+import { Jobcategory } from '../../models/jobcategory';
 import { Subscription } from 'rxjs';
-registerLocaleData(localeEs, 'es');
+import { DashnuevajobcategoryComponent } from '../../modals/dashjobcategory/dashnuevajobcategory/dashnuevajobcategory.component';
+import { DasheditarjobcategoryComponent } from '../../modals/dashjobcategory/dasheditarjobcategory/dasheditarjobcategory.component';
+import { DasheliminarjobcategoryComponent } from '../../modals/dashjobcategory/dasheliminarjobcategory/dasheliminarjobcategory.component';
+import { DasheliminarseleccionjobcategoryComponent } from '../../modals/dashjobcategory/dasheliminarseleccionjobcategory/dasheliminarseleccionjobcategory.component';
 
 @Component({
-  selector: 'app-dashboardempleos',
+  selector: 'app-dashboardcategoriasempleo',
   standalone: true,
-  providers: [{provide: LOCALE_ID, useValue: 'es'}],
-  imports: [MatButton, MatFormFieldModule, MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatSelectModule, MatDialogModule, CommonModule],
-  templateUrl: './dashboardempleos.component.html',
-  styleUrl: './dashboardempleos.component.scss',
+  imports: [MatButton, MatFormFieldModule, MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatSelectModule, MatDialogModule,],
+  templateUrl: './dashboardcategoriasempleo.component.html',
+  styleUrl: './dashboardcategoriasempleo.component.scss'
 })
-export class DashboardempleosComponent implements OnInit, OnDestroy{
+export class DashboardcategoriasempleoComponent implements OnInit, OnDestroy{
 
-  empleos: Ofertaempleo[]; // Esto se suministrará a la tabla con [dataSource], la cual es menos limitada
-  linkActivado: any = 'empleo';
+  categorias: Jobcategory[];
   suscripcion: Subscription;
-  dataSource: MatTableDataSource<Ofertaempleo>;
-  selection = new SelectionModel<Ofertaempleo>(true, []); // Para los checkbox
-  displayedColumns: string[] = ['select', 'id', 'puesto', 'provincia', 'jornada', 'fecha', 'acciones']; // Permite indicar las columnas a mostrar en el HTML
+  dataSource: MatTableDataSource<Jobcategory>;
+  selection = new SelectionModel<Jobcategory>(true, []); // Para los checkbox
+  displayedColumns: string[] = ['select', 'id', 'categoria', 'slug', 'acciones']; // Permite indicar las columnas a mostrar en el HTML
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; // Hace referencia a mat-paginator en el HTML. Añadimos {static:true} para cambiar el label de registros por página.
   @ViewChild(MatSort) sort: MatSort; // Hace referencia a mat-sort en el HTML
 
-  constructor(private title: Title, private empleoservice: OfertasempleoService) {}
+  constructor(private title: Title, private ofertaService: OfertasempleoService) {}
 
-  /* MODAL PARA AÑADIR NUEVO EMPLEO */
+  // Inyectamos el MatDialog
   readonly dialog = inject(MatDialog);
 
-  openDialogNuevoEmpleo() {
-    const dialogRef = this.dialog.open(DashnuevoempleoComponent);
+  // Modal nueva categoría
+  openDialogNuevaCategoria() {
+    this.dialog.open(DashnuevajobcategoryComponent);
   }
 
-  /* MODAL PARA EDITAR EMPLEO */
-  openDialogEditarEmpleo(id: number) {
-    const dialogRef = this.dialog.open(DasheditarempleoComponent, {
+  // Modal editar categoría
+  openDialogEditarCategoria(id: number) {
+    this.dialog.open(DasheditarjobcategoryComponent, {
       data: {id : id}
     });
   }
 
-  /* MODAL PARA ELIMINAR EMPLEO */
-  openDialogEliminarEmpleo(id: number, nombre: string) {
-    const dialogRef = this.dialog.open(DasheliminarempleoComponent, {
+  // Modal eliminar categoría
+  openDialogEliminarCategoria(id: number, nombre: string) {
+    this.dialog.open(DasheliminarjobcategoryComponent, {
       data: {id : id, nombre: nombre}
     });
   }
 
-  /* MODAL PARA ELIMINAR EMPLEOS SELECCIONADOS */
-  openDialogEliminarSeleccionEmpleo() {
+  // Modal eliminar selección categoría
+  openDialogEliminarSeleccionCategoria() {
     const ids = this.selection.selected.map(empleo => empleo.id); // Obtenemos los ids de los empleos seleccionados
-    const dialogRef = this.dialog.open(DasheliminarseleccionempleoComponent, {
-       data: {ids : ids} 
+    this.dialog.open(DasheliminarseleccionjobcategoryComponent, {
+      data: {ids : ids}
     });
   }
 
   ngOnInit(): void {
-    this.title.setTitle('Empleos < EasyShop');
+    this.title.setTitle('Categorías Empleo < EasyShop');
     this.paginator._intl.itemsPerPageLabel = "Registros por página:"; // Cambiamos el label 'Items per page'
     this.paginator._intl.previousPageLabel = "Anterior";
     this.paginator._intl.nextPageLabel = "Siguiente";
-    this.getAllOfertas();
-
+    this.getJobcategories();
+    
     // Manejo de la suscripción, cada vez que se ejecute, volverá a cargar las ofertas
-    this.suscripcion = this.empleoservice.refresh$.subscribe(() => {
-      this.getAllOfertas();
+    this.suscripcion = this.ofertaService.refresh$.subscribe(() => {
+      this.getJobcategories();
     })
   }
 
   // Desuscripción del observable para evitar fugas de memoria, se ejecuta al cambiar de página.
   ngOnDestroy(): void {
-    this.suscripcion.unsubscribe(); 
-    console.log('Se ha eliminado la suscripción.');
+    this.suscripcion.unsubscribe();
   }
 
-  // Obtenemos todas las ofertas de la API
-  getAllOfertas() {
-    this.empleoservice.getAllOfertas().subscribe({
+  getJobcategories() {
+    this.ofertaService.getAllJobcategories().subscribe({
       next: (respuesta) => {
-        this.empleos = respuesta;
-        this.dataSource = new MatTableDataSource(this.empleos);
-        console.log('DataSource:' ,this.dataSource);
+        this.categorias = respuesta;
+        this.dataSource = new MatTableDataSource(this.categorias);
 
-        // Establece las páginas analizando el dataSource que es el que contiene los empleos
-        /* El paginador y el sort hay que ponerlos después de inyectar los empleos en dataSource, además en la función que ejecutará el observable */
+        // Establece las páginas analizando el dataSource que es el que contiene las categorías
+        /* El paginador y el sort hay que ponerlos después de inyectar las categorías en dataSource, además en la función que ejecutará el observable */
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
@@ -148,7 +141,7 @@ export class DashboardempleosComponent implements OnInit, OnDestroy{
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Ofertaempleo): string {
+  checkboxLabel(row?: Jobcategory): string {
     // Con esto nos aseguramos que dataSource cargue antes
     if (!this.dataSource) {
       return '';
@@ -159,5 +152,4 @@ export class DashboardempleosComponent implements OnInit, OnDestroy{
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
-
 }

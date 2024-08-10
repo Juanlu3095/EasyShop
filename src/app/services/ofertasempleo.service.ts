@@ -4,9 +4,9 @@ import { environment } from '../../environments/environment.development';
 import { Ofertaempleo } from '../models/ofertaempleo';
 import { Jobcategory } from '../models/jobcategory';
 import { Provincias } from '../models/provincias';
-import { Subject, tap } from 'rxjs';
+import { Subject, tap, map } from 'rxjs';
 
-type Apiresponse = { data:Ofertaempleo }; // Ésta es la respuesta que recibimos de la api
+type Apiresponse = { data: any }; // Ésta es la respuesta que recibimos de la api
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +48,7 @@ export class OfertasempleoService {
       'Content-Type': 'application/json; charset=utf-8'
     })
     var options = {headers: headers}
-    return this.http.put<any>(`${this.endpoint}/jobs/${id}`, editarEmpleoForm, options).pipe(
+    return this.http.put<Ofertaempleo>(`${this.endpoint}/jobs/${id}`, editarEmpleoForm, options).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -63,8 +63,12 @@ export class OfertasempleoService {
     )
   }
 
-  deleteOfertas() {
-    
+  deleteOfertas(id: Array<number>) {
+    return this.http.delete<Ofertaempleo>(`${this.endpoint}/jobs/selected/${id}`).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
   }
 
   getAllProvinces() {
@@ -73,6 +77,46 @@ export class OfertasempleoService {
 
   getAllJobcategories() {
     return this.http.get<Jobcategory[]>(`${this.endpoint}/jobcategories`);
+  }
+
+  getJobCategory(id: number) {
+    return this.http.get<Apiresponse>(`${this.endpoint}/jobcategories/${id}`).pipe(
+      map( (respuesta: Apiresponse) => {
+        return respuesta.data;
+      })
+    );
+  }
+
+  postJobcategory(categoryForm: any) {
+    var headers = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8'
+    })
+    var options = {headers: headers}
+    return this.http.post<Jobcategory>(`${this.endpoint}/jobcategories`, categoryForm, options).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    );
+  }
+
+  updateJobcategory(id:number, categoryForm: any) {
+    var headers = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8'
+    })
+    var options = {headers: headers}
+    return this.http.put<Jobcategory>(`${this.endpoint}/jobcategories/${id}`, categoryForm, options).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
+  }
+
+  deleteJobcategories(id: number | Array<number>) {
+    return this.http.delete<Ofertaempleo>(`${this.endpoint}/jobcategories/${id}`).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
   }
 
   getCVs(idOferta:number) {

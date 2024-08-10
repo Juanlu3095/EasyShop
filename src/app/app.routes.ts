@@ -29,6 +29,10 @@ export const routes: Routes = [
                 path: 'empleos',
                 loadComponent: () => import('./pages/dashboardempleos/dashboardempleos.component').then((m) => m.DashboardempleosComponent),
             },
+            {
+                path: 'categoriasempleo',
+                loadComponent: () => import('./pages/dashboardcategoriasempleo/dashboardcategoriasempleo.component').then((m) => m.DashboardcategoriasempleoComponent),
+            },
         ]
     },
     {

@@ -8,10 +8,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { OfertasempleoService } from '../../services/ofertasempleo.service';
-import { Ofertaempleo } from '../../models/ofertaempleo';
-import { Provincias } from '../../models/provincias';
-import { Jobcategory } from '../../models/jobcategory';
+import { OfertasempleoService } from '../../../services/ofertasempleo.service';
+import { Ofertaempleo } from '../../../models/ofertaempleo';
+import { Provincias } from '../../../models/provincias';
+import { Jobcategory } from '../../../models/jobcategory';
 
 type Apiresponse = { data:Ofertaempleo }; // Ésta es la respuesta que recibimos de la api
 
@@ -92,13 +92,15 @@ export class DasheditarempleoComponent implements OnInit{
     })
   }
 
+  // Función para editar oferta de empleo
   editarEmpleo() {
     if(this.editarEmpleoForm.valid) {
-      console.log('Estos son los datos del formulario:', this.editarEmpleoForm.value);
       this.ofertaservice.updateOferta(this.data.id, this.editarEmpleoForm.value).subscribe({
         next: (response) => {
           console.log('Los datos se han actualizado correctamente', response);
-          this._snackBar.open('Oferta de empleo editada.', 'Aceptar');
+          this._snackBar.open('Oferta de empleo editada.', 'Aceptar', {
+            duration: 3000
+          });
         },
         error: (error) => {
           console.error('Ha ocurrido un error:', error);

@@ -3,33 +3,33 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { OfertasempleoService } from '../../services/ofertasempleo.service';
-import { Ofertaempleo } from '../../models/ofertaempleo';
+import { OfertasempleoService } from '../../../services/ofertasempleo.service';
 
 @Component({
-  selector: 'app-dasheliminarempleo',
+  selector: 'app-dasheliminarjobcategory',
   standalone: true,
   imports: [MatDialogModule, MatButtonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './dasheliminarempleo.component.html',
-  styleUrl: './dasheliminarempleo.component.scss'
+  templateUrl: './dasheliminarjobcategory.component.html',
+  styleUrl: './dasheliminarjobcategory.component.scss'
 })
-export class DasheliminarempleoComponent implements OnInit{
+export class DasheliminarjobcategoryComponent implements OnInit{
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {id: number, nombre: string}, private empleoService: OfertasempleoService, private _snackBar: MatSnackBar) {}
-
-  nombreEmpleo: string;
+  idCategoria: number | number[];
+  nombreCategoria: string;
 
   ngOnInit(): void {
-    this.nombreEmpleo = this.data.nombre;
-
+    this.nombreCategoria = this.data.nombre;
+    this.idCategoria = this.data.id;
   }
 
-  eliminarEmpleo(id: number) {
-    this.empleoService.deleteOferta(id).subscribe({
+  eliminarCategoria() {
+    this.empleoService.deleteJobcategories(this.data.id).subscribe({
       next: (response) => {
-        console.log('La oferta ha sido eliminada satisfactoriamente', response);
-        this._snackBar.open('Oferta de empleo eliminada.', 'Aceptar')
+        this._snackBar.open('Categoría eliminada.', 'Aceptar', {
+          duration: 3000
+        })
       },
       error: (error) => {
         console.error('Ha ocurrido un error:', error);

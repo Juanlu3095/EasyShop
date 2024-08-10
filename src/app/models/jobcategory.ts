@@ -1,4 +1,5 @@
 export interface Jobcategory {
     id: number,
-    nombre: string
+    nombre: string,
+    slug: string
 }

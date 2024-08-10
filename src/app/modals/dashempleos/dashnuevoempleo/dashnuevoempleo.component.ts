@@ -7,10 +7,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { OfertasempleoService } from '../../services/ofertasempleo.service';
-import { Ofertaempleo } from '../../models/ofertaempleo';
-import { Jobcategory } from '../../models/jobcategory';
-import { Provincias } from '../../models/provincias';
+import { OfertasempleoService } from '../../../services/ofertasempleo.service';
+import { Ofertaempleo } from '../../../models/ofertaempleo';
+import { Jobcategory } from '../../../models/jobcategory';
+import { Provincias } from '../../../models/provincias';
 
 @Component({
   selector: 'app-dashnuevoempleo',
@@ -70,7 +70,9 @@ export class DashnuevoempleoComponent implements OnInit{
       this.ofertaService.postOferta(this.crearEmpleoForm.value).subscribe({
         next: (response) => {
           console.log('La oferta se ha creado correctamente', response);
-          this._snackBar.open('Oferta de empleo creada.', 'Aceptar')
+          this._snackBar.open('Oferta de empleo creada.', 'Aceptar', {
+            duration: 3000
+          })
         },
         error: (error) => {
           console.error('Ha ocurrido un error:', error);
