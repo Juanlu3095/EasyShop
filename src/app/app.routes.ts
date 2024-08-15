@@ -30,8 +30,20 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/dashboardempleos/dashboardempleos.component').then((m) => m.DashboardempleosComponent),
             },
             {
+                path: 'empleos/:idempleo',
+                loadComponent: () => import('./pages/dashboardempleocvs/dashboardempleocvs.component').then((m) => m.DashboardempleocvsComponent),
+            },
+            {
                 path: 'categoriasempleo',
                 loadComponent: () => import('./pages/dashboardcategoriasempleo/dashboardcategoriasempleo.component').then((m) => m.DashboardcategoriasempleoComponent),
+            },
+            {
+                path: 'mensajes',
+                loadComponent: () => import('./pages/dashboardmensajes/dashboardmensajes.component').then((m) => m.DashboardmensajesComponent),
+            },
+            {
+                path: 'newsletter',
+                loadComponent: () => import('./pages/dashboardnewsletter/dashboardnewsletter.component').then((m) => m.DashboardnewsletterComponent),
             },
         ]
     },

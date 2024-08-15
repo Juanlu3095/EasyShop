@@ -36,7 +36,7 @@ export class OfertasempleoService {
       'Content-Type': 'application/json; charset=utf-8'
     })
     var options = {headers: headers}
-    return this.http.post<Ofertaempleo[]>(`${this.endpoint}/jobs`, crearEmpleoForm, options).pipe(
+    return this.http.post<Ofertaempleo>(`${this.endpoint}/jobs`, crearEmpleoForm, options).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -119,8 +119,8 @@ export class OfertasempleoService {
     )
   }
 
-  getCVs(idOferta:number) {
-
+  getCVsPorOferta(idOferta:number) {
+    return this.http.get(`${this.endpoint}/cvs/empleo/${idOferta}`);
   }
 
   postCv(jobForm: any) {

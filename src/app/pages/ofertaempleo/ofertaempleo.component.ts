@@ -40,7 +40,8 @@ export class OfertaempleoComponent implements OnInit{
     incorporacion: new FormControl('', Validators.required),
     ruta_cv: new FormControl('', Validators.required),
     job_id: new FormControl<number>(0, Validators.compose([Validators.min(1), Validators.required])),
-    politica: new FormControl(false, Validators.requiredTrue)
+    politica: new FormControl(false, Validators.requiredTrue),
+    estado_candidatura: new FormControl('En proceso') // Hay que poner esto porque lo pide CvResource en Laravel y hay que darle un valor
   })
 
   constructor(private title: Title, private ofertaempleoservice: OfertasempleoService, private activatedroute: ActivatedRoute) {}

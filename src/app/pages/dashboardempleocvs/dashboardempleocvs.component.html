@@ -1,0 +1,152 @@
+<main>
+    <section class="oferta-empleo">
+        @if(ofertaEmpleo) {
+            <h1>{{ ofertaEmpleo.puesto }}</h1>
+            <p>Publicada el {{ ofertaEmpleo.fecha | date:'longDate'}}</p>
+
+            <div class="oferta">
+
+                <!-- Descripción de la oferta -->
+                <div class="cuerpo-oferta">
+                    <a href="dashboard/empleos">← Volver a la página anterior</a>
+        
+                    <h2>Descripción</h2>
+        
+                    <p>{{ ofertaEmpleo.descripcion }}</p> 
+        
+                    <h2>Requisitos</h2>
+        
+                    <p>{{ ofertaEmpleo.requisitos }}</p>
+        
+                    <h2>Beneficios</h2>
+        
+                    <p>{{ ofertaEmpleo.beneficios }}</p>
+                </div>
+        
+                <!-- Detalles de la oferta -->
+                <div class="detalles-oferta">
+                    <mat-card class="detalles-card" appearance="outlined">
+                        
+                        <mat-card-header>
+                        <mat-card-title>Detalles</mat-card-title>
+                        </mat-card-header>
+
+                        <mat-card-content>
+                            <div class="detalle-item">
+                                <p>Categoría</p>
+                                <span>{{ ofertaEmpleo.jobcategory }}</span>
+                            </div>
+                            <br>
+                            <div class="detalle-item">
+                                <p>Provincia</p>
+                                <span>{{ ofertaEmpleo.province }}</span>
+                            </div>
+                            <br>
+                            <div class="detalle-item">
+                                <p>Tipo de jornada</p>
+                                <span>{{ ofertaEmpleo.jornada }}</span>
+                            </div>
+                            <br>
+                            <div class="detalle-item">
+                                <p>Nivel profesional</p>
+                                <span>{{ ofertaEmpleo.nivel_profesional }}</span>
+                            </div>
+                            <br>
+                            <div class="detalle-item">
+                                <p>Modalidad</p>
+                                <span>{{ ofertaEmpleo.modalidad }}</span>
+                            </div>
+                            <br>
+                            <div class="detalle-item">
+                                <p>Salario</p>
+                                <span>{{ ofertaEmpleo.salario }}</span>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        } @else {
+            <p>La oferta de empleo a la que quieres acceder no existe.</p>
+        }
+        
+        <!-- TABLA DE CVS -->
+        <p class="cvtable-descripcion">A continuación, puedes ver los CVs inscritos a esta oferta de empleo:</p>
+
+        @if(cvs) {
+            <div class="CvTable">
+                <mat-form-field>
+                    <mat-label>Filtro</mat-label>
+                    <input matInput  placeholder="Ej. Pepe Suárez" #input> <!-- FILTRO -->
+                </mat-form-field>
+    
+                <button mat-stroked-button  class="dangerAll">Eliminar CVs selecionados</button>
+                  
+                  <!-- TABLA CON LOS EMPLEOS -->
+                  <div class="mat-elevation-z8 table-responsive">
+                    <table mat-table [dataSource]="dataSource" matSort> <!-- [dataSource] indica de qué variable coge los datos -->
+    
+                      <!-- Checkbox Column -->
+                      <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                          <mat-checkbox >
+                          </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                          <mat-checkbox >
+                          </mat-checkbox>
+                        </td>
+                      </ng-container>
+                  
+                      <!-- Nombre Column -->
+                      <ng-container matColumnDef="nombre">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                        <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
+                      </ng-container>
+                  
+                      <!-- Apellidos Column -->
+                      <ng-container matColumnDef="apellidos">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
+                        <td mat-cell *matCellDef="let row"> {{row.apellidos}} </td>
+                      </ng-container>
+    
+                      <!-- Fecha Column -->
+                      <ng-container matColumnDef="fecha">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+                        <td mat-cell *matCellDef="let row"> {{row.fecha | date:'shortDate'}} </td>
+                      </ng-container>
+    
+                      <!-- Candidatura Column -->
+                      <ng-container matColumnDef="candidatura">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidatura </th>
+                        <td mat-cell *matCellDef="let row"> {{row.estado_candidatura}} </td>
+                      </ng-container>
+    
+                      <!-- Columna para ver/editar ofertas -->
+                      <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                        <td mat-cell *matCellDef="let row">
+                          <button mat-stroked-button >Editar</button>
+                          <button mat-stroked-button >Ver CV</button>
+                          <button mat-stroked-button class="danger" >Eliminar</button>
+                        </td>
+                      </ng-container>
+                  
+                      <!-- INDICAMOS LAS COLUMNAS A MOSTRAR EN EL HEADER Y EN LAS COLUMNAS DE LOS DATOS DE DEBAJO -->
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  
+                      <!-- FILA QUE SE MUESTRA SI LOS REGISTROS NO CUMPLEN CON LO ESTABLECIDO EN EL FILTRO -->
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No hay datos que coincidan con el filtro: "{{input.value}}"</td> <!-- input viene del filtro de arriba con #input -->
+                      </tr>
+                    </table>
+                  
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of cvs"></mat-paginator>
+                  </div>
+            </div>
+        } @else {
+            <p>No hay ningún CV inscrito a esta oferta de empleo.</p>
+        }
+        
+    </section>
+</main>

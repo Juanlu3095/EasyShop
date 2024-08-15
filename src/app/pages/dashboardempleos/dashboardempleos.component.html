@@ -1,5 +1,5 @@
 <main>
-    <section class="productos">
+    <section class="empleos">
         <div class="encabezado-empleo">
             <h1>Empleos</h1>
             <button mat-stroked-button (click)="openDialogNuevoEmpleo()">Añadir nueva oferta</button>
@@ -72,7 +72,7 @@
                     <th mat-header-cell *matHeaderCellDef> Acciones </th>
                     <td mat-cell *matCellDef="let row">
                       <button mat-stroked-button (click)="openDialogEditarEmpleo(row.id)">Editar</button>
-                      <button mat-stroked-button >Ver CVs</button>
+                      <button mat-stroked-button routerLink="{{row.id}}">Ver CVs</button>
                       <button mat-stroked-button class="danger" (click)="openDialogEliminarEmpleo(row.id, row.puesto)">Eliminar</button>
                     </td>
                   </ng-container>

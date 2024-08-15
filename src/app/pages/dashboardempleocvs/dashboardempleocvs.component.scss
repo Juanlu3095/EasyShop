@@ -1,0 +1,67 @@
+/* OFERTA*/
+.oferta{
+    display: flex;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+// Cuerpo oferta
+.cuerpo-oferta{
+    width: 75%;
+}
+
+.cuerpo-oferta h2{
+    margin: 1rem 0;
+}
+
+// Detalles oferta
+.detalles-oferta{
+    width: 25%;
+}
+
+.detalles-card mat-card-title{
+    margin-bottom: 1rem;
+}
+
+.detalle-item{
+    line-height: 1rem;
+}
+
+.detalle-item p{
+    font-weight: 500;
+}
+
+// Tabla CVs
+.cvtable-descripcion {
+    margin-top: 2rem;
+}
+
+.encabezado-empleo{
+    display: flex;
+    gap: 1rem; 
+    margin-bottom: 1rem;
+}
+
+.encabezado-empleo button{
+    border-color: var(--darkblue);
+}
+
+.dangerAll{
+    margin: 0 2rem;
+    background-color: red;
+    color: var(--white);
+}
+
+.productos p{
+    margin-bottom: 2rem;
+}
+
+
+td button{
+    margin-right: 1rem;
+}
+
+button.danger{
+    background-color: red;
+    color: var(--white);
+}

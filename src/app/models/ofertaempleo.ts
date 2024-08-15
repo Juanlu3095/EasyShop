@@ -12,5 +12,5 @@ export interface Ofertaempleo {
     requisitos: string,
     beneficios: string,
     salario: string,
-    fecha: string
+    fecha: Date
 }

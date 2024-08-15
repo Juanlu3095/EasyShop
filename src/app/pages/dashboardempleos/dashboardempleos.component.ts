@@ -19,13 +19,14 @@ import { OfertasempleoService } from '../../services/ofertasempleo.service';
 import { Ofertaempleo } from '../../models/ofertaempleo';
 import localeEs from '@angular/common/locales/es';
 import { Subscription } from 'rxjs';
+import { RouterLink } from '@angular/router';
 registerLocaleData(localeEs, 'es');
 
 @Component({
   selector: 'app-dashboardempleos',
   standalone: true,
   providers: [{provide: LOCALE_ID, useValue: 'es'}],
-  imports: [MatButton, MatFormFieldModule, MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatSelectModule, MatDialogModule, CommonModule],
+  imports: [MatButton, MatFormFieldModule, MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatSelectModule, MatDialogModule, CommonModule, RouterLink],
   templateUrl: './dashboardempleos.component.html',
   styleUrl: './dashboardempleos.component.scss',
 })
