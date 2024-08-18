@@ -4,6 +4,8 @@ import { environment } from '../../environments/environment.development';
 import { Subject, tap, map } from 'rxjs';
 import { Mensajescontacto } from '../models/mensajescontacto';
 
+type Apiresponse = { data: Mensajescontacto }; // Ésta es la respuesta que recibimos de la api
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,7 +26,11 @@ export class MensajescontactoService {
   }
 
   getMensaje(idMensaje: number) {
-    return this.http.get<any>(`${this.endpoint}/messages/${idMensaje}`);
+    return this.http.get<Apiresponse>(`${this.endpoint}/messages/${idMensaje}`).pipe(
+      map( respuesta => {
+        return respuesta.data;
+      })
+    );
   }
 
   postMensaje(MensajeForm: any) {
@@ -51,8 +57,16 @@ export class MensajescontactoService {
     )
   }
 
-  deleteMensaje(idMensaje: number) {
-    return this.http.delete<Mensajescontacto>(`${this.endpoint}/messages/${idMensaje}`).pipe(
+  deleteMensaje(idMensaje: number | Array<number>) {
+    return this.http.delete<any>(`${this.endpoint}/messages/${idMensaje}`).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
+  }
+
+  deleteMensajes(idsMensaje: Array<number>) {
+    return this.http.delete<any>(`${this.endpoint}/messages/${idsMensaje}`).pipe(
       tap(() => {
         this.refresh$.next()
       })

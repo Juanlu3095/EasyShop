@@ -69,15 +69,7 @@ export class OfertaempleoComponent implements OnInit{
   }
 
   inscripcion(){
-    /* let nombre = this.jobForm.value.nombre;
-    let apellidos = this.jobForm.value.apellidos;
-    let email = this.jobForm.value.email;
-    let telefono = this.jobForm.value.telefono;
-    let pais = this.jobForm.value.pais;
-    let ciudad = this.jobForm.value.ciudad;
-    let incorporacion = this.jobForm.value.incorporacion;
-    let ruta_cv = this.jobForm.value.ruta_cv;
-    let job_id = this.jobForm.value.job_id; */
+    
     this.jobForm.patchValue({
       job_id: this.oferta.id
     })

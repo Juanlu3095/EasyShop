@@ -42,6 +42,10 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/dashboardmensajes/dashboardmensajes.component').then((m) => m.DashboardmensajesComponent),
             },
             {
+                path: 'mensajes/:idmensaje',
+                loadComponent: () => import('./pages/dashboardmensajeindividual/dashboardmensajeindividual.component').then((m) => m.DashboardmensajeindividualComponent),
+            },
+            {
                 path: 'newsletter',
                 loadComponent: () => import('./pages/dashboardnewsletter/dashboardnewsletter.component').then((m) => m.DashboardnewsletterComponent),
             },

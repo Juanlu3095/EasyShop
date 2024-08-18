@@ -1,4 +1,4 @@
-import {OnInit, Component, input, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {OnInit, Component, input, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -7,13 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {SelectionModel} from '@angular/cdk/collections';
-
-export interface Button {
-  id: number;
-  nombre: string;
-  class: string;
-  accion: any;  
-}
+import { TableButton } from '../../models/tablebutton';
 
 @Component({
   selector: 'app-tablacompleta',
@@ -30,11 +24,15 @@ export class TablacompletaComponent<T> implements OnChanges{
   displayedColumns = input.required<string[]>(); // Éstas serían todas las columnas incluyendo los checkbox entre otros.
   data = input.required<T[]>(); // Tipo genérico (sólo en TS), lo que hace que pueda ser tanto string como number p.ej., y no usamos 'any'. Sólo para desarrollo. */
   
-  // Inputs
+  // Inputs -> Datos del padre al hijo (Dashboardmensajes => TablaCompleta)
   @Input() columns: string[];
   @Input() displayedColumns: string[];
   @Input() data: T[];
-  @Input() buttons: Button[];
+  @Input() buttons: TableButton[];
+  @Input() eliminarSeleccionados: () => void;
+
+  // Output -> Datos del hijo al padre (Tablacompleta => DashboardMensajes)
+  @Output() selectionChange = new EventEmitter<number[]>(); // Con esto mandamos al padre los ids seleccionados
 
   dataSource = new MatTableDataSource<T>();
 
@@ -55,6 +53,13 @@ export class TablacompletaComponent<T> implements OnChanges{
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  // Método para emitir los IDs seleccionados al padre con el Output
+  emitSelectedIds() {
+    const selectedIds = this.selection.selected.map(mensaje => mensaje['Id']);
+    console.log('Emitting selected IDs:', selectedIds);
+    this.selectionChange.emit(selectedIds);  // Emitimos los IDs seleccionados
   }
 
   /** Whether the number of selected elements matches the total number of rows. */

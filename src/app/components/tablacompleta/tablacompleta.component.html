@@ -3,7 +3,7 @@
     <input matInput (keyup)="aplicarFiltro($event)" placeholder="Ex. Mia" #input>
   </mat-form-field>
 
-  <button mat-stroked-button  class="dangerAll">Eliminar registros selecionados</button>
+  <button mat-stroked-button (click)="eliminarSeleccionados()" class="dangerAll">Eliminar registros selecionados</button>
   
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
@@ -11,15 +11,15 @@
       <!-- Checkbox Column -->
       
         <ng-container matColumnDef="select">
-          <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox (change)="$event ? toggleAllRows() : null"
+          <th mat-header-cell *matHeaderCellDef> <!-- Se ejecutan tanto toggleAllRows como emitSelectedIds -->
+            <mat-checkbox (change)="toggleAllRows() ; emitSelectedIds()"
                           [checked]="selection.hasValue() && isAllSelected()"
                           [indeterminate]="selection.hasValue() && !isAllSelected()"
                           [aria-label]="checkboxLabel()"></mat-checkbox>
           </th>
           <td mat-cell *matCellDef="let row">
             <mat-checkbox (click)="$event.stopPropagation()"
-                          (change)="$event ? selection.toggle(row) : null"
+                          (change)="selection.toggle(row); emitSelectedIds()"
                           [checked]="selection.isSelected(row)"
                           [aria-label]="checkboxLabel(row)">
             </mat-checkbox>
@@ -40,16 +40,17 @@
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let row">
           @for (button of buttons; track button.id) { <!-- BOTONES DINÁMICOS -->
-            <button mat-stroked-button class="{{button.class}}" (click)="button.accion()">{{ button.nombre}}</button>
+            <button mat-stroked-button class="{{button.class}}" (click)="button.accion(row.Id)">{{ button.nombre}}</button>
           }
-          
+         
         </td>
       </ng-container>
+      
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   
-      <!-- Lo que se muestra si el filtro no encuentra lo que bsucamos. -->
+      <!-- Lo que se muestra si el filtro no encuentra lo que buscamos. -->
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
       </tr>

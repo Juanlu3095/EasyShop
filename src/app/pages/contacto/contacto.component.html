@@ -40,33 +40,33 @@
                     <p>Rellena el siguiente formulario con tu consulta y te daremos una respuesta en el menor tiempo posible:</p>
                 </div>
                 
-                <form class="form-contacto">
+                <form class="form-contacto" [formGroup]="MensajeForm" (ngSubmit)="enviarMensaje()">
                     <mat-grid-list class="input-list" cols="2" rowHeight="5:1">
                         <mat-grid-tile [colspan]="1" [rowspan]="1">
                             <mat-form-field class="nombre-input form-field" [style.width.%]="100" [style.gap.%]="10">
                                 <mat-label>Nombre:</mat-label>
-                                <input type="text" matInput placeholder="" value="" required>
+                                <input type="text" matInput placeholder="" value="" formControlName="nombre" required>
                             </mat-form-field>
                         </mat-grid-tile>
 
                         <mat-grid-tile [colspan]="1" [rowspan]="1">
                             <mat-form-field class="apellidos-input form-field" [style.width.%]="100">
                                 <mat-label>Apellidos:</mat-label>
-                                <input type="text" matInput placeholder="" value="" required>
+                                <input type="text" matInput placeholder="" value="" formControlName="apellidos" required>
                             </mat-form-field>
                         </mat-grid-tile>
 
                         <mat-grid-tile [colspan]="1" [rowspan]="1">
                             <mat-form-field class="nombre-input form-field" [style.width.%]="100" [style.gap.%]="10">
                                 <mat-label>Email:</mat-label>
-                                <input type="email" matInput placeholder="" value="" required>
+                                <input type="email" matInput placeholder="" value="" formControlName="email" required>
                             </mat-form-field>
                         </mat-grid-tile>
 
                         <mat-grid-tile [colspan]="1" [rowspan]="1">
                             <mat-form-field class="apellidos-input form-field" [style.width.%]="100">
                                 <mat-label>Asunto:</mat-label>
-                                <input type="text" matInput placeholder="" value="" required>
+                                <input type="text" matInput placeholder="" value="" formControlName="asunto" required>
                             </mat-form-field>
                         </mat-grid-tile>
 
@@ -76,7 +76,7 @@
                                 <textarea matInput cdkTextareaAutosize
                                 #autosize="cdkTextareaAutosize"
                                 cdkAutosizeMinRows="7"
-                                cdkAutosizeMaxRows="10" type="textarea"></textarea>
+                                cdkAutosizeMaxRows="10" type="textarea" formControlName="mensaje"></textarea>
                               </mat-form-field>
                         </mat-grid-tile>
                     </mat-grid-list>
