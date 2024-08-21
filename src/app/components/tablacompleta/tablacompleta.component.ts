@@ -1,4 +1,4 @@
-import {OnInit, Component, input, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
+import {OnInit, Component, input, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -32,15 +32,19 @@ export class TablacompletaComponent<T> implements OnChanges{
   @Input() eliminarSeleccionados: () => void;
 
   // Output -> Datos del hijo al padre (Tablacompleta => DashboardMensajes)
-  @Output() selectionChange = new EventEmitter<number[]>(); // Con esto mandamos al padre los ids seleccionados
+  @Output() selectionChange = new EventEmitter<number[]>(); // Con esto mandamos al padre los ids seleccionados para los checkbox
 
   dataSource = new MatTableDataSource<T>();
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; // Hace referencia a mat-paginator en el HTML. Añadimos {static:true} para cambiar el label de registros por página.
+  @ViewChild(MatSort) sort: MatSort; // Hace referencia a mat-sort en el HTML
 
   // Actualizamos los datos en el HTML
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {
       console.log('Data received in app-tablacompleta:', this.data);
       this.dataSource.data = this.data;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
   }
 

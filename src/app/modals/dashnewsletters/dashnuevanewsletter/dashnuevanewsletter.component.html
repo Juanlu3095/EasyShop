@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Añadir suscripción a la newsletter</h2>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="newsletterForm" class="example-form">
+        <mat-form-field class="example-full-width">
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput type="email" placeholder="Ejemplo: pepe@gmail.com" formControlName="email" required ngDefaultControl>
+        </mat-form-field>
+
+        @if ( newsletterForm.controls.email.hasError('email') && !newsletterForm.controls.email.hasError('required')) {
+            <mat-error>Introduzca un email válido.</mat-error>
+          }
+          @if (newsletterForm.controls.email.hasError('required')) {
+            <mat-error>El email es <strong>requerido.</strong></mat-error>
+          }
+    </form>
+      
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button [mat-dialog-close]="true" (click)="postNewsletter()" cdkFocusInitial>Guardar</button>
+</mat-dialog-actions>

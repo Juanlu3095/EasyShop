@@ -58,7 +58,7 @@ export class MensajescontactoService {
   }
 
   deleteMensaje(idMensaje: number | Array<number>) {
-    return this.http.delete<any>(`${this.endpoint}/messages/${idMensaje}`).pipe(
+    return this.http.delete<Mensajescontacto>(`${this.endpoint}/messages/${idMensaje}`).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -66,7 +66,7 @@ export class MensajescontactoService {
   }
 
   deleteMensajes(idsMensaje: Array<number>) {
-    return this.http.delete<any>(`${this.endpoint}/messages/${idsMensaje}`).pipe(
+    return this.http.delete<Mensajescontacto[]>(`${this.endpoint}/messages/${idsMensaje}`).pipe(
       tap(() => {
         this.refresh$.next()
       })

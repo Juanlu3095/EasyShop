@@ -68,7 +68,7 @@ export class DashboardmensajesComponent implements OnInit{
   readonly dialog = inject(MatDialog);
 
   verMensaje(id: number) {
-   this.router.navigate(['dashboard/mensajes', id]);
+    this.router.navigate(['dashboard/mensajes', id]);
   }
 
   openDialogEditarMensaje(id: number) {
@@ -83,7 +83,7 @@ export class DashboardmensajesComponent implements OnInit{
     });
   }
 
-  // Método que se ejecuta cuando cambia la selección en el hijo
+  // Método que se ejecuta cuando cambia la selección en el hijo para los checkbox
   onSelectionChange(ids: number[]) {
     this.selectedIds = ids;
   }
