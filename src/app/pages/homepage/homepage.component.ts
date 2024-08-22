@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink, Router, NavigationEnd } from '@angular/router';
+import { NewsletterService } from '../../services/newsletter.service';
 
 @Component({
   selector: 'app-homepage',
@@ -19,18 +20,26 @@ export class HomepageComponent implements OnInit{
   enviando:boolean = false;
   emailguardado: boolean = false;
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private newsletterService: NewsletterService){}
 
   newsletterForm = new FormGroup({
-    emailFormControl: new FormControl('', Validators.compose([Validators.email, Validators.required]))
+    email: new FormControl('', Validators.compose([Validators.email, Validators.required])) // el nombre de formcontrol debe ser igual que el de la base de datos
   })
   
-  async suscripcionNews() {
-    let email = this.newsletterForm.value.emailFormControl;
+  suscripcionNews() {
+    
     if(this.newsletterForm.valid){
       this.enviando = true;
-      await console.log(email); // Aquí vendría la función para enviar a la API
-      this.emailguardado = true;
+      console.log(this.newsletterForm);
+      this.newsletterService.postNewsletter(this.newsletterForm.value).subscribe({
+        next: (respuesta) => {
+          console.log(respuesta);
+          this.emailguardado = true;
+        },
+        error: (error) => {
+          console.error('Se ha producido un error', error);
+        }
+      })
       
     } 
   }

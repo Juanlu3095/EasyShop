@@ -223,7 +223,7 @@
         <form [formGroup]="newsletterForm" class="newsletterForm" (ngSubmit)="suscripcionNews()" ngNativeValidate>
           <label for="email" class="form-label">Correo electrónico: *</label>
           <div class="inputs">
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Indique su correo electrónico..." formControlName="emailFormControl" required>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Indique su correo electrónico..." formControlName="email" required>
             <button type="submit" class="submit" >Suscribirme</button>
           </div>
           @if(enviando){
