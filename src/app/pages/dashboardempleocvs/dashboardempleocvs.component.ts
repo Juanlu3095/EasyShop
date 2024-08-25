@@ -1,23 +1,23 @@
-import { Component, OnInit, LOCALE_ID } from '@angular/core';
+import { Component, OnInit, LOCALE_ID, inject } from '@angular/core';
 import { registerLocaleData, CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatCardModule } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatTableModule, MatTableDataSource } from '@angular/material/table';
-import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
-import { MatSortModule, MatSort } from '@angular/material/sort';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { SelectionModel } from '@angular/cdk/collections';
-import { MatSelectModule } from '@angular/material/select';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { TablacompletaComponent } from '../../components/tablacompleta/tablacompleta.component';
 import { OfertasempleoService } from '../../services/ofertasempleo.service';
 import { Ofertaempleo } from '../../models/ofertaempleo';
 import { Cv } from '../../models/cv';
 import localeEs from '@angular/common/locales/es';
 import { Subscription } from 'rxjs';
+import { TableButton } from '../../models/tablebutton';
+import { DasheditarcvComponent } from '../../modals/dashcv/dasheditarcv/dasheditarcv.component';
+import { DasheliminarcvComponent } from '../../modals/dashcv/dasheliminarcv/dasheliminarcv.component';
+import { DasheliminarseleccioncvComponent } from '../../modals/dashcv/dasheliminarseleccioncv/dasheliminarseleccioncv.component';
+import { environment } from '../../../environments/environment.development';
 
 registerLocaleData(localeEs, 'es');
 
@@ -25,7 +25,7 @@ registerLocaleData(localeEs, 'es');
   selector: 'app-dashboardempleocvs',
   standalone: true,
   providers: [{provide: LOCALE_ID, useValue: 'es'}],
-  imports: [CommonModule, MatCardModule, MatButton, MatFormFieldModule, MatCheckboxModule, MatSortModule, MatPaginatorModule, MatTableModule, MatInputModule, MatSelectModule, MatDialogModule,],
+  imports: [CommonModule, MatCardModule, MatButton, MatFormFieldModule, MatInputModule, MatDialogModule, TablacompletaComponent],
   templateUrl: './dashboardempleocvs.component.html',
   styleUrl: './dashboardempleocvs.component.scss'
 })
@@ -33,12 +33,21 @@ export class DashboardempleocvsComponent implements OnInit{
 
   idEmpleo: number | null;
   ofertaEmpleo: Ofertaempleo;
-  dataSource: MatTableDataSource<Cv>;
   cvs: Cv[];
   suscripcion: Subscription;
-  displayedColumns: string[] = ['select', 'nombre', 'apellidos', 'fecha', 'candidatura', 'acciones']; // Permite indicar las columnas a mostrar en el HTML
+  columns: string[] = ['Nombre', 'Apellidos', 'Fecha', 'Candidatura']; // Permite indicar las columnas a mostrar en el HTML, deben coincidir con el Resource de Laravel
+  displayedColumns = ['select',...this.columns, 'acciones']; // Columnas que vamos a mostrar, que incluyen p.ej. checkbox y acciones
+  selectedIds: number[] = [];
+  public fileEndpoint = environment.FilesEndpoint;
 
-  constructor(private title: Title, private empleoService: OfertasempleoService, private activatedroute: ActivatedRoute) {}
+  // Botones para las acciones de la tabla
+  public botones: TableButton[] = [
+    {id: 1, nombre: 'Editar', class: '', accion: (id:number) => this.openDialogEditarCv(id) }, // () => para poder usar this..., le pasamos la id del mensaje
+    {id: 2, nombre: 'Ver archivo', class: '', accion: (id:number) => this.abrirCv(id) },
+    {id: 2, nombre: 'Eliminar', class: 'danger', accion: (id:number) => this.openDialogEliminarCv(id) },
+  ]
+
+  constructor(private title: Title, private empleoService: OfertasempleoService, private activatedroute: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     
@@ -68,7 +77,6 @@ export class DashboardempleocvsComponent implements OnInit{
             next: (response: any) => {
               console.log(response);
               this.cvs = response;
-              this.dataSource = new MatTableDataSource(this.cvs);
             },
             error: (error) => {
               console.log(error);
@@ -80,6 +88,42 @@ export class DashboardempleocvsComponent implements OnInit{
         }
       })
     }
-    
+  }
+
+  // Inyectamos el dialog
+  readonly dialog = inject(MatDialog);
+
+  openDialogEditarCv(id: number) {
+    this.dialog.open(DasheditarcvComponent, {
+      data: {id: id}
+    })
+  }
+
+  abrirCv(id: number) {
+    this.empleoService.getCv(id).subscribe({
+      next: (respuesta:Cv) => {
+        window.open(`${this.fileEndpoint}${respuesta.Ruta_cv}`, '_blank'); // Abre url en otra pestaña para acceder al cv concreto
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
+  }
+
+  openDialogEliminarCv(id: number) {
+    this.dialog.open(DasheliminarcvComponent, {
+      data: {id: id}
+    })
+  }
+
+  // Método que se ejecuta cuando cambia la selección en el hijo para los checkbox
+  onSelectionChange(ids: number[]) {
+    this.selectedIds = ids;
+  }
+
+  openDialogEliminarSeleccionCv() {
+    this.dialog.open(DasheliminarseleccioncvComponent, {
+      data: {ids : this.selectedIds} 
+    });
   }
 }

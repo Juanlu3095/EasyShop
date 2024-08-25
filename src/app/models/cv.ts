@@ -1,13 +1,13 @@
 export interface Cv {
-    id: number,
-    nombre: string,
-    apellidos: string,
-    telefono: string,
-    email: string,
-    ruta_cv: string,
-    incorporacion: string,
-    pais: string,
-    ciudad: string,
-    fecha: Date,
-    estado_candidatura: string
+    Id: number,
+    Nombre: string,
+    Apellidos: string,
+    Teléfono: string,
+    Email: string,
+    Ruta_cv: File,
+    Incorporación: string,
+    País: string,
+    Ciudad: string,
+    Fecha: Date,
+    Candidatura: string
 }

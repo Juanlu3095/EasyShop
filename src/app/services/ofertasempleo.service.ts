@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment.development';
 import { Ofertaempleo } from '../models/ofertaempleo';
 import { Jobcategory } from '../models/jobcategory';
 import { Provincias } from '../models/provincias';
+import { Cv } from '../models/cv';
 import { Subject, tap, map } from 'rxjs';
 
 type Apiresponse = { data: any }; // Ésta es la respuesta que recibimos de la api
@@ -120,14 +121,42 @@ export class OfertasempleoService {
   }
 
   getCVsPorOferta(idOferta:number) {
-    return this.http.get(`${this.endpoint}/cvs/empleo/${idOferta}`);
+    return this.http.get<Cv>(`${this.endpoint}/cvs/empleo/${idOferta}`);
+  }
+
+  getCv(id: number) {
+    return this.http.get<Apiresponse>(`${this.endpoint}/cvs/${id}`).pipe(
+      map( respuesta => {
+        return respuesta.data;
+      })
+    );;
   }
 
   postCv(jobForm: any) {
     var headers = new HttpHeaders({
+      'Content-Type': 'multipart/form-data; charset=utf-8'
+    })
+    var options = {headers: headers}
+    return this.http.post<Cv>(`${this.endpoint}/cvs`, jobForm);
+  }
+
+  updateCv(id: number, CvForm: any) {
+    var headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=utf-8'
     })
     var options = {headers: headers}
-    return this.http.post(`${this.endpoint}/cvs`, jobForm, options);
+    return this.http.put<Cv>(`${this.endpoint}/cvs/${id}`, CvForm, options).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
+  }
+
+  deleteCv(id: number | Array<number>) {
+    return this.http.delete<Cv>(`${this.endpoint}/cvs/${id}`).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
   }
 }
