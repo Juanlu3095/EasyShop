@@ -42,6 +42,7 @@ export class DasheliminarcvComponent implements OnInit{
         this._snackBar.open('CV eliminado.', 'Aceptar', {
           duration: 3000
         })
+        console.log(response);
       },
       error: (error) => {
         console.error('Ha ocurrido un error:', error);

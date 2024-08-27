@@ -22,6 +22,14 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/panelcontrol/panelcontrol.component').then((m) => m.PanelcontrolComponent),
             },
             {
+                path: 'media',
+                loadComponent: () => import('./pages/dashboardmedia/dashboardmedia.component').then((m) => m.DashboardmediaComponent),
+            },
+            {
+                path: 'media/:idmedia',
+                loadComponent: () => import('./pages/dashboardmedia/dashboardmedia.component').then((m) => m.DashboardmediaComponent),
+            },
+            {
                 path: 'productos',
                 loadComponent: () => import('./pages/productospage/productospage.component').then((m) => m.ProductospageComponent),
             },
