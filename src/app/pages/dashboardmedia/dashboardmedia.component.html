@@ -12,7 +12,7 @@
             </mat-form-field>
 
             @if(imagenesFiltradas.length > 0) { <!-- Muestra las imágenes si el array imagenesFiltradas contiene datos -->
-                <mat-grid-list class="imagenes" cols="4" rowHeight="1.5:1">
+                <mat-grid-list class="imagenes" [cols]="cols" [rowHeight]="rowHeight">
 
                     @for (image of imagenesFiltradas; track image.id) {
                         <mat-grid-tile>

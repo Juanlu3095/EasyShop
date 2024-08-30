@@ -14,7 +14,7 @@ type Apiresponse = { data: any }; // Ésta es la respuesta que recibimos de la a
 })
 export class OfertasempleoService {
 
-  private _refresh$ = new Subject<void>(); // Observable
+  private _refresh$ = new Subject<void>(); // Observable, no tiene valor explícito, sólo para avisar al componente de los cambios.
   constructor(private http: HttpClient) { }
 
   public endpoint = environment.ApiEndpoint;

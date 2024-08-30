@@ -1,5 +1,11 @@
+@if(dispositivo == "Móvil" || dispositivo == "Tablet") {
+    <div class="menu-header">
+        <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </div>
+}
+
 <mat-sidenav-container>
-    <mat-sidenav class="sidebar" mode="side" opened [style.width.%]="15" [style.minHeight.vh]="100">
+    <mat-sidenav class="sidenav" [mode]="mode" [opened]="open" [style.width.%]="sidenavWidth" #sidenav>
         <mat-nav-list role="navigation">
             <mat-list-item role="listitem" class="nav-item" routerLink="/dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }"><mat-icon matListItemIcon [style.margin.%]="10">home</mat-icon>Panel de control</mat-list-item>
             <mat-list-item role="listitem" class="nav-item" routerLink="/dashboard/media" routerLinkActive="active-link"><mat-icon matListItemIcon [style.margin.%]="10">photo_library</mat-icon>Media</mat-list-item>

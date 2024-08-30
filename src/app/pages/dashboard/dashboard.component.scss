@@ -1,11 +1,18 @@
-/* SIDEBAR */
-/* .menupanel{
-    //transform: translate(0px, 32px); 
-    background-color: black !important;
-    margin-top: 90px;
-} */
+/* HEADER */
+.menu-header{
+    background-color: black;
+    padding: 0.5rem 1rem;
+}
 
+.menu-header mat-icon{
+    color: white;
+    cursor: pointer;
+}
 
+/* SIDENAV */
+.sidenav{
+    position: fixed; // Hace que el sidenav no se pueda scrollear lo hace el contenido de la derecha.
+}
 
 /* CONTENIDO */
 mat-sidenav-content{
