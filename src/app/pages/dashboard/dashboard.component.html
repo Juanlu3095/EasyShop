@@ -1,8 +1,13 @@
-@if(dispositivo == "Móvil" || dispositivo == "Tablet") {
+
     <div class="menu-header">
-        <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+        @if(dispositivo == "Móvil" || dispositivo == "Tablet") {
+            <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+        }
+        <a routerLink="">
+            <mat-icon>home</mat-icon>
+            @if(dispositivo == "Desktop") {<span>Volver a la web</span>}
+        </a>
     </div>
-}
 
 <mat-sidenav-container>
     <mat-sidenav class="sidenav" [mode]="mode" [opened]="open" [style.width.%]="sidenavWidth" #sidenav>

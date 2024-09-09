@@ -76,7 +76,7 @@ export class CanalempleoComponent implements OnInit{
     this.ofertaempleoservice.getAllOfertas().subscribe({
       next: (respuesta) => {
         this.ofertasempleo = respuesta;
-        console.log(respuesta)
+        console.log('Estos son los empleos:', respuesta)
       },
       error: (error) => {
         console.error(error);

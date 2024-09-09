@@ -16,7 +16,9 @@
 
                     @for (image of imagenesFiltradas; track image.id) {
                         <mat-grid-tile>
-                            <img mat-card-image [ngSrc]="image.images[0]" loading="lazy" [alt]="image.title" fill>
+                            <a (click)="openDialogEditarMedio(image.id)">
+                                <img mat-card-image [ngSrc]="storageEndpoint + image.archivo" loading="lazy" [alt]="image.alt" fill>
+                            </a>
                         </mat-grid-tile>
                     }
     

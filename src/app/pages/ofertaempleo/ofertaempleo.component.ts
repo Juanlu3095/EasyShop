@@ -87,14 +87,14 @@ export class OfertaempleoComponent implements OnInit{
       datos.append('pais', this.jobForm.value.pais ?? '');
       datos.append('ciudad', this.jobForm.value.ciudad ?? '');
       datos.append('incorporacion', this.jobForm.value.incorporacion ?? '');
-      datos.append('ruta_cv', this.fileformData.get('files') as File);
+      //datos.append('ruta_cv', this.fileformData.get('files') as File); // Esta línea sobra
       datos.append('job_id', this.oferta.id.toString()); // Append obliga a usar string
       datos.append('estado_candidatura', 'En proceso');
 
       // Agrega el archivo desde fileformData
     const file = this.fileformData.get('ruta_cv') as File;
     if (file) {
-      datos.append('ruta_cv', file); // Asegúrate de que el nombre es "ruta_cv"
+      datos.append('ruta_cv', file); // "ruta_cv" viene del form html
     } else {
       console.error('No se ha seleccionado ningún archivo.');
       return; // No continuar si no hay archivo
@@ -114,18 +114,9 @@ export class OfertaempleoComponent implements OnInit{
         console.log('Respuesta OK', respuesta);
       },
       error: (error) => {
-        console.error('Ha habido un error', error)
+        console.error('Ha habido un error', error);
       }
     })
-
-      /* this.ofertaempleoservice.postCv(this.jobForm.value).subscribe({
-        next: (respuesta: any) => {
-          console.log('Respuesta OK', respuesta);
-        },
-        error: (error) => {
-          console.error('Ha habido un error', error)
-        }
-      }) */
     }
     
   }
@@ -137,7 +128,7 @@ export class OfertaempleoComponent implements OnInit{
   getFile(event: Event) {
     const target = event.target as HTMLInputElement;
 
-    const files: FileList | null = target.files;
+    const files: FileList | null = target.files; // Obtiene los archivos
 
     if(files!.length > 0 && files != null) {
       

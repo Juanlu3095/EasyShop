@@ -1,18 +1,23 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { MatButton } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ImagenService } from '../../services/imagen.service';
 import { ResponsivedesignService } from '../../services/responsivedesign.service';
 import { Subscription } from 'rxjs';
+import { DashnuevamediaComponent } from '../../modals/dashmedia/dashnuevamedia/dashnuevamedia.component';
+import { Image } from '../../models/image';
+import { environment } from '../../../environments/environment.development';
+import { DasheditarmediaComponent } from '../../modals/dashmedia/dasheditarmedia/dasheditarmedia.component';
 
 @Component({
   selector: 'app-dashboardmedia',
   standalone: true,
-  imports: [NgOptimizedImage, MatButton, MatFormFieldModule, MatInputModule, MatGridListModule],
+  imports: [NgOptimizedImage, MatButton, MatFormFieldModule, MatInputModule, MatGridListModule, MatDialogModule],
   templateUrl: './dashboardmedia.component.html',
   styleUrl: './dashboardmedia.component.scss'
 })
@@ -20,24 +25,44 @@ export class DashboardmediaComponent implements OnInit, OnDestroy{
 
   constructor(private title: Title, private imageService: ImagenService, private responsiveService: ResponsivedesignService) {}
 
-  imagenes: any[] = [];
-  imagenesFiltradas: any[] = [];
+  imagenes: Image[];
+  imagenesFiltradas: Image[] = [];
   suscripcion: Subscription[] = [];
   cols: number;
   rowHeight: string;
+  storageEndpoint = environment.FilesEndpoint;
 
   ngOnInit(): void {
-
     this.disenoResponsivo();
-
     this.title.setTitle('Galería de medios < EasyShop');
     this.getImagenes();
-    this.imagenesFiltradas =  [...this.imagenes];
 
+    if(this.imagenes) {
+      this.imagenesFiltradas =  [...this.imagenes];
+    }
+
+    // Manejo de la suscripción de las imágenes, cada vez que se ejecute, volverá a cargar las imágenes. Añadimos la suscripción al Array
+    this.suscripcion.push(this.imageService.refresh$.subscribe(() => {
+      this.getImagenes();
+    }));
+    
   }
 
   ngOnDestroy(): void {
     this.suscripcion.forEach((elemento) => { elemento.unsubscribe() });
+  }
+
+  /* MODAL PARA AÑADIR NUEVO EMPLEO */
+  readonly dialog = inject(MatDialog);
+
+  openDialogNuevoMedio() {
+    this.dialog.open(DashnuevamediaComponent);
+  }
+
+  openDialogEditarMedio(id: number) {
+    this.dialog.open(DasheditarmediaComponent, {
+      data: { id: id }
+    })
   }
 
   // Obtenemos el tipo de dispositivo y aplicamos los valores a la tabla de Angular Material según el caso.
@@ -75,8 +100,8 @@ export class DashboardmediaComponent implements OnInit, OnDestroy{
   getImagenes() {
     this.suscripcion.push(this.imageService.getImages().subscribe({
       next: (respuesta) => {
-        console.log(respuesta);
-        this.imagenes = respuesta;
+        console.log(respuesta.data);
+        this.imagenes = respuesta.data;
         console.log('Images: ', this.imagenes)
         this.imagenesFiltradas = this.imagenes;
         console.log('Filtro: ', this.imagenesFiltradas)
@@ -88,10 +113,6 @@ export class DashboardmediaComponent implements OnInit, OnDestroy{
   );
   }
 
-  openDialogNuevoMedio() {
-
-  }
-
   /*
   * Aplicamos un filtro en el que separamos el array imagenes (lo que obtenemos de la api directamente) e imagenesFiltradas (lo que se filtra al usar palabras clave). 
   */
@@ -101,7 +122,7 @@ export class DashboardmediaComponent implements OnInit, OnDestroy{
     if(!filterValue) { // Si no hay palabra para filtrar las imágenes filtradas vuelven a ser las de la api al completo.
       this.imagenesFiltradas = this.imagenes; 
     } else { // Si hay palabra a filtrar asignamos a imagenesFiltradas las imagenes con filtro desde el array imagenes.
-      this.imagenesFiltradas = this.imagenes.filter( word => word.title.toLowerCase().includes(filterValue)); // Filtramos por el 'title' del Array
+      this.imagenesFiltradas = this.imagenes.filter( word => word.nombre.toLowerCase().includes(filterValue)); // Filtramos por el 'title' del Array
     }
   }
 }

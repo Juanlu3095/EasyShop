@@ -11,4 +11,10 @@
 .imagenes img{
     max-width: 300px;
     max-height: 230px;
+    object-fit: cover;
+    margin: 1rem;
+}
+
+.imagenes a{
+    cursor: pointer;
 }

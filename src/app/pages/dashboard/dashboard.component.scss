@@ -2,11 +2,27 @@
 .menu-header{
     background-color: black;
     padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.menu-header mat-icon{
+.menu-header mat-icon, .menu-header span{
     color: white;
     cursor: pointer;
+    position: sticky;
+}
+
+.menu-header a{
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    gap: 0.5rem;
+}
+
+.menu-header a span{
+    padding-top: 5px;
 }
 
 /* SIDENAV */
@@ -23,4 +39,10 @@ mat-sidenav-content{
 .active-link{
     background-color: var(--lightgray) !important; /* Cambia a tu color deseado */
     font-weight: bold;
+}
+
+@media (min-width: 1024px) {
+    .menu-header{
+        padding-left: 16.5%;
+    }
 }

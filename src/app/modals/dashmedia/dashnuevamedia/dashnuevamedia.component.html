@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Añadir medio</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="crearImagenForm" class="example-form">
+        <mat-form-field class="example-full-width">
+            <mat-label>Nombre</mat-label>
+            <input type="text" matInput placeholder="Escribe un nombre para la imagen" value="" formControlName="nombre" required ngDefaultControl>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Texto alternativo</mat-label>
+            <input type="text" matInput placeholder="Texto alternativo de la imagen" formControlName="alt" ngDefaultControl required>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Leyenda</mat-label>
+            <input type="text" matInput placeholder="Leyenda de la imagen" formControlName="leyenda" ngDefaultControl required>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput placeholder="Descripción de la imagen" formControlName="descripcion" ngDefaultControl required></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="file-input form-field" [style.width.%]="100">
+            <mat-label></mat-label>
+            <input type="file" (change)="getFile($event)" name="archivo" required>
+            <input hidden matInput>
+        </mat-form-field>
+      </form>
+      
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button [mat-dialog-close]="true" (click)="crearImagen()" cdkFocusInitial>Guardar</button>
+</mat-dialog-actions>
