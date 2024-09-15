@@ -1,0 +1,26 @@
+.data{
+    display: flex;
+    gap: 2rem;
+}
+
+.column-data{
+    width: 50%;
+}
+
+.column-data img{
+    max-width: 400px;
+}
+
+.example-form {
+    min-width: 150px;
+    width: 100%;
+}
+  
+.example-full-width {
+    width: 100%;
+}
+
+.select-image{
+    background-color: var(--darkblue);
+    color: var(--white);
+}

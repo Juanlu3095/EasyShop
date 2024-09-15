@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';

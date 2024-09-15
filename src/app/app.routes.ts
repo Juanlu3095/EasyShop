@@ -26,12 +26,16 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/dashboardmedia/dashboardmedia.component').then((m) => m.DashboardmediaComponent),
             },
             {
-                path: 'media/:idmedia',
-                loadComponent: () => import('./pages/dashboardmedia/dashboardmedia.component').then((m) => m.DashboardmediaComponent),
-            },
-            {
                 path: 'productos',
                 loadComponent: () => import('./pages/productospage/productospage.component').then((m) => m.ProductospageComponent),
+            },
+            {
+                path: 'categoriasproducto',
+                loadComponent: () => import('./pages/dashboardcategoriasproducto/dashboardcategoriasproducto.component').then((m) => m.DashboardcategoriasproductoComponent),
+            },
+            {
+                path: 'categoriasproducto/:idcategoria',
+                loadComponent: () => import('./pages/dashboardeditarcategoriaproducto/dashboardeditarcategoriaproducto.component').then((m) => m.DashboardeditarcategoriaproductoComponent),
             },
             {
                 path: 'empleos',

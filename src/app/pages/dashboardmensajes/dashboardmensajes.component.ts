@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MensajescontactoService } from '../../services/mensajescontacto.service';
 import { Mensajescontacto } from '../../models/mensajescontacto';
@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './dashboardmensajes.component.html',
   styleUrl: './dashboardmensajes.component.scss'
 })
-export class DashboardmensajesComponent implements OnInit{
+export class DashboardmensajesComponent implements OnInit, OnDestroy{
 
   constructor(private title: Title, private mensajeService: MensajescontactoService, private router: Router) {}
 

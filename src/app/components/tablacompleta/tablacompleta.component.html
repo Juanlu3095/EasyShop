@@ -3,7 +3,9 @@
     <input matInput (keyup)="aplicarFiltro($event)" placeholder="" #input>
   </mat-form-field>
 
-  <button mat-stroked-button (click)="eliminarSeleccionados()" class="dangerAll">Eliminar registros selecionados</button>
+  @if(!btnDangerAll) {
+    <button mat-stroked-button (click)="eliminarSeleccionados()" class="dangerAll" #btnDangerAll>Eliminar registros selecionados</button>
+  }
   
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
@@ -25,6 +27,15 @@
             </mat-checkbox>
           </td>
         </ng-container>
+
+      <!-- Iteramos sobre el displayColumns para generar cada columna: displayedColumns() es un signal -->
+      @for (column of columnImage; track $index) {
+
+        <ng-container [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column }} </th>
+            <td mat-cell *matCellDef="let row"><img class="imageGaleria" [src]="storageEndpoint + row[column]">  </td>
+        </ng-container>
+      }  
       
       <!-- Iteramos sobre el displayColumns para generar cada columna: displayedColumns() es un signal -->
       @for (column of columns; track $index) {
@@ -40,7 +51,7 @@
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let row">
           @for (button of buttons; track button.id) { <!-- BOTONES DINÁMICOS -->
-            <button mat-stroked-button class="{{button.class}}" (click)="button.accion(row.Id)">{{ button.nombre}}</button>
+            <button mat-stroked-button class="{{button.class}}" (click)="button.accion(row.Id)">{{ button.nombre}}</button> <!-- 'Id' obliga a escribir un resource en la api que devuelva 'Id' => ... -->
           }
          
         </td>

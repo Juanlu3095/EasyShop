@@ -1,4 +1,4 @@
-import {OnInit, Component, input, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, ElementRef, Renderer2, OnInit} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -8,6 +8,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {SelectionModel} from '@angular/cdk/collections';
 import { TableButton } from '../../models/tablebutton';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-tablacompleta',
@@ -16,7 +17,7 @@ import { TableButton } from '../../models/tablebutton';
   templateUrl: './tablacompleta.component.html',
   styleUrl: './tablacompleta.component.scss'
 })
-export class TablacompletaComponent<T> implements OnChanges{
+export class TablacompletaComponent<T> implements OnChanges, OnInit{
   selection = new SelectionModel<any>(true, []);
 
   // Implementamos las signals
@@ -25,11 +26,13 @@ export class TablacompletaComponent<T> implements OnChanges{
   data = input.required<T[]>(); // Tipo genérico (sólo en TS), lo que hace que pueda ser tanto string como number p.ej., y no usamos 'any'. Sólo para desarrollo. */
   
   // Inputs -> Datos del padre al hijo (Dashboardmensajes => TablaCompleta)
+  @Input() columnImage: string[]; // columna para las imagenes
   @Input() columns: string[];
   @Input() displayedColumns: string[];
   @Input() data: T[];
   @Input() buttons: TableButton[];
   @Input() eliminarSeleccionados: () => void;
+  @Input() btnDangerAll: boolean = false; // Permite mostrar o no si se muestra el botón de eliminar todo
 
   // Output -> Datos del hijo al padre (Tablacompleta => DashboardMensajes)
   @Output() selectionChange = new EventEmitter<number[]>(); // Con esto mandamos al padre los ids seleccionados para los checkbox
@@ -37,6 +40,9 @@ export class TablacompletaComponent<T> implements OnChanges{
   dataSource = new MatTableDataSource<T>();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; // Hace referencia a mat-paginator en el HTML. Añadimos {static:true} para cambiar el label de registros por página.
   @ViewChild(MatSort) sort: MatSort; // Hace referencia a mat-sort en el HTML
+  @ViewChild('btnDangerAll', { static: false }) botonEliminarTodo: ElementRef;
+
+  storageEndpoint = environment.FilesEndpoint;
 
   // Actualizamos los datos en el HTML
   ngOnChanges(changes: SimpleChanges): void {
@@ -46,6 +52,12 @@ export class TablacompletaComponent<T> implements OnChanges{
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
+  }
+
+  ngOnInit(): void {
+    this.paginator._intl.itemsPerPageLabel = "Registros por página:"; // Cambiamos el label 'Items per page'
+    this.paginator._intl.previousPageLabel = "Anterior";
+    this.paginator._intl.nextPageLabel = "Siguiente";
   }
 
   // Función para aplicar el filtro

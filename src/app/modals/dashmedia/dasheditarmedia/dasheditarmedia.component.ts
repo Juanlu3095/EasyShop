@@ -45,15 +45,14 @@ export class DasheditarmediaComponent implements OnInit{
   getImagen(idImagen: number) {
     this.imageService.getImage(idImagen).subscribe({
       next: (respuesta) => {
-        console.log(respuesta.data);
         this.imagen = respuesta.data;
 
         // Inyectamos los valores actuales del formulario antes de editar
         this.editarImagenForm.patchValue({
-          nombre: this.imagen.nombre,
-          alt: this.imagen.alt,
-          leyenda: this.imagen.leyenda,
-          descripcion: this.imagen.descripcion,
+          nombre: this.imagen.Nombre,
+          alt: this.imagen.Alt,
+          leyenda: this.imagen.Leyenda,
+          descripcion: this.imagen.Descripcion,
         })
       },
       error: (error) => {

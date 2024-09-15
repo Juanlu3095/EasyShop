@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Seleccionar imagen</h2>
+<span class="info-imagen">Imagen seleccionada: {{ imagenSeleccionada().nombre }}</span>
+<mat-dialog-content class="mat-typography">
+    
+    <app-tablacompleta [columnImage]="columnImages" [columns]="columns" [displayedColumns]="displayedColumns" [data]="datos" [btnDangerAll]="true"
+    [buttons]="botones"></app-tablacompleta>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button [mat-dialog-close]="imagenSeleccionada()" cdkFocusInitial>Seleccionar imagen</button>
+</mat-dialog-actions>

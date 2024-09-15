@@ -100,11 +100,8 @@ export class DashboardmediaComponent implements OnInit, OnDestroy{
   getImagenes() {
     this.suscripcion.push(this.imageService.getImages().subscribe({
       next: (respuesta) => {
-        console.log(respuesta.data);
         this.imagenes = respuesta.data;
-        console.log('Images: ', this.imagenes)
         this.imagenesFiltradas = this.imagenes;
-        console.log('Filtro: ', this.imagenesFiltradas)
       },
       error: (error) => {
         console.error(error);
@@ -122,7 +119,7 @@ export class DashboardmediaComponent implements OnInit, OnDestroy{
     if(!filterValue) { // Si no hay palabra para filtrar las imágenes filtradas vuelven a ser las de la api al completo.
       this.imagenesFiltradas = this.imagenes; 
     } else { // Si hay palabra a filtrar asignamos a imagenesFiltradas las imagenes con filtro desde el array imagenes.
-      this.imagenesFiltradas = this.imagenes.filter( word => word.nombre.toLowerCase().includes(filterValue)); // Filtramos por el 'title' del Array
+      this.imagenesFiltradas = this.imagenes.filter( word => word.Nombre.toLowerCase().includes(filterValue)); // Filtramos por el 'title' del Array
     }
   }
 }

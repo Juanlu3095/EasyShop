@@ -14,10 +14,10 @@
             @if(imagenesFiltradas.length > 0) { <!-- Muestra las imágenes si el array imagenesFiltradas contiene datos -->
                 <mat-grid-list class="imagenes" [cols]="cols" [rowHeight]="rowHeight">
 
-                    @for (image of imagenesFiltradas; track image.id) {
+                    @for (image of imagenesFiltradas; track image.Id) {
                         <mat-grid-tile>
-                            <a (click)="openDialogEditarMedio(image.id)">
-                                <img mat-card-image [ngSrc]="storageEndpoint + image.archivo" loading="lazy" [alt]="image.alt" fill>
+                            <a (click)="openDialogEditarMedio(image.Id)">
+                                <img mat-card-image [ngSrc]="storageEndpoint + image.Archivo" loading="lazy" [alt]="image.Alt" fill>
                             </a>
                         </mat-grid-tile>
                     }

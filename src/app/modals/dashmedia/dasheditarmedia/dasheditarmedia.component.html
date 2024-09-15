@@ -5,17 +5,17 @@
         <div class="container">
 
             <section class="imagen">
-                <img mat-card-image [src]="storageEndpoint + imagen.archivo" [alt]="imagen.alt">
+                <img mat-card-image [src]="storageEndpoint + imagen.Archivo" [alt]="imagen.Alt">
             </section>
     
             <section>
 
                 <div class="datos-imagen">
-                    <p><strong>Fecha de subida:</strong> {{ imagen.fecha | date: 'longDate' }}</p>
-                    <p><strong>Tamaño del archivo:</strong> {{ imagen.tamano }} KB</p>
-                    <p><strong>Dimensiones:</strong> {{ imagen.dimensiones }}</p>
-                    <p><strong>Nombre del archivo:</strong> {{ imagen.nombre_archivo }}</p>
-                    <p><strong>Tipo de archivo:</strong> {{ imagen.tipo }}</p>
+                    <p><strong>Fecha de subida:</strong> {{ imagen.Fecha | date: 'longDate' }}</p>
+                    <p><strong>Tamaño del archivo:</strong> {{ imagen.Tamano }} KB</p>
+                    <p><strong>Dimensiones:</strong> {{ imagen.Dimensiones }}</p>
+                    <p><strong>Nombre del archivo:</strong> {{ imagen.Nombre_archivo }}</p>
+                    <p><strong>Tipo de archivo:</strong> {{ imagen.Tipo }}</p>
                 </div>
 
                 <hr>
