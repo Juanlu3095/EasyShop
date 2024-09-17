@@ -72,16 +72,20 @@ export class DashboardmediaComponent implements OnInit, OnDestroy{
       next: (dispositivo) => {
         switch(dispositivo) {
           case 'Desktop':
+            this.cols = 5;
+            this.rowHeight = '1.25:1';
+            break;
+          case 'Portátil':
             this.cols = 4;
-            this.rowHeight = '1.5:1'
+            this.rowHeight = '1.5:1';
             break;
           case 'Tablet':
             this.cols = 3;
-            this.rowHeight = '1.5:1'
+            this.rowHeight = '1.5:1';
             break;
           case 'Móvil':
             this.cols = 2;
-            this.rowHeight = '1.5:1'
+            this.rowHeight = '1.5:1';
             break;
           default:
             console.log('Dispositivo desconocido.');

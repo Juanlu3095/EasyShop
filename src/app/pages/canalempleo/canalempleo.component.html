@@ -9,22 +9,22 @@
             <!-- FILTROS -->
             <div class="filtros">
                 
-                    <form class="filtroForm">
-                        <select name="provincia" class="form-control provincia" id="provincia" placeholder="Provincia" formControlName="provinciaFormControl" matNativeControl>
+                    <form class="filtroForm" [formGroup]="filtroForm" (submit)="filtrarEmpleos()">
+                        <select name="provincia" class="form-control provincia" id="provincia" placeholder="Provincia" formControlName="provincia" matNativeControl>
                             <option value="" disabled selected>Provincia</option>
                             @for (provincia of provincias; track provincia.id) {
-                                <option value="{{provincia.nombre}}">{{provincia.nombre}}</option>
+                                <option value="{{provincia.id}}">{{provincia.nombre}}</option>
                             }
                         </select>
 
-                        <select name="categoria" class="form-control categoria" id="categoria" placeholder="Categoría" formControlName="categoriaFormControl" matNativeControl>
+                        <select name="categoria" class="form-control categoria" id="categoria" placeholder="Categoría" formControlName="categoria" matNativeControl>
                             <option value="" disabled selected>Categoría</option>
                             @for (categoria of categoriasdeempleo; track categoria.id) {
-                                <option value="{{categoria.nombre}}">{{categoria.nombre}}</option>
+                                <option value="{{categoria.id}}">{{categoria.nombre}}</option>
                             }
                         </select>
 
-                        <input type="text" class="form-control puesto" id="puesto" placeholder="Puesto" formControlName="puestoFormControl">
+                        <input type="text" class="form-control puesto" id="puesto" placeholder="Puesto" formControlName="puesto">
 
                         <button mat-flat-button type="submit" class="submit">Filtrar</button>
                     </form>
@@ -33,15 +33,16 @@
 
             <!-- LISTADO DE OFERTAS DE EMPLEO -->
             <div class="ofertas-list">
-                @if (ofertasempleo) {
-                    <mat-grid-list cols="2" rowHeight="5:1">
+                @if (ofertasempleo && ofertasempleo.length > 0) {
+                    <mat-grid-list [cols]="colList" [rowHeight]="rowList">
 
                         @for (oferta of ofertasempleo; track oferta.id) {
-                            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                            <mat-grid-tile [colspan]="colItem" [rowspan]="rowItem">
                                 <mat-card appearance="outlined" class="oferta-item">
                                     <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
         
                                     <div class="oferta-content">
+                                        
                                         <mat-card-header>
                                             <mat-card-subtitle>{{oferta.jobcategory}}</mat-card-subtitle>
                                             <mat-card-title>{{oferta.puesto}}</mat-card-title>
@@ -49,7 +50,6 @@
                                         </mat-card-header>
                     
                                         <mat-card-footer>
-                                            
                                             <button mat-flat-button class="btn-inscribir" routerLink="{{oferta.id}}">Ver oferta</button>
                                         </mat-card-footer>
                                     </div>

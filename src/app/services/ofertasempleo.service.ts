@@ -8,6 +8,7 @@ import { Cv } from '../models/cv';
 import { Subject, tap, map } from 'rxjs';
 
 type Apiresponse = { data: any }; // Ésta es la respuesta que recibimos de la api
+type LaravelResponse = { success: boolean, result: Ofertaempleo}
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class OfertasempleoService {
     return this._refresh$;
   }
 
+  /* OFERTAS DE EMPLEO */
   getAllOfertas() {
     return this.http.get<Ofertaempleo[]>(`${this.endpoint}/jobs`);
   }
@@ -72,10 +74,24 @@ export class OfertasempleoService {
     )
   }
 
+  filtrarOfertas(filtroForm: any) {
+    var headers = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8'
+    })
+    var options = {headers: headers}
+    return this.http.post<Ofertaempleo[]>(`${this.endpoint}/jobs/filter`, filtroForm, options).pipe(
+      map( (respuesta:any) => { // Entre paréntesis para poder indicar el tipo
+        return respuesta.result;
+      })
+    );
+  }
+
+  /* PROVINCIAS */
   getAllProvinces() {
     return this.http.get<Provincias[]>(`${this.endpoint}/provinces`);
   }
 
+  /* CATEGORÍAS DE EMPLEO */
   getAllJobcategories() {
     return this.http.get<Jobcategory[]>(`${this.endpoint}/jobcategories`);
   }

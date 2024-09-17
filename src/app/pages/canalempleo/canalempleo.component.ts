@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,27 +13,41 @@ import { OfertasempleoService } from '../../services/ofertasempleo.service';
 import { Ofertaempleo } from '../../models/ofertaempleo';
 import { Jobcategory } from '../../models/jobcategory';
 import { Provincias } from '../../models/provincias';
+import { FormControl, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ResponsivedesignService } from '../../services/responsivedesign.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-canalempleo',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, MatSelectModule, MatFormFieldModule, MatButton, MatCardModule, MatGridListModule, RouterLink],
+  imports: [HeaderComponent, FooterComponent, MatSelectModule, MatFormFieldModule, MatButton, MatCardModule, MatGridListModule, RouterLink, FormsModule, ReactiveFormsModule],
   templateUrl: './canalempleo.component.html',
   styleUrl: './canalempleo.component.scss'
 })
-export class CanalempleoComponent implements OnInit{
+export class CanalempleoComponent implements OnInit, OnDestroy{
 
-  constructor(private title: Title, private activatedroute: ActivatedRoute, private ofertaempleoservice: OfertasempleoService) {}
+  constructor(private title: Title, private activatedroute: ActivatedRoute, private ofertaempleoservice: OfertasempleoService, private responsive: ResponsivedesignService) {}
 
+  suscripcion: Subscription;
   ofertasempleo: Ofertaempleo[];
   categoriasdeempleo: Jobcategory[];
   provincias: Provincias[];
-  provincia: string | null;
-  categoria: string | null;
-  puesto: string | null;
+
+  // Para el resposive de MATERIAL GRID
+  colList: number;
+  rowList: string;
+  colItem: number;
+  rowItem: string;
+
+  filtroForm = new FormGroup({
+    provincia: new FormControl(''),
+    categoria: new FormControl(''),
+    puesto: new FormControl(''),
+  })
 
   ngOnInit(): void {
     this.title.setTitle('Ofertas de empleo');
+    this.disenoResponsivo();
     
     /* Obtenemos las categorías de empleo para el select del filtro */
     this.ofertaempleoservice.getAllJobcategories().subscribe({
@@ -55,28 +69,60 @@ export class CanalempleoComponent implements OnInit{
       }
     })
 
-    // Intentar hacerlo sólo con consulta a php usando HttpParams de Angular para apuntar a Laravel
-    // Ordenar ofertas mostrando primero las últimas ofertadas
-    /* this.activatedroute.firstChild?.params.subscribe(parametros => {
-      this.categoria = parametros['categoria'] || '';
-      this.provincia = parametros['provincia'] || '';
-      this.puesto = parametros['puesto'] || ''; 
-
-      console.log(parametros)
-    }); */
-
-    this.activatedroute.queryParams.subscribe(parametros => {
-      this.categoria = parametros['categoria'] || '';
-      this.provincia = parametros['provincia'] || '';
-      this.puesto = parametros['puesto'] || ''; 
-    })
-    
-    console.log(this.provincia)
-
     this.ofertaempleoservice.getAllOfertas().subscribe({
       next: (respuesta) => {
         this.ofertasempleo = respuesta;
-        console.log('Estos son los empleos:', respuesta)
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.suscripcion.unsubscribe();
+  }
+
+  filtrarEmpleos() {
+    this.ofertaempleoservice.filtrarOfertas(this.filtroForm.value).subscribe({
+      next: (respuesta) => {
+        this.ofertasempleo = respuesta;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
+  }
+
+  disenoResponsivo() {
+    this.suscripcion = this.responsive.obtenerDispositivo().subscribe({
+      next: (dispositivo) => {
+        switch(dispositivo) {
+          case 'Desktop':
+            this.colList = 2;
+            this.rowList = "5:1";
+            this.colItem = 1;
+            this.rowItem = "1"
+            break;
+          case 'Portátil':
+            this.colList = 1;
+            this.rowList = "5:1";
+            this.colItem = 1;
+            this.rowItem = "1"
+            break;
+          case 'Tablet':
+            this.colList = 1;
+            this.rowList = "5:1";
+            this.colItem = 1;
+            this.rowItem = "1";
+            break;
+          case 'Móvil':
+            this.colList = 1;
+            this.rowList = "4:1";
+            this.colItem = 1;
+            this.rowItem = "1"
+            break;
+        }
       },
       error: (error) => {
         console.error(error);

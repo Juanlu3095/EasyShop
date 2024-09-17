@@ -15,16 +15,19 @@ export class ResponsivedesignService {
 
   obtenerDispositivo() {
 
-    return this.responsive.observe(['(max-width: 767px)', '(min-width:768px) and (max-width: 1023px)', '(min-width: 1024px)']).pipe(
+    return this.responsive.observe(['(max-width: 767px)', '(min-width:768px) and (max-width: 1023px)', '(min-width:1024px) and (max-width: 1439px)', '(min-width: 1440px)']).pipe(
       map( (mediaQuery: BreakpointState) => {
         if(mediaQuery.matches) {
           if (this.responsive.isMatched('(max-width: 767px)')) {
             return 'Móvil';
           } else if (this.responsive.isMatched('(min-width:768px) and (max-width: 1023px)')) {
             return 'Tablet';
-          } else if (this.responsive.isMatched('(min-width: 1024px)')) {
+          } else if (this.responsive.isMatched('(min-width:1024px) and (max-width: 1439px)')) {
+            return 'Portátil';
+          } else if (this.responsive.isMatched('(min-width: 1440px)')) {
             return 'Desktop';
           } 
+          
         } 
         return 'Dispositivo desconocido';
       })

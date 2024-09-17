@@ -39,6 +39,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
     this.subscription = this.responsiveService.obtenerDispositivo().subscribe({
       next: (dispositivo) => {
         switch(dispositivo) {
+          case 'Portátil':
           case 'Desktop':
             this.dispositivo = dispositivo;
             this.open = true;
