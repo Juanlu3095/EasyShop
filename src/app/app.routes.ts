@@ -38,6 +38,14 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/dashboardeditarcategoriaproducto/dashboardeditarcategoriaproducto.component').then((m) => m.DashboardeditarcategoriaproductoComponent),
             },
             {
+                path: 'marcas',
+                loadComponent: () => import('./pages/dashboardmarcas/dashboardmarcas.component').then((m) => m.DashboardmarcasComponent),
+            },
+            {
+                path: 'marcas/:idmarca',
+                loadComponent: () => import('./pages/dashboardeditarmarca/dashboardeditarmarca.component').then((m) => m.DashboardeditarmarcaComponent),
+            },
+            {
                 path: 'empleos',
                 loadComponent: () => import('./pages/dashboardempleos/dashboardempleos.component').then((m) => m.DashboardempleosComponent),
             },

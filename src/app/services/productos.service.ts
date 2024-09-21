@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 import { Subject, tap, map } from 'rxjs';
 import { Productcategory } from '../models/productcategory';
+import { Marca } from '../models/marca';
 
 type Apiresponse = { data: any }; // Ésta es la respuesta que recibimos de la api
 
@@ -56,6 +57,51 @@ export class ProductosService {
 
   deleteCategoria(id: number) {
     return this.http.delete<Productcategory>(`${this.endpoint}/productcategories/${id}`).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
+  }
+
+  /* MARCAS */
+  getMarcas() {
+    return this.http.get<Apiresponse>(`${this.endpoint}/brand`);
+  }
+
+  getMarca(id: number) {
+    return this.http.get<Apiresponse>(`${this.endpoint}/brand/${id}`).pipe(
+      map( (respuesta) => {
+        return respuesta.data
+      })
+    );
+  }
+
+  postBrand(crearBrandForm: any) {
+    var headers = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8'
+    })
+    var options = {headers: headers}
+    return this.http.post<Marca>(`${this.endpoint}/brand`, crearBrandForm, options).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
+  }
+
+  updateBrand(id: number, editarBrandForm: any) {
+    var headers = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8'
+    })
+    var options = {headers: headers}
+    return this.http.put<Marca>(`${this.endpoint}/brand/${id}`, editarBrandForm, options).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
+  }
+
+  deleteBrand(id: any) {
+    return this.http.delete<Marca>(`${this.endpoint}/brand/${id}`).pipe(
       tap(() => {
         this.refresh$.next()
       })

@@ -1,0 +1,55 @@
+<main>
+    <div class="encabezado-marcas">
+        <h1>Marcas</h1>
+    </div>
+
+    <div class="container-marcas">
+        <section class="lista-marcas">
+            <app-tablacompleta [columns]="columns" [displayedColumns]="displayedColumns" [data]="marcas" [buttons]="botones" [btnDangerAll]="false"
+            [eliminarSeleccionados]="eliminarSeleccionDialog.bind(this)" (selectionChange)="onSelectionChange($event)"></app-tablacompleta>
+        </section>
+
+        <aside class="form-marcas">
+            <h2>Añadir nueva marca</h2>
+            <form [formGroup]="crearMarcaForm" class="example-form">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput placeholder="Nombre de la marca" formControlName="nombre" ngDefaultControl required>
+                </mat-form-field>
+
+                <button mat-flat-button class="select-image" (click)="openDialogSeleccionarImagen()">Seleccionar imagen</button>
+                @if(imagenSeleccionada()) {
+                    <span> Imagen: {{ imagenElegida.nombre }}</span>
+                }
+
+                <br><br>
+                <button mat-stroked-button type="submit" (click)="crearMarca()" [disabled]="!crearMarcaForm.valid">Guardar</button>
+            </form>
+        </aside>
+    </div>
+        
+</main>
+
+<!-- CONTENIDO DEL MODAL PARA EDITAR MARCA-->
+<ng-template #contentEditar>
+    <div>
+        Hola, qué paza!
+    </div>
+</ng-template>
+
+<!-- CONTENIDO DEL MODAL PARA ELIMINAR MARCA-->
+<ng-template #contentEliminar>
+    <div>
+        ¿Estás seguro de querer eliminar la marca "{{ nombreMarca }}"?
+    </div>
+</ng-template>
+
+<!-- CONTENIDO DEL MODAL PARA ELIMINAR LA SELECCIÓN DE MARCAS -->
+<ng-template #contentEliminarSeleccion>
+    <div>
+        ¿Estás seguro de querer las marcas seleccionadas?
+        <br>
+        <span class="caution">¡OJO! Si has pulsado el botón para seleccionar todo, se eliminarán todos las suscripciones, incluidas aquellas que no aparezcan en la vista actual.</span>
+    </div>
+</ng-template>
+

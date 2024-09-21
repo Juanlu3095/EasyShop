@@ -1,0 +1,51 @@
+<main>
+    <section>
+        <h1>Editar marca</h1>
+        <a href="dashboard/marcas">← Volver a la página anterior</a>
+    </section>
+
+    <br><br>
+
+    <section class="data">
+
+        @if(marca) {
+
+            <div class="column-data">
+
+                <form [formGroup]="editarMarcaForm" class="example-form">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput placeholder="Nombre de la marca" formControlName="nombre" ngDefaultControl required>
+                    </mat-form-field>
+        
+                    <button mat-flat-button class="select-image" (click)="openDialogSeleccionarImagen()">Seleccionar imagen</button>
+                    @if(imagenSeleccionada()) {
+                        <span> Imagen: {{ imagenElegida.nombre }}</span>
+                    }
+                
+                    <br><br>
+                    <button mat-stroked-button type="submit" (click)="editarMarca()">Guardar</button>
+        
+                </form>
+            </div>
+    
+            <div class="column-data">
+    
+                @if(marca.Imagen[0]) {
+                    <h3>Ésta es la imagen asignada actualmente:</h3>
+                    <p>Nombre de la imagen: {{ marca.Imagen[0].Nombre_imagen }}</p>
+                    <img [src]="FileEndpoint + marca.Imagen[0].Ruta_archivo" [alt]="marca.Imagen[0].Alt">
+
+                } @else {
+                    <p>La categoría no tiene una imagen asignada.</p>
+                }
+            </div>
+
+        } @else {
+            <p>La categoría a la que intentas acceder no existe.</p>
+        }
+
+        
+    </section>
+    
+</main>
