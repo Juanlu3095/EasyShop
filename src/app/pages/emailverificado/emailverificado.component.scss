@@ -1,0 +1,39 @@
+
+.email-cliente{
+    padding: 5rem 0;
+    background-color: var(--lightgray);
+}
+
+.page-container{
+    width: 70%;
+    margin: 0 auto;
+    padding: 5rem 0;
+    background-color: var(--white);
+}
+
+.welcome h1, .welcome h3{
+    text-align: center;
+}
+
+/* Links */
+.links{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+}
+
+.btn-home a{
+    color: var(--black);
+    text-decoration: none;
+}
+
+.btn-acceso{
+    background-color: var(--darkblue);
+    color: var(--white);
+}
+
+.btn-acceso a{
+    color: var(--white);
+    text-decoration: none;
+}

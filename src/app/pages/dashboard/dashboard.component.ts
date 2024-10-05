@@ -4,8 +4,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { ResponsivedesignService } from '../../services/responsivedesign.service';
+import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -23,7 +25,7 @@ export class DashboardComponent implements OnInit, OnDestroy{
   mode: MatDrawerMode; // Para señalar cómo mostrar el sidenav, si como side, over o push.
   sidenavWidth: number; // Para dar un ancho al sidenav.
 
-  constructor(private responsiveService: ResponsivedesignService) {}
+  constructor(private responsiveService: ResponsivedesignService, private cookieService: CookieService, private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.disenoResponsivo();
@@ -67,5 +69,20 @@ export class DashboardComponent implements OnInit, OnDestroy{
         console.error(error);
       }
     })
+  }
+
+  logout() {
+    // Función para eliminar el token de la base de datos y del navegador
+    this.authService.logoutAdmin().subscribe({
+      next: (respuesta) => {
+        console.log(respuesta);
+        this.cookieService.delete('TOKEN_A', '/'); // Para borrar la cookie, debe ir después de la petición de logout a laravel
+        this.router.navigate(['/iniciosesion']);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
+    
   }
 }

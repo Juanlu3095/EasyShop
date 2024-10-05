@@ -2,19 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { Title } from '@angular/platform-browser';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-micuenta',
+  selector: 'app-emailverificado',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent,],
-  templateUrl: './micuenta.component.html',
-  styleUrl: './micuenta.component.scss'
+  imports: [HeaderComponent, FooterComponent, MatButtonModule],
+  templateUrl: './emailverificado.component.html',
+  styleUrl: './emailverificado.component.scss'
 })
-export class MicuentaComponent implements OnInit{
+export class EmailverificadoComponent {
 
   constructor(private title: Title) {}
  
   ngOnInit(): void {
-    this.title.setTitle('Mi cuenta < EasyShop');
+    this.title.setTitle('Email verificado < EasyShop');
   }
 }

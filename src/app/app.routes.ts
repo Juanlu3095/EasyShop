@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { AuthadminGuard, AuthadminGuardReverse } from './guards/auth-admin.guard';
+import { AuthaclientGuard, AuthclientGuardReverse } from './guards/auth-client.guard';
 
 export const routes: Routes = [
     {
@@ -8,14 +10,26 @@ export const routes: Routes = [
     {
         path: 'iniciosesion',
         loadComponent: () => import('./pages/login/login.component').then((m) => m.LoginComponent),
+        canActivate: [AuthadminGuardReverse]
+    },
+    {
+        path: 'acceso',
+        loadComponent: () => import('./pages/accesocliente/accesocliente.component').then((m) => m.AccesoclienteComponent),
+        canActivate: [AuthclientGuardReverse]
+    },
+    {
+        path: 'emailverificado',
+        loadComponent: () => import('./pages/emailverificado/emailverificado.component').then((m) => m.EmailverificadoComponent),
     },
     {
         path: 'mi-cuenta',
         loadComponent: () => import('./pages/micuenta/micuenta.component').then((m) => m.MicuentaComponent),
+        canActivate: [AuthaclientGuard]
     },
     {
         path: 'dashboard',
         loadComponent: () => import('./pages/dashboard/dashboard.component').then((m) => m.DashboardComponent),
+        canActivateChild: [AuthadminGuard],
         children: [
             {
                 path: '',
