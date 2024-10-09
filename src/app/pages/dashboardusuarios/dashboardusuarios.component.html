@@ -1,0 +1,109 @@
+<main>
+    <section>
+        <div class="encabezado-usuarios">
+            <h1>Usuarios</h1>
+            <button mat-stroked-button (click)="crearUsuario()">Añadir usuario</button>
+        </div>
+
+        <app-tablacompleta [columns]="columns" [displayedColumns]="displayedColumns" [data]="usuarios" [buttons]="botones"
+        [eliminarSeleccionados]="eliminarSeleccionUsuarios.bind(this)" (selectionChange)="onSelectionChange($event)">
+        </app-tablacompleta>
+    </section>
+</main>
+
+<!-- MODAL PARA CREAR USUARIO -->
+<ng-template #contentCrear>
+
+    <div class="form-usuario">
+
+        <form [formGroup]="UsuarioForm" class="example-form">
+            <mat-form-field class="example-full-width">
+                <mat-label>Nombre</mat-label>
+                <input matInput type="text" formControlName="name" ngDefaultControl required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" ngDefaultControl required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Rol</mat-label>
+                <mat-select formControlName="role_id" ngDefaultControl required>
+                    @if (roles) {
+                        @for (rol of roles; track rol.id) {
+                            <mat-option [value]="rol.id">{{ rol.nombre }}</mat-option>
+                        }
+                    }
+                    </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Contraseña</mat-label>
+                <input matInput type="password" formControlName="password" ngDefaultControl required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Repite contraseña</mat-label>
+                <input matInput type="password" formControlName="password_confirmation" ngDefaultControl required>
+            </mat-form-field>
+
+        </form>
+    </div>
+</ng-template>
+
+<!-- MODAL PARA EDITAR USUARIO -->
+<ng-template #contentEditar>
+    <div class="form-usuario">
+
+        <form [formGroup]="UsuarioForm" class="example-form">
+            <mat-form-field class="example-full-width">
+                <mat-label>Nombre</mat-label>
+                <input matInput type="text" formControlName="name" ngDefaultControl required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" ngDefaultControl required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Rol</mat-label>
+                <mat-select formControlName="role_id" ngDefaultControl required>
+                    @if (roles) {
+                        @for (rol of roles; track rol.id) {
+                            <mat-option [value]="rol.id">{{ rol.nombre }}</mat-option>
+                        }
+                    }
+                    </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Contraseña</mat-label>
+                <input matInput type="password" formControlName="password" ngDefaultControl required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Repite contraseña</mat-label>
+                <input matInput type="password" formControlName="password_confirmation" ngDefaultControl required>
+            </mat-form-field>
+
+        </form>
+    </div>
+</ng-template>
+
+<!-- CONTENIDO DEL MODAL PARA ELIMINAR USUARIO -->
+<ng-template #contentEliminar>
+    <div>
+        ¿Estás seguro de querer eliminar al usuario "{{ nombreUsuario }}"?
+    </div>
+</ng-template>
+
+<!-- CONTENIDO DEL MODAL PARA ELIMINAR LA SELECCIÓN DE MARCAS -->
+<ng-template #contentEliminarSeleccion>
+    <div>
+        ¿Estás seguro de querer los usuarios?
+        <br>
+        <span class="caution">¡OJO! Si has pulsado el botón para seleccionar todo, se eliminarán todos las suscripciones, incluidas aquellas que no aparezcan en la vista actual.</span>
+    </div>
+</ng-template>

@@ -1,0 +1,26 @@
+.encabezado-usuarios{
+    display: flex;
+    gap: 1rem; 
+    margin-bottom: 1rem;
+}
+
+.encabezado-usuarios button{
+    border-color: var(--darkblue);
+}
+
+.caution{
+    color: red;
+}
+
+.confirmar{
+    color: var(--darkblue);
+}
+
+.example-form {
+    min-width: 150px;
+    width: 100%;
+}
+  
+.example-full-width {
+    width: 100%;
+}

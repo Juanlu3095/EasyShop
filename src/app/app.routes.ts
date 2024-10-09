@@ -83,6 +83,10 @@ export const routes: Routes = [
                 path: 'newsletter',
                 loadComponent: () => import('./pages/dashboardnewsletter/dashboardnewsletter.component').then((m) => m.DashboardnewsletterComponent),
             },
+            {
+                path: 'usuarios',
+                loadComponent: () => import('./pages/dashboardusuarios/dashboardusuarios.component').then((m) => m.DashboardusuariosComponent),
+            },
         ]
     },
     {

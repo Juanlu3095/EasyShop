@@ -26,8 +26,7 @@ export class DashboardmarcasComponent implements OnInit, OnDestroy{
 
   constructor(private title: Title, private dialogService: DialogService, private productoService: ProductosService, private _snackBar: MatSnackBar, private router: Router) {}
 
-  @ViewChild('contentEditar') modalEditar!: TemplateRef<HTMLElement>; // El contenido a mostrar en el modal, opcional
-  @ViewChild('contentEliminar') modalEliminar!: TemplateRef<HTMLElement>;
+  @ViewChild('contentEliminar') modalEliminar!: TemplateRef<HTMLElement>; // El contenido a mostrar en el modal, opcional
   @ViewChild('contentEliminarSeleccion') modalEliminarSeleccion!: TemplateRef<HTMLElement>; 
   suscripcion: Subscription;
   marcas: any; // El array de marcas que se añade a la tabla
