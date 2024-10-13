@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 import { Ofertaempleo } from '../models/ofertaempleo';
 import { Jobcategory } from '../models/jobcategory';
 import { Provincias } from '../models/provincias';
 import { Cv } from '../models/cv';
 import { Subject, tap, map } from 'rxjs';
+import { HttpheadersService } from './httpheaders.service';
 
 type Apiresponse = { data: any }; // Ésta es la respuesta que recibimos de la api
 type LaravelResponse = { success: boolean, result: Ofertaempleo}
@@ -16,7 +17,7 @@ type LaravelResponse = { success: boolean, result: Ofertaempleo}
 export class OfertasempleoService {
 
   private _refresh$ = new Subject<void>(); // Observable, no tiene valor explícito, sólo para avisar al componente de los cambios.
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private httpheaders: HttpheadersService) { }
 
   public endpoint = environment.ApiEndpoint;
 
@@ -27,19 +28,15 @@ export class OfertasempleoService {
 
   /* OFERTAS DE EMPLEO */
   getAllOfertas() {
-    return this.http.get<Ofertaempleo[]>(`${this.endpoint}/jobs`);
+    return this.http.get<Ofertaempleo[]>(`${this.endpoint}/jobs`, this.httpheaders.createHeadersGeneric());
   }
 
   getOferta(id: number) {
-    return this.http.get<Apiresponse>(`${this.endpoint}/jobs/${id}`);
+    return this.http.get<Apiresponse>(`${this.endpoint}/jobs/${id}`, this.httpheaders.createHeadersGeneric());
   }
 
   postOferta(crearEmpleoForm: any) {
-    var headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8'
-    })
-    var options = {headers: headers}
-    return this.http.post<Ofertaempleo>(`${this.endpoint}/jobs`, crearEmpleoForm, options).pipe(
+    return this.http.post<Ofertaempleo>(`${this.endpoint}/jobs`, crearEmpleoForm, this.httpheaders.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -47,11 +44,7 @@ export class OfertasempleoService {
   }
 
   updateOferta(id:number, editarEmpleoForm: any) {
-    var headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8'
-    })
-    var options = {headers: headers}
-    return this.http.put<Ofertaempleo>(`${this.endpoint}/jobs/${id}`, editarEmpleoForm, options).pipe(
+    return this.http.put<Ofertaempleo>(`${this.endpoint}/jobs/${id}`, editarEmpleoForm, this.httpheaders.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -59,7 +52,7 @@ export class OfertasempleoService {
   }
 
   deleteOferta(id:number) {
-    return this.http.delete<Ofertaempleo>(`${this.endpoint}/jobs/${id}`).pipe(
+    return this.http.delete<Ofertaempleo>(`${this.endpoint}/jobs/${id}`, this.httpheaders.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -67,7 +60,7 @@ export class OfertasempleoService {
   }
 
   deleteOfertas(id: Array<number>) {
-    return this.http.delete<Ofertaempleo>(`${this.endpoint}/jobs/selected/${id}`).pipe(
+    return this.http.delete<Ofertaempleo>(`${this.endpoint}/jobs/selected/${id}`, this.httpheaders.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -75,11 +68,7 @@ export class OfertasempleoService {
   }
 
   filtrarOfertas(filtroForm: any) {
-    var headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8'
-    })
-    var options = {headers: headers}
-    return this.http.post<Ofertaempleo[]>(`${this.endpoint}/jobs/filter`, filtroForm, options).pipe(
+    return this.http.post<Ofertaempleo[]>(`${this.endpoint}/jobs/filter`, filtroForm, this.httpheaders.createHeadersGeneric()).pipe(
       map( (respuesta:any) => { // Entre paréntesis para poder indicar el tipo
         return respuesta.result;
       })
@@ -88,16 +77,16 @@ export class OfertasempleoService {
 
   /* PROVINCIAS */
   getAllProvinces() {
-    return this.http.get<Provincias[]>(`${this.endpoint}/provinces`);
+    return this.http.get<Provincias[]>(`${this.endpoint}/provinces`, this.httpheaders.createHeadersGeneric());
   }
 
   /* CATEGORÍAS DE EMPLEO */
   getAllJobcategories() {
-    return this.http.get<Jobcategory[]>(`${this.endpoint}/jobcategories`);
+    return this.http.get<Jobcategory[]>(`${this.endpoint}/jobcategories`, this.httpheaders.createHeadersGeneric());
   }
 
   getJobCategory(id: number) {
-    return this.http.get<Apiresponse>(`${this.endpoint}/jobcategories/${id}`).pipe(
+    return this.http.get<Apiresponse>(`${this.endpoint}/jobcategories/${id}`, this.httpheaders.createHeadersGeneric()).pipe(
       map( (respuesta: Apiresponse) => {
         return respuesta.data;
       })
@@ -105,11 +94,7 @@ export class OfertasempleoService {
   }
 
   postJobcategory(categoryForm: any) {
-    var headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8'
-    })
-    var options = {headers: headers}
-    return this.http.post<Jobcategory>(`${this.endpoint}/jobcategories`, categoryForm, options).pipe(
+    return this.http.post<Jobcategory>(`${this.endpoint}/jobcategories`, categoryForm, this.httpheaders.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -117,11 +102,7 @@ export class OfertasempleoService {
   }
 
   updateJobcategory(id:number, categoryForm: any) {
-    var headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8'
-    })
-    var options = {headers: headers}
-    return this.http.put<Jobcategory>(`${this.endpoint}/jobcategories/${id}`, categoryForm, options).pipe(
+    return this.http.put<Jobcategory>(`${this.endpoint}/jobcategories/${id}`, categoryForm, this.httpheaders.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -129,7 +110,7 @@ export class OfertasempleoService {
   }
 
   deleteJobcategories(id: number | Array<number>) {
-    return this.http.delete<Ofertaempleo>(`${this.endpoint}/jobcategories/${id}`).pipe(
+    return this.http.delete<Ofertaempleo>(`${this.endpoint}/jobcategories/${id}`, this.httpheaders.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -137,11 +118,11 @@ export class OfertasempleoService {
   }
 
   getCVsPorOferta(idOferta:number) {
-    return this.http.get<Cv>(`${this.endpoint}/cvs/empleo/${idOferta}`);
+    return this.http.get<Cv>(`${this.endpoint}/cvs/empleo/${idOferta}`, this.httpheaders.createHeadersAdmin());
   }
 
   getCv(id: number) {
-    return this.http.get<Apiresponse>(`${this.endpoint}/cvs/${id}`).pipe(
+    return this.http.get<Apiresponse>(`${this.endpoint}/cvs/${id}`, this.httpheaders.createHeadersAdmin()).pipe(
       map( respuesta => {
         return respuesta.data;
       })
@@ -149,19 +130,11 @@ export class OfertasempleoService {
   }
 
   postCv(jobForm: any) {
-    var headers = new HttpHeaders({
-      'Content-Type': 'multipart/form-data; charset=utf-8'
-    })
-    var options = {headers: headers}
-    return this.http.post<Cv>(`${this.endpoint}/cvs`, jobForm);
+    return this.http.post<Cv>(`${this.endpoint}/cvs`, jobForm); // Si ponemos headers, no se podrá enviar ya que ruta_cv contiene un file, por lo que crearEmpleoForm no sería un JSON
   }
 
   updateCv(id: number, CvForm: any) {
-    var headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8'
-    })
-    var options = {headers: headers}
-    return this.http.put<Cv>(`${this.endpoint}/cvs/${id}`, CvForm, options).pipe(
+    return this.http.put<Cv>(`${this.endpoint}/cvs/${id}`, CvForm, this.httpheaders.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -169,7 +142,7 @@ export class OfertasempleoService {
   }
 
   deleteCv(id: number | Array<number>) {
-    return this.http.delete<Cv>(`${this.endpoint}/cvs/${id}`).pipe(
+    return this.http.delete<Cv>(`${this.endpoint}/cvs/${id}`, this.httpheaders.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })

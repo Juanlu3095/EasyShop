@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 import { Subject, tap, map } from 'rxjs';
-import { CookieService } from 'ngx-cookie-service';
 import { Mensajescontacto } from '../models/mensajescontacto';
+import { HttpheadersService } from './httpheaders.service';
 
 type Apiresponse = { data: Mensajescontacto }; // Ésta es la respuesta que recibimos de la api
 
@@ -15,7 +15,7 @@ export class MensajescontactoService {
   private _refresh$ = new Subject<void>(); // Observable
   public endpoint = environment.ApiEndpoint;
 
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private httpheaders: HttpheadersService) { }
   
   // Obtenemos el Observable
   get refresh$() {
@@ -23,11 +23,11 @@ export class MensajescontactoService {
   }
 
   getAllMensajes() {
-    return this.http.get<Mensajescontacto[]>(`${this.endpoint}/messages`, this.createHeaders());
+    return this.http.get<Mensajescontacto[]>(`${this.endpoint}/messages`, this.httpheaders.createHeadersAdmin());
   }
 
   getMensaje(idMensaje: number) {
-    return this.http.get<Apiresponse>(`${this.endpoint}/messages/${idMensaje}`, this.createHeaders()).pipe(
+    return this.http.get<Apiresponse>(`${this.endpoint}/messages/${idMensaje}`, this.httpheaders.createHeadersAdmin()).pipe(
       map( respuesta => {
         return respuesta.data;
       })
@@ -35,11 +35,7 @@ export class MensajescontactoService {
   }
 
   postMensaje(MensajeForm: any) {
-    var headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8'
-    })
-    var options = {headers: headers}
-    return this.http.post<Mensajescontacto>(`${this.endpoint}/messages`, MensajeForm, options).pipe(
+    return this.http.post<Mensajescontacto>(`${this.endpoint}/messages`, MensajeForm, this.httpheaders.createHeadersGeneric()).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -47,7 +43,7 @@ export class MensajescontactoService {
   }
 
   updateMensaje(idMensaje: number, MensajeForm: any) {
-    return this.http.put<Mensajescontacto>(`${this.endpoint}/messages/${idMensaje}`, MensajeForm, this.createHeaders()).pipe(
+    return this.http.put<Mensajescontacto>(`${this.endpoint}/messages/${idMensaje}`, MensajeForm, this.httpheaders.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -55,7 +51,7 @@ export class MensajescontactoService {
   }
 
   deleteMensaje(idMensaje: number | Array<number>) {
-    return this.http.delete<Mensajescontacto>(`${this.endpoint}/messages/${idMensaje}`, this.createHeaders()).pipe(
+    return this.http.delete<Mensajescontacto>(`${this.endpoint}/messages/${idMensaje}`, this.httpheaders.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -63,19 +59,11 @@ export class MensajescontactoService {
   }
 
   deleteMensajes(idsMensaje: Array<number>) {
-    return this.http.delete<Mensajescontacto[]>(`${this.endpoint}/messages/${idsMensaje}`, this.createHeaders()).pipe(
+    return this.http.delete<Mensajescontacto[]>(`${this.endpoint}/messages/${idsMensaje}`, this.httpheaders.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })
     )
   }
 
-  createHeaders() {
-    return {
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'X-A-T': 'getProtectedData' // Nos permite luego diferenciar las peticiones a interceptar o no
-      })
-    }
-  }
 }

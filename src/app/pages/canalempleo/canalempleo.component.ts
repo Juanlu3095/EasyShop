@@ -16,11 +16,12 @@ import { Provincias } from '../../models/provincias';
 import { FormControl, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ResponsivedesignService } from '../../services/responsivedesign.service';
 import { Subscription } from 'rxjs';
+import {MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-canalempleo',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, MatSelectModule, MatFormFieldModule, MatButton, MatCardModule, MatGridListModule, RouterLink, FormsModule, ReactiveFormsModule],
+  imports: [MatPaginatorModule, HeaderComponent, FooterComponent, MatSelectModule, MatFormFieldModule, MatButton, MatCardModule, MatGridListModule, RouterLink, FormsModule, ReactiveFormsModule],
   templateUrl: './canalempleo.component.html',
   styleUrl: './canalempleo.component.scss'
 })
@@ -72,21 +73,44 @@ export class CanalempleoComponent implements OnInit, OnDestroy{
     this.ofertaempleoservice.getAllOfertas().subscribe({
       next: (respuesta) => {
         this.ofertasempleo = respuesta;
+        this.paginateData(); // Se actualizan los filtros de las páginas para generar el paginador
       },
       error: (error) => {
         console.error(error);
       }
     })
+
   }
 
   ngOnDestroy(): void {
     this.suscripcion.unsubscribe();
   }
 
+  // PAGINACIÓN
+  paginatedData: Ofertaempleo[] = []; // El array que contendrá las ofertas por página seleccionada, se actualiza al cambiar de página con paginateData
+  pageSize = 5; // Número de elementos por página por defecto
+  currentPage = 0; // Usamos esto para el slice de paginateData
+
+  paginateData() {
+    const startIndex = this.currentPage * this.pageSize; // Empezamos en la posicion 0
+    const endIndex = startIndex + this.pageSize; // Marcaría la última posición del array ofertasempleo
+
+    // slice permite excluir del array elementos de un extremo al otro, siendo startIndex el inicio de la página y endIndex el final
+    this.paginatedData = this.ofertasempleo.slice(startIndex, endIndex); 
+  }
+
+  // Se ejecuta cuando cambiamos el numero de elementos por página en mat-paginator
+  onPageChange(event: PageEvent) {
+    this.pageSize = event.pageSize; // las propiedadespageSize y pageIndex las da el tipo PageEvent
+    this.currentPage = event.pageIndex;
+    this.paginateData(); // Se actualizan los filtros de las páginas para generar el paginador
+  }
+
   filtrarEmpleos() {
     this.ofertaempleoservice.filtrarOfertas(this.filtroForm.value).subscribe({
       next: (respuesta) => {
         this.ofertasempleo = respuesta;
+        this.paginateData(); // Se actualizan los filtros de las páginas para generar el paginador
       },
       error: (error) => {
         console.error(error);

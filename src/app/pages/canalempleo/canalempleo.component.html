@@ -11,14 +11,14 @@
                 
                     <form class="filtroForm" [formGroup]="filtroForm" (submit)="filtrarEmpleos()">
                         <select name="provincia" class="form-control provincia" id="provincia" placeholder="Provincia" formControlName="provincia" matNativeControl>
-                            <option value="" disabled selected>Provincia</option>
+                            <option value="" selected>Provincia</option>
                             @for (provincia of provincias; track provincia.id) {
                                 <option value="{{provincia.id}}">{{provincia.nombre}}</option>
                             }
                         </select>
 
                         <select name="categoria" class="form-control categoria" id="categoria" placeholder="Categoría" formControlName="categoria" matNativeControl>
-                            <option value="" disabled selected>Categoría</option>
+                            <option value="" selected>Categoría</option>
                             @for (categoria of categoriasdeempleo; track categoria.id) {
                                 <option value="{{categoria.id}}">{{categoria.nombre}}</option>
                             }
@@ -36,7 +36,15 @@
                 @if (ofertasempleo && ofertasempleo.length > 0) {
                     <mat-grid-list [cols]="colList" [rowHeight]="rowList">
 
-                        @for (oferta of ofertasempleo; track oferta.id) {
+                        <mat-paginator [length]="ofertasempleo.length"
+                            [pageSize]="pageSize"
+                            [pageSizeOptions]="[5, 10, 20, 50]"
+                            aria-label="Select page"
+                            (page)="onPageChange($event)">
+                        </mat-paginator>
+
+
+                        @for (item of paginatedData; track paginatedData) {
                             <mat-grid-tile [colspan]="colItem" [rowspan]="rowItem">
                                 <mat-card appearance="outlined" class="oferta-item">
                                     <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
@@ -44,13 +52,13 @@
                                     <div class="oferta-content">
                                         
                                         <mat-card-header>
-                                            <mat-card-subtitle>{{oferta.jobcategory}}</mat-card-subtitle>
-                                            <mat-card-title>{{oferta.puesto}}</mat-card-title>
-                                            <mat-card-subtitle>{{oferta.province}}</mat-card-subtitle>
+                                            <mat-card-subtitle>{{item.jobcategory}}</mat-card-subtitle>
+                                            <mat-card-title>{{item.puesto}}</mat-card-title>
+                                            <mat-card-subtitle>{{item.province}}</mat-card-subtitle>
                                         </mat-card-header>
                     
                                         <mat-card-footer>
-                                            <button mat-flat-button class="btn-inscribir" routerLink="{{oferta.id}}">Ver oferta</button>
+                                            <button mat-flat-button class="btn-inscribir" routerLink="{{item.id}}">Ver oferta</button>
                                         </mat-card-footer>
                                     </div>
                                     

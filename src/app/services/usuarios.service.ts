@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 import { Usuario } from '../models/usuario';
 import { map, Observable, Subject, tap } from 'rxjs';
 import { Rol } from '../models/rol';
+import { HttpheadersService } from './httpheaders.service';
 
 // Ésta es la respuesta que recibimos de la api
 type Apiresponse = {
@@ -20,7 +21,7 @@ export class UsuariosService {
   public endpoint = environment.ApiEndpoint;
   private _refresh$ = new Subject<void>(); // Observable
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private httpheaders: HttpheadersService) { }
   
   // Obtenemos el Observable
   get refresh$() {
@@ -28,15 +29,15 @@ export class UsuariosService {
   }
 
   getAllUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(`${this.endpoint}/usuario`);
+    return this.http.get<Usuario[]>(`${this.endpoint}/usuario`, this.httpheaders.createHeadersAdmin());
   }
 
   getAllRoles(): Observable<Rol[]> {
-    return this.http.get<Rol[]>(`${this.endpoint}/roles`);
+    return this.http.get<Rol[]>(`${this.endpoint}/roles`, this.httpheaders.createHeadersAdmin());
   }
 
   getUsuario(idUsuario: number): Observable<Usuario> {
-    return this.http.get<Apiresponse>(`${this.endpoint}/usuario/${idUsuario}`).pipe(
+    return this.http.get<Apiresponse>(`${this.endpoint}/usuario/${idUsuario}`, this.httpheaders.createHeadersAdmin()).pipe( 
       map( respuesta => {
         return respuesta.data;
       })
@@ -44,11 +45,7 @@ export class UsuariosService {
   }
 
   postUsuario(crearUsuarioForm: any) {
-    var headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8'
-    })
-    var options = {headers: headers}
-    return this.http.post<Usuario>(`${this.endpoint}/usuario`, crearUsuarioForm, options).pipe(
+    return this.http.post<Usuario>(`${this.endpoint}/usuario`, crearUsuarioForm, this.httpheaders.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -56,11 +53,7 @@ export class UsuariosService {
   }
 
   updateUsuario(id: number, editarUsuarioForm: any) {
-    var headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8'
-    })
-    var options = {headers: headers}
-    return this.http.put<Usuario>(`${this.endpoint}/usuario/${id}`, editarUsuarioForm, options).pipe(
+    return this.http.put<Usuario>(`${this.endpoint}/usuario/${id}`, editarUsuarioForm, this.httpheaders.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -68,7 +61,7 @@ export class UsuariosService {
   }
 
   deleteUsuario(id: number | Array<number>) {
-    return this.http.delete<Usuario>(`${this.endpoint}/usuario/${id}`).pipe(
+    return this.http.delete<Usuario>(`${this.endpoint}/usuario/${id}`, this.httpheaders.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })
