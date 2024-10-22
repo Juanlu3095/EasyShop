@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Image } from '../models/image';
 import { environment } from '../../environments/environment.development';
 import { Subject, tap } from 'rxjs';
@@ -31,7 +31,7 @@ export class ImagenService {
   }
 
   postImage(ImageForm: any) {
-    return this.http.post<Image>(`${this.endpoint}/image`, ImageForm, this.httpheaders.createHeadersAdmin()).pipe(
+    return this.http.post<Image>(`${this.endpoint}/image`, ImageForm, this.httpheaders.createHeadersAdminAnyObject()).pipe(
       tap(() => {
         this.refresh$.next()
       })

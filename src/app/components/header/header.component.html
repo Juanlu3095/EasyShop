@@ -37,13 +37,13 @@
 
     <div class="container-bottom">
         <a class="category-item" href="/productos">Ver todo</a>
-        <a class="category-item" href="/productos/ordenadores">Ordenadores</a>
-        <a class="category-item" href="/productos/tablets">Tablets</a>
-        <a class="category-item" href="/productos/telefonos">Teléfonos</a>
-        <a class="category-item" href="/productos/perifericos">Periféricos</a>
-        <a class="category-item" href="/productos/televisiones">Televisiones</a>
-        <a class="category-item" href="/productos/audio">Audio</a>
-        <a class="category-item" href="/productos/camaras">Cámaras</a>
+        @if (categorias) {
+
+            @for (item of categorias; track item.Id) {
+                <a class="category-item" href="/productos/{{ item.Slug }}">{{ item.Nombre }}</a>
+            }
+        }
+        
     </div>
 
 </header>

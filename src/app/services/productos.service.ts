@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment.development';
 import { Subject, tap, map } from 'rxjs';
 import { Productcategory } from '../models/productcategory';
 import { Marca } from '../models/marca';
+import { Product } from '../models/product';
 
 type Apiresponse = { data: any }; // Ésta es la respuesta que recibimos de la api
 
@@ -65,7 +66,7 @@ export class ProductosService {
 
   /* MARCAS */
   getMarcas() {
-    return this.http.get<Apiresponse>(`${this.endpoint}/brand`);
+    return this.http.get<Marca[]>(`${this.endpoint}/brand`);
   }
 
   getMarca(id: number) {
@@ -109,4 +110,47 @@ export class ProductosService {
   }
 
   /* PRODUCTOS */
+  getProductos() {
+    return this.http.get<Apiresponse>(`${this.endpoint}/product`);
+  }
+
+  getProducto(id: number) {
+    return this.http.get<any>(`${this.endpoint}/product/${id}`).pipe(
+      map( (respuesta) => {
+        return respuesta.data
+      })
+    );
+  }
+
+  postProducto(postProductoForm: any) {
+    var headers = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8'
+    })
+    var options = {headers: headers}
+    return this.http.post<Apiresponse>(`${this.endpoint}/product`, postProductoForm, options).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
+  }
+
+  updateProducto(id: number, editarProductoForm: any) {
+    var headers = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8'
+    })
+    var options = {headers: headers}
+    return this.http.put<Product>(`${this.endpoint}/product/${id}`, editarProductoForm, options).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
+  }
+
+  deleteProducto(id: number | Array<number>) {
+    return this.http.delete<Product>(`${this.endpoint}/product/${id}`).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
+  }
 }

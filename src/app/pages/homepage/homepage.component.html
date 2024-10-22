@@ -126,60 +126,24 @@
       <div class="categorias-list">
 
         <mat-card class="categoria-card">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+          <img mat-card-image src="../../../assets/img/todo_categorias.jpg" alt="Todas las categorías" class="d-block w-60">
           <mat-card-header>
             <mat-card-title><a routerLink="/productos">Ver todo</a></mat-card-title>
           </mat-card-header>
         </mat-card>
 
-        <mat-card class="categoria-card">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-          <mat-card-header>
-            <mat-card-title><a routerLink="/productos/ordenadores">Ordenadores</a></mat-card-title>
-          </mat-card-header>
-        </mat-card>
+        @if(categorias){
 
-        <mat-card class="categoria-card">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-          <mat-card-header>
-            <mat-card-title><a routerLink="/productos/tablets">Tablets</a></mat-card-title>
-          </mat-card-header>
-        </mat-card>
+          @for (item of categorias; track item.Id) {
+            <mat-card class="categoria-card">
+              <img mat-card-image src="{{ fileEndpoint + item.Imagen[0].Ruta_archivo }}" alt="{{ item.Imagen[0].Alt }}">
+              <mat-card-header>
+                <mat-card-title><a routerLink="/productos/{{ item.Slug }}">{{ item.Nombre }}</a></mat-card-title>
+              </mat-card-header>
+            </mat-card>
+          }
 
-        <mat-card class="categoria-card">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-          <mat-card-header>
-            <mat-card-title><a routerLink="/productos/telefonos">Teléfonos</a></mat-card-title>
-          </mat-card-header>
-        </mat-card>
-
-        <mat-card class="categoria-card">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-          <mat-card-header>
-            <mat-card-title><a routerLink="/productos/perifericos">Periféricos</a></mat-card-title>
-          </mat-card-header>
-        </mat-card>
-
-        <mat-card class="categoria-card">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-          <mat-card-header>
-            <mat-card-title><a routerLink="/productos/televisiones">Televisiones</a></mat-card-title>
-          </mat-card-header>
-        </mat-card>
-
-        <mat-card class="categoria-card">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-          <mat-card-header>
-            <mat-card-title><a routerLink="/productos/audio">Audio</a></mat-card-title>
-          </mat-card-header>
-        </mat-card>
-
-        <mat-card class="categoria-card">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-          <mat-card-header>
-            <mat-card-title><a routerLink="/productos/camaras">Camaras</a></mat-card-title>
-          </mat-card-header>
-        </mat-card>
+        }
 
       </div>
     </section>
@@ -189,25 +153,20 @@
       <h2 class="marcas-title">Marcas</h2>
 
       <div class="marcas-list">
-        <mat-card class="marca-card">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-        </mat-card>
 
-        <mat-card class="marca-card">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-        </mat-card>
+        @if(marcas) {
 
-        <mat-card class="marca-card">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-        </mat-card>
+          @for (item of marcas; track item.Id) {
+            <mat-card class="marca-card">
+              <img mat-card-image src="{{ fileEndpoint + item.Imagen[0].Ruta_archivo }}" alt="{{ item.Imagen[0].Alt }}" loading="lazy">
+            </mat-card>
+          }
 
-        <mat-card class="marca-card">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-        </mat-card>
+        } @else {
+          <h3>No hay marcas a mostrar.</h3>
+        }
+        
 
-        <mat-card class="marca-card">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-        </mat-card>
       </div>
     </section>
 

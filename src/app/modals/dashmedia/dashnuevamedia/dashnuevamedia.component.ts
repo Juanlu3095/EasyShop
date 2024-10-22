@@ -42,6 +42,7 @@ export class DashnuevamediaComponent {
         const file = this.fileformData.get('archivo') as File;
         if (file) {
           datos.append('archivo', file); // "archivo" viene del form html
+          
         } else {
           console.error('No se ha seleccionado ningún archivo.');
           return; // No continuar si no hay archivo
@@ -54,6 +55,8 @@ export class DashnuevamediaComponent {
             })
           },
           error: (error) => {
+            console.error(error);
+            
             this._snackBar.open('El archivo no se ha podido procesar.', 'Aceptar', {
               duration: 3000
             })

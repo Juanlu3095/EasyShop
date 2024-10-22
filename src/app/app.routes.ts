@@ -41,7 +41,15 @@ export const routes: Routes = [
             },
             {
                 path: 'productos',
-                loadComponent: () => import('./pages/productospage/productospage.component').then((m) => m.ProductospageComponent),
+                loadComponent: () => import('./pages/dashboardproducts/dashboardproducts.component').then((m) => m.DashboardproductsComponent),
+            },
+            {
+                path: 'productos/:idproducto',
+                loadComponent: () => import('./pages/dashboardproductseditar/dashboardproductseditar.component').then((m) => m.DashboardproductseditarComponent),
+            },
+            {
+                path: 'nuevoproducto',
+                loadComponent: () => import('./pages/dashboardproductsnuevo/dashboardproductsnuevo.component').then((m) => m.DashboardproductsnuevoComponent),
             },
             {
                 path: 'categoriasproducto',

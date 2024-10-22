@@ -9,5 +9,6 @@ export interface Image {
     Tamano: string,
     Dimensiones: string,
     Tipo: string,
-    Nombre_archivo: string
+    Nombre_archivo: string,
+    Estado: string
 }

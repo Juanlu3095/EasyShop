@@ -7,6 +7,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink, Router, NavigationEnd } from '@angular/router';
 import { NewsletterService } from '../../services/newsletter.service';
+import { ProductosService } from '../../services/productos.service';
+import { Marca } from '../../models/marca';
+import { environment } from '../../../environments/environment.development';
+import { NgOptimizedImage } from '@angular/common';
+import { Productcategory } from '../../models/productcategory';
 
 @Component({
   selector: 'app-homepage',
@@ -20,7 +25,11 @@ export class HomepageComponent implements OnInit{
   enviando:boolean = false;
   emailguardado: boolean = false;
 
-  constructor(private router: Router, private newsletterService: NewsletterService){}
+  marcas: Marca[];
+  categorias: Productcategory[];
+  fileEndpoint = environment.FilesEndpoint;
+
+  constructor(private router: Router, private newsletterService: NewsletterService, private productService: ProductosService){}
 
   newsletterForm = new FormGroup({
     email: new FormControl('', Validators.compose([Validators.email, Validators.required])) // el nombre de formcontrol debe ser igual que el de la base de datos
@@ -51,5 +60,30 @@ export class HomepageComponent implements OnInit{
         window.scrollTo(0, 0); // Scroll to top on navigation end
       }
     });
+
+    this.getBrands();
+    this.getProductcategories();
+  }
+
+  getBrands() {
+    this.productService.getMarcas().subscribe({
+      next: (respuesta) => {
+        this.marcas = respuesta;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
+  }
+
+  getProductcategories() {
+    this.productService.getCategorias().subscribe({
+      next: (respuesta) => {
+        this.categorias = respuesta.data;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
   }
 }

@@ -29,7 +29,7 @@ export class DashboardmarcasComponent implements OnInit, OnDestroy{
   @ViewChild('contentEliminar') modalEliminar!: TemplateRef<HTMLElement>; // El contenido a mostrar en el modal, opcional
   @ViewChild('contentEliminarSeleccion') modalEliminarSeleccion!: TemplateRef<HTMLElement>; 
   suscripcion: Subscription;
-  marcas: any; // El array de marcas que se añade a la tabla
+  marcas: Marca[]; // El array de marcas que se añade a la tabla
   columns = ['Nombre',]; // Columnas que rellenamos los datos con la api
   displayedColumns = ['select',...this.columns, 'acciones']; // Columnas que vamos a mostrar, que incluyen p.ej. checkbox y acciones
   imagenElegida: {id: number, nombre: string}; // Para la selección de la imagen

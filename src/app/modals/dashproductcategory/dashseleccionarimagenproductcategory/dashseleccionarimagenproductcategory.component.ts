@@ -23,7 +23,7 @@ export class DashseleccionarimagenproductcategoryComponent implements OnInit{
   readonly imagenSeleccionada = signal(this.data.imagenSeleccionada);
 
   columnImages = ['Archivo'];
-  columns = ['Nombre']; // Columnas que rellenamos los datos con la api
+  columns = ['Nombre', 'Estado']; // Columnas que rellenamos los datos con la api
   displayedColumns = [...this.columnImages,...this.columns, 'acciones']; // Columnas que vamos a mostrar, que incluyen p.ej. checkbox y acciones
   datos: Image[]; // Los datos que insertamos en la tabla HTML
 
@@ -32,7 +32,7 @@ export class DashseleccionarimagenproductcategoryComponent implements OnInit{
     {id: 1, nombre: 'Seleccionar', class: '', accion: (id:number) => this.seleccionarImagen(id) },
   ]
 
-  constructor(private imagenService: ImagenService, @Inject(MAT_DIALOG_DATA) public data: {imagenSeleccionada: {id: number, nombre: string}}) {}
+  constructor(private imagenService: ImagenService, @Inject(MAT_DIALOG_DATA) public data: {imagenSeleccionada: {id: number, nombre: string, ruta: File}}) {}
 
   ngOnInit(): void {
     this.getImages();
@@ -53,7 +53,7 @@ export class DashseleccionarimagenproductcategoryComponent implements OnInit{
     const imagen = this.datos.find(({ Id }) => Id === id); // Busca en el array de datos el objeto con la id indicada como parámetro (id: number)
     
     if (imagen) {
-      this.imagenSeleccionada.set({ id: imagen.Id, nombre: imagen.Nombre }); // Guarda la imagen seleccionada en la signal 
+      this.imagenSeleccionada.set({ id: imagen.Id, nombre: imagen.Nombre, ruta: imagen.Archivo }); // Guarda la imagen seleccionada en la signal 
     }
   
   }
