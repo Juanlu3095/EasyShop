@@ -57,7 +57,13 @@
           @for(novedad of novedades; track novedad.Id) {
 
             <mat-card class="superventas-card" appearance="outlined">
-              <img mat-card-image src="{{ fileEndpoint + novedad.Imagen[0].Ruta_archivo }}" alt="{{ novedad.Imagen[0].Alt }}">
+              @if(novedad.Marca.length > 0) {
+                <img mat-card-image src="{{ fileEndpoint + novedad.Imagen[0].Ruta_archivo }}" alt="{{ novedad.Imagen[0].Alt }}">
+
+              } @else {
+
+                <img mat-card-image src="../../../assets/img/no_category.png" alt="sin imagen">
+              }
               <mat-card-header>
                 <mat-card-title><a routerLink="/producto"> {{ novedad.Nombre}}</a></mat-card-title>
                 <mat-card-subtitle> {{ novedad.Precio_euros }}€</mat-card-subtitle>
@@ -99,7 +105,13 @@
 
           @for (item of categorias; track item.Id) {
             <mat-card class="categoria-card">
-              <img mat-card-image src="{{ fileEndpoint + item.Imagen[0].Ruta_archivo }}" alt="{{ item.Imagen[0].Alt }}">
+
+              @if (item.Imagen.length > 0) {
+                <img mat-card-image src="{{ fileEndpoint + item.Imagen[0].Ruta_archivo }}" alt="{{ item.Imagen[0].Alt }}">
+
+              } @else {
+                <img mat-card-image src="../../../assets/img/no_category.png" alt="sin imagen">
+              }
               <mat-card-header>
                 <mat-card-title><a routerLink="/productos/{{ item.Slug }}">{{ item.Nombre }}</a></mat-card-title>
               </mat-card-header>
@@ -125,7 +137,14 @@
 
           @for (item of marcas; track item.Id) {
             <mat-card class="marca-card">
-              <img mat-card-image src="{{ fileEndpoint + item.Imagen[0].Ruta_archivo }}" alt="{{ item.Imagen[0].Alt }}" loading="lazy">
+
+              @if(item.Imagen.length > 0) {
+                <img mat-card-image src="{{ fileEndpoint + item.Imagen[0].Ruta_archivo }}" alt="{{ item.Imagen[0].Alt }}" loading="lazy">
+
+              } @else {
+
+                <img mat-card-image src="../../../assets/img/no_category.png" alt="sin imagen">
+              }
             </mat-card>
           }
 
