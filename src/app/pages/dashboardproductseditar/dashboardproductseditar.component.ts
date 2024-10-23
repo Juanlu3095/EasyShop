@@ -12,7 +12,7 @@ import { environment } from '../../../environments/environment.development';
 import { Productcategory } from '../../models/productcategory';
 import { Marca } from '../../models/marca';
 import { ProductosService } from '../../services/productos.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Product } from '../../models/product';
 import { Subscription } from 'rxjs';
 
@@ -82,12 +82,14 @@ export class DashboardproductseditarComponent implements OnInit, OnDestroy{
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
         this.imagenSeleccionada.set(result); // Asignamos el valor a imagenSeleccionada cuando se cierra la ventana modal, tanto nombre como id
-        this.imagenElegida = result;
-        console.log(result);
+        if(result != '') { // Result puede volverse vacío si damos al botón de 'cancelar'
+          this.imagenElegida = result;
+        }
+        console.log('resultado:', result);
         this.editarproductoForm.patchValue({
           imagen_id: this.imagenElegida.id
         })
-      }
+      } 
     });
   }
 

@@ -114,6 +114,11 @@ export class ProductosService {
     return this.http.get<Apiresponse>(`${this.endpoint}/product`);
   }
 
+  // Nos trae los últimos 5 productos publicados
+  getProductosUltimasNovedades() {
+    return this.http.get<Apiresponse>(`${this.endpoint}/novedades`);
+  }
+
   getProducto(id: number) {
     return this.http.get<any>(`${this.endpoint}/product/${id}`).pipe(
       map( (respuesta) => {

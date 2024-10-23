@@ -48,69 +48,32 @@
 
     <!-- LOS MÁS VENDIDOS -->
     <section class="superventas espacioResponsive">
-      <h2 class="superventas-title">Los más vendidos</h2>
+      <h2 class="superventas-title">Últimas novedades</h2>
 
       <div class="superventas-list">
 
-        <mat-card class="superventas-card" appearance="outlined">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-          <mat-card-header>
-            <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
-            <mat-card-subtitle>150€</mat-card-subtitle>
-          </mat-card-header>
-          <button class="btn-addtocart">
-            <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-            <span>Añadir</span>
-          </button>
-        </mat-card>
+        @if(novedades) {
 
-        <mat-card class="superventas-card" appearance="outlined">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-          <mat-card-header>
-            <mat-card-title>Shiba Inu</mat-card-title>
-            <mat-card-subtitle>150€</mat-card-subtitle>
-          </mat-card-header>
-          <button class="btn-addtocart">
-            <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-            <span>Añadir</span>
-          </button>
-        </mat-card>
+          @for(novedad of novedades; track novedad.Id) {
 
-        <mat-card class="superventas-card" appearance="outlined">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-          <mat-card-header>
-            <mat-card-title>Shiba Inu</mat-card-title>
-            <mat-card-subtitle>150€</mat-card-subtitle>
-          </mat-card-header>
-          <button class="btn-addtocart">
-            <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-            <span>Añadir</span>
-          </button>
-        </mat-card>
+            <mat-card class="superventas-card" appearance="outlined">
+              <img mat-card-image src="{{ fileEndpoint + novedad.Imagen[0].Ruta_archivo }}" alt="{{ novedad.Imagen[0].Alt }}">
+              <mat-card-header>
+                <mat-card-title><a routerLink="/producto"> {{ novedad.Nombre}}</a></mat-card-title>
+                <mat-card-subtitle> {{ novedad.Precio_euros }}€</mat-card-subtitle>
+              </mat-card-header>
+              <button class="btn-addtocart">
+                <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
+                <span>Añadir</span>
+              </button>
+            </mat-card>
+          }
 
-        <mat-card class="superventas-card" appearance="outlined">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-          <mat-card-header>
-            <mat-card-title>Shiba Inu</mat-card-title>
-            <mat-card-subtitle>150€</mat-card-subtitle>
-          </mat-card-header>
-          <button class="btn-addtocart">
-            <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-            <span>Añadir</span>
-          </button>
-        </mat-card>
+        } @else {
 
-        <mat-card class="superventas-card" appearance="outlined">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-          <mat-card-header>
-            <mat-card-title>Shiba Inu</mat-card-title>
-            <mat-card-subtitle>150€</mat-card-subtitle>
-          </mat-card-header>
-          <button class="btn-addtocart">
-            <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-            <span>Añadir</span>
-          </button>
-        </mat-card>
+          <h3>No hay novedades a mostrar.</h3>
+
+        }
       </div>
       <!-- ¿Esto es realmente necesario? -->
       <div class="btn-more-superventas">
@@ -143,6 +106,10 @@
             </mat-card>
           }
 
+        } @else {
+
+          <h3>No hay categorías a mostrar.</h3>
+          
         }
 
       </div>

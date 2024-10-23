@@ -12,6 +12,7 @@ import { Marca } from '../../models/marca';
 import { environment } from '../../../environments/environment.development';
 import { NgOptimizedImage } from '@angular/common';
 import { Productcategory } from '../../models/productcategory';
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-homepage',
@@ -27,6 +28,7 @@ export class HomepageComponent implements OnInit{
 
   marcas: Marca[];
   categorias: Productcategory[];
+  novedades: Product[];
   fileEndpoint = environment.FilesEndpoint;
 
   constructor(private router: Router, private newsletterService: NewsletterService, private productService: ProductosService){}
@@ -61,8 +63,21 @@ export class HomepageComponent implements OnInit{
       }
     });
 
+    this.getNovedades();
     this.getBrands();
     this.getProductcategories();
+  }
+
+  getNovedades() {
+    this.productService.getProductosUltimasNovedades().subscribe({
+      next: (respuesta) => {
+        console.log(respuesta);
+        this.novedades = respuesta.data;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
   }
 
   getBrands() {

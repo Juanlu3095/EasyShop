@@ -7,6 +7,11 @@ mat-icon{
     overflow: visible;
 }
 
+mat-card-title a{
+    text-decoration: none;
+    color: black;
+}
+
 // DESKTOP
 @media screen and (min-width:1367px){ 
     /* CAROUSEL */
