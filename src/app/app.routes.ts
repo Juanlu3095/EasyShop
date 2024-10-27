@@ -102,13 +102,14 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/listaproductos/listaproductos.component').then((m) => m.ListaproductosComponent),
         children: [
             {
-                path: ':categoria',
+                path: 'categoria/:categoria',
                 loadComponent: () => import('./pages/listaproductos/listaproductos.component').then((m) => m.ListaproductosComponent),
             },
             {
-                path: ':categoria/:preciomin/:preciomax',
+                path: 'marca/:marca',
                 loadComponent: () => import('./pages/listaproductos/listaproductos.component').then((m) => m.ListaproductosComponent),
             },
+            
         ]
     },
     {
@@ -116,7 +117,7 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/resultadosbusqueda/resultadosbusqueda.component').then((m) => m.ResultadosbusquedaComponent),
     },
     {
-        path: 'producto',
+        path: 'producto/:idProducto',
         loadComponent: () => import('./pages/fichaproducto/fichaproducto.component').then((m) => m.FichaproductoComponent),
     },
     {

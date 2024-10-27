@@ -5,6 +5,8 @@
     <section class="lista-productos">
         @if (categoria) {
             <h1>{{ categoria | titlecase }}</h1>
+        } @else if (marca){
+            <h1>{{ marca.Nombre }}</h1>
         } @else {
             <h1>Todos los productos</h1>
         }
@@ -13,104 +15,83 @@
 
             <!-- FILTROS -->
             <div class="lista-productos-column filtros">
-                <h2>Filtrar por</h2>
+                <div class="lista-encabezado">
+                  <h2>Filtros</h2>
+                  <button mat-stroked-button (click)="cambiarFiltros()" class="btnfiltros">Ver/Mostrar filtros</button>
+                </div>
                 <mat-divider></mat-divider>
-                
-                <h3>Categorías</h3>
-                <mat-list role="list" class="categoria-list">
-                    <mat-list-item role="listitem"><a href="/productos">Todas</a></mat-list-item>
-                    <mat-list-item role="listitem"><a href="/productos/categoria/ordenadores">Ordenadores</a></mat-list-item>
-                    <mat-list-item role="listitem"><a href="/productos/categoria/tablets">Tablets</a></mat-list-item>
-                    <mat-list-item role="listitem"><a href="/productos/categoria/telefonos">Teléfonos</a></mat-list-item>
-                    <mat-list-item role="listitem"><a href="/productos/categoria/perifericos">Periféricos</a></mat-list-item>
-                    <mat-list-item role="listitem"><a href="/productos//categoria/televisiones">Televisiones</a></mat-list-item>
-                    <mat-list-item role="listitem"><a href="/productos/categoria/audio">Audio</a></mat-list-item>
-                    <mat-list-item role="listitem"><a href="/productos/categoria/camaras">Cámaras</a></mat-list-item>
-                </mat-list>
+                <br><br>
+                <form class="filtroProductos" #formFiltro [formGroup]="filtroForm">
 
-                <h3>Precio</h3>
+                  <h3>Categoría:</h3>
+                    <select name="categoria" class="form-control categoria" id="categoria" placeholder="Categoria" formControlName="categoria" matNativeControl>
+                      <option value="" selected>Categoria</option>
+                      @for (categoria of categorias; track categoria.Id) {
+                          <option value="{{ categoria.Id }}">{{ categoria.Nombre }}</option>
+                      }
+                    </select>
 
-                <p>Precio mínimo</p>
+                  <h3>Marca:</h3>
+                    <select name="marca" class="form-control marca" id="marca" placeholder="Marca" formControlName="marca" matNativeControl>
+                      <option value="" selected>Marca</option>
+                      @for (marca of marcas; track marca.Id) {
+                          <option value="{{ marca.Id }}">{{ marca.Nombre}}</option>
+                      }
+                    </select>
 
-                <p>Precio máximo</p>
+                  <h3>Precio mínimo (€):</h3>
+                    <input type="number" class="form-control preciomin" id="preciomin" placeholder="" formControlName="preciomin">
+
+                  <h3>Precio máximo (€):</h3>
+                    <input type="number" class="form-control preciomax" id="preciomax" placeholder="" formControlName="preciomax">
+
+                  <button mat-flat-button type="submit" class="submit" (click)="filtrar()">Filtrar</button>
+
+                </form>
 
             </div>
 
             <!-- LISTADO DE PRODUCTOS -->
             <div class="lista-productos-column listado">
+
+              <mat-paginator [length]="productos.length"
+                             [pageSize]="pageSize"
+                             [pageSizeOptions]="[5, 10, 20, 50]"
+                             aria-label="Select page"
+                             (page)="onPageChange($event)">
+              </mat-paginator>
+
                 <div class="productos-list">
 
-                    <mat-card class="producto-card" appearance="outlined">
-                        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                  @if(productos && productos.length > 0) {
+
+                    @for(producto of paginatedData; track producto.Id) {
+
+                      <mat-card class="producto-card" appearance="outlined">
+                        <img mat-card-image src="{{ endpointFile + producto.Imagen[0].Ruta_archivo}}" alt=" {{ producto.Imagen[0].Alt }}">
                         <mat-card-header>
-                          <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
-                          <mat-card-subtitle>150€</mat-card-subtitle>
+                          <mat-card-title><a routerLink="/producto/{{ producto.Id }}">{{ producto.Nombre }}</a></mat-card-title>
+                          <mat-card-subtitle>
+                            @if(producto.Precio_rebajado_euros !== null) {
+                              <span class="precio">{{ producto.Precio_rebajado_euros }}€   </span>
+                              <span class="precio_rebajado"><del>{{ producto.Precio_euros }}</del>€</span>
+
+                            } @else {
+                              <span class="precio">{{ producto.Precio_euros }}€</span>
+                            }
+                          </mat-card-subtitle>
                         </mat-card-header>
                         <button class="btn-addtocart">
                           <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
                           <span>Añadir</span>
                         </button>
                     </mat-card>
+                    }
+                    
+                  } @else {
 
-                    <mat-card class="producto-card" appearance="outlined">
-                        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-                        <mat-card-header>
-                          <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
-                          <mat-card-subtitle>150€</mat-card-subtitle>
-                        </mat-card-header>
-                        <button class="btn-addtocart">
-                          <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-                          <span>Añadir</span>
-                        </button>
-                    </mat-card>
-
-                    <mat-card class="producto-card" appearance="outlined">
-                        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-                        <mat-card-header>
-                          <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
-                          <mat-card-subtitle>150€</mat-card-subtitle>
-                        </mat-card-header>
-                        <button class="btn-addtocart">
-                          <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-                          <span>Añadir</span>
-                        </button>
-                    </mat-card>
-
-                    <mat-card class="producto-card" appearance="outlined">
-                        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-                        <mat-card-header>
-                          <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
-                          <mat-card-subtitle>150€</mat-card-subtitle>
-                        </mat-card-header>
-                        <button class="btn-addtocart">
-                          <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-                          <span>Añadir</span>
-                        </button>
-                    </mat-card>
-
-                    <mat-card class="producto-card" appearance="outlined">
-                        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-                        <mat-card-header>
-                          <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
-                          <mat-card-subtitle>150€</mat-card-subtitle>
-                        </mat-card-header>
-                        <button class="btn-addtocart">
-                          <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-                          <span>Añadir</span>
-                        </button>
-                    </mat-card>
-
-                    <mat-card class="producto-card" appearance="outlined">
-                      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-                      <mat-card-header>
-                        <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
-                        <mat-card-subtitle>150€</mat-card-subtitle>
-                      </mat-card-header>
-                      <button class="btn-addtocart">
-                        <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-                        <span>Añadir</span>
-                      </button>
-                  </mat-card>
+                    <h3>No hay productos a mostrar.</h3>
+                  }
 
                 </div>
             </div>

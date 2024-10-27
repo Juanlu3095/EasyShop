@@ -92,7 +92,7 @@ export class CanalempleoComponent implements OnInit, OnDestroy{
   currentPage = 0; // Usamos esto para el slice de paginateData
 
   paginateData() {
-    const startIndex = this.currentPage * this.pageSize; // Empezamos en la posicion 0
+    const startIndex = this.currentPage * this.pageSize; // La paginación empieza en la posicion 0
     const endIndex = startIndex + this.pageSize; // Marcaría la última posición del array ofertasempleo
 
     // slice permite excluir del array elementos de un extremo al otro, siendo startIndex el inicio de la página y endIndex el final

@@ -40,7 +40,7 @@
         @if (categorias) {
 
             @for (item of categorias; track item.Id) {
-                <a class="category-item" href="/productos/{{ item.Slug }}">{{ item.Nombre }}</a>
+                <a class="category-item" href="/productos/categoria/{{ item.Slug }}">{{ item.Nombre }}</a>
             }
         }
         
@@ -75,27 +75,17 @@
             <button mat-menu-item>
                 <a href="/productos">Ver todo</a>
             </button>
-            <button mat-menu-item>
-                <a href="/productos/ordenadores">Ordenadores</a>
-            </button>
-            <button mat-menu-item>
-                <a href="/productos/tablets">Tablets</a>
-            </button>
-            <button mat-menu-item>
-                <a href="/productos/telefonos">Teléfonos</a>
-            </button>
-            <button mat-menu-item>
-                <a href="/productos/perifericos">Periféricos</a>
-            </button>
-            <button mat-menu-item>
-                <a href="/productos/televisiones">Televisiones</a>
-            </button>
-            <button mat-menu-item>
-                <a href="/productos/audio">Audio</a>
-            </button>
-            <button mat-menu-item>
-                <a href="/productos/camaras">Cámaras</a>
-            </button>
+
+            @if (categorias) {
+
+                @for(categoria of categorias; track categoria.Id) {
+
+                    <button mat-menu-item>
+                        <a href="/productos/categoria/{{ categoria.Slug }}">{{ categoria.Nombre }}</a>
+                    </button>
+                }
+                
+            }
             <button mat-menu-item>
                 <a href="/nosotros">Nosotros</a>
             </button>

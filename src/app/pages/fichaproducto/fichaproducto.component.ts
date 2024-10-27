@@ -5,8 +5,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { RouterLink } from '@angular/router';
+import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { ProductosService } from '../../services/productos.service';
+import { Product } from '../../models/product';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-fichaproducto',
@@ -19,11 +22,53 @@ export class FichaproductoComponent implements OnInit{
 
   // Esta variable sería la cantidad del producto que viene de la base de datos
   quantity:number
+  idProducto: number;
+  producto: Product;
+  productosRelacionados: Product[] = [];
+  endPointFile = environment.FilesEndpoint;
 
-  constructor(private title: Title) {}
+  constructor(private title: Title, private productService: ProductosService, private activatedRoute: ActivatedRoute, private route: Router) {}
 
   ngOnInit(): void {
-    // Habrá que obtener el nombre del producto desde la api directamente
-    this.title.setTitle('Ficha de producto');
+    this.idProducto = this.activatedRoute.snapshot.params['idProducto'];
+    this.getProducto();
+    
+  }
+
+  getProducto() {
+    this.productService.getProducto(this.idProducto).subscribe({
+      next: (respuesta) => {
+        this.producto = respuesta;
+
+        // Habrá que obtener el nombre del producto desde la api directamente
+        this.title.setTitle(`${this.producto.Nombre} < EasyShop`);
+        this.getProductosRelacionados();
+      },
+      error: (error) => {
+        if(error.status == 404) {
+          this.route.navigate(['/notfound']); // Si el producto no existe, nos lleva a la página 404
+        } else {
+          console.error('Ha ocurrido un error');
+        }
+        
+      }
+    })
+  }
+
+  // Obtenemos productos relacionados: tendrán la misma categoría que el producto principal, pero se excluye el mismo
+  getProductosRelacionados() {
+    let data = {
+      categoria_id: this.producto.Categoria_id,
+      producto_id: this.producto.Id
+    }
+    this.productService.getRelatedProducts(data).subscribe({
+      next: (respuesta) => {
+        console.log(respuesta);
+        this.productosRelacionados = respuesta.data;
+      },
+      error: (error) => {
+        console.error(error)
+      }
+    })
   }
 }

@@ -7,9 +7,21 @@ mat-icon{
     overflow: visible;
 }
 
+.superventas-card{
+    cursor: pointer;
+}
+
 mat-card-title a{
     text-decoration: none;
     color: black;
+}
+
+.precio_tachado{
+    color: var(--orangered);
+}
+
+.marca-card img{
+    cursor: pointer;
 }
 
 // DESKTOP

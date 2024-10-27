@@ -3,47 +3,63 @@
 
 <main>
     <section class="fichaproducto">
-        <div class="fichaproducto-container">
-            <div class="fichaproducto-col">
-                <mat-card class="producto-img">
-                    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-                </mat-card>
-            </div>
-            <div class="fichaproducto-col">
-                <h1 class="titulo-producto">Perro bonito Mastodonte</h1>
-                <span class="precio">150€</span>
-                <br><br>
-                <form>
-                    <label for="cantidad" class="form-label">Cantidad:</label>
-                    <input type="number" class="form-control" id="cantidad" min="1" value="{{ quantity || 1}}" required>
-                    <button mat-stroked-button type="submit" class="submit addtocart" >Agregar al carrito</button>
-                    <button mat-mini-fab class="btn-fav">
-                        <mat-icon aria-hidden="false">favorite</mat-icon>
-                    </button>
+
+        @if(producto) {
+            
+            <div class="fichaproducto-container">
+                <div class="fichaproducto-col">
+                    <mat-card class="producto-img">
+                        <img mat-card-image src="{{ endPointFile + producto.Imagen[0].Ruta_archivo }}" alt="{{ producto.Imagen[0].Alt }}">
+                    </mat-card>
+                </div>
+                <div class="fichaproducto-col">
+                    <h1 class="titulo-producto"> {{ producto.Nombre }}</h1>
+                    @if(producto.Precio_rebajado_euros !== null) {
+                        <span class="precio">{{ producto.Precio_rebajado_euros }}€   </span>
+                        <span class="precio_rebajado"><del>{{ producto.Precio_euros }}</del>€</span>
+                        
+                    } @else {
+
+                        <span class="precio">{{ producto.Precio_euros }}€</span>
+                    }
                     <br><br>
-                </form>
-                    <button mat-flat-button routerLink="/finalizar-compra" class="btn-checkout">Finalizar compra</button>
-                
-                <br><br>
-                <mat-accordion>
-                    <!-- Información del producto-->
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>Información del producto</mat-panel-title>  
-                        </mat-expansion-panel-header>
-                        <p>Detalle del producto. Lugar ideal para agregar más información sobre tu producto como su tamaño, materiales, instrucciones de uso y mantenimiento. También es un buen espacio para explicar lo especial que es tu producto y sus beneficios.</p>
-                    </mat-expansion-panel>
-                    <br>
-                    <!-- Detalles técnicos -->
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>Detalles técnicos</mat-panel-title>  
-                        </mat-expansion-panel-header>
-                        <p>Detalles técnicos del producto. Lugar ideal para agregar más información sobre tu producto como su tamaño, materiales, instrucciones de uso y mantenimiento. También es un buen espacio para explicar lo especial que es tu producto y sus beneficios.</p>
-                    </mat-expansion-panel>
-                </mat-accordion>
+                    <form>
+                        <label for="cantidad" class="form-label">Cantidad:</label>
+                        <input type="number" class="form-control" id="cantidad" min="1" value="{{ quantity || 1}}" required>
+                        <button mat-stroked-button type="submit" class="submit addtocart" >Agregar al carrito</button>
+                        <button mat-mini-fab class="btn-fav">
+                            <mat-icon aria-hidden="false">favorite</mat-icon>
+                        </button>
+                        <br><br>
+                    </form>
+                        <button mat-flat-button routerLink="/finalizar-compra" class="btn-checkout">Finalizar compra</button>
+                    
+                    <br><br>
+                    <mat-accordion>
+                        <!-- Información del producto-->
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>Información del producto</mat-panel-title>  
+                            </mat-expansion-panel-header>
+                            <p class="descripcion">{{ producto.Descripcion }}</p>
+                        </mat-expansion-panel>
+                        <br>
+                        <!-- Detalles técnicos -->
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>Detalles técnicos</mat-panel-title>  
+                            </mat-expansion-panel-header>
+                            <p class="descripcion_corta">{{ producto.Descripcion_corta }}</p>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
             </div>
-        </div>
+
+        } @else {
+
+            <span>El producto al que trata de acceder no existe.</span>
+        }
+        
     </section>
 
     <!-- PRODUCTOS RELACIONADOS -->
@@ -51,41 +67,37 @@
         <div class="relacionados-container">
             <h2>Productos relacionados</h2>
             <div class="relacionados-list">
-                <mat-card class="relacionados-card" appearance="outlined">
-                    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-                    <mat-card-header>
-                      <mat-card-title>Shiba Inu</mat-card-title>
-                      <mat-card-subtitle>150€</mat-card-subtitle>
-                    </mat-card-header>
-                    <button class="btn-addtocart">
-                      <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-                      <span>Añadir</span>
-                    </button>
-                </mat-card>
 
-                <mat-card class="relacionados-card" appearance="outlined">
-                    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-                    <mat-card-header>
-                      <mat-card-title>Shiba Inu</mat-card-title>
-                      <mat-card-subtitle>150€</mat-card-subtitle>
-                    </mat-card-header>
-                    <button class="btn-addtocart">
-                      <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-                      <span>Añadir</span>
-                    </button>
-                </mat-card>
+                @if(productosRelacionados.length > 0) {
 
-                <mat-card class="relacionados-card" appearance="outlined">
-                    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-                    <mat-card-header>
-                      <mat-card-title>Shiba Inu</mat-card-title>
-                      <mat-card-subtitle>150€</mat-card-subtitle>
-                    </mat-card-header>
-                    <button class="btn-addtocart">
-                      <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-                      <span>Añadir</span>
-                    </button>
-                </mat-card>
+                    @for (item of productosRelacionados; track item.Id) {
+
+                        <mat-card class="relacionados-card" appearance="outlined">
+                            <img mat-card-image src="{{ endPointFile + item.Imagen[0].Ruta_archivo }}" alt="{{ item.Imagen[0].Alt }}">
+                            <mat-card-header>
+                              <mat-card-title><a routerLink="/producto/{{ item.Id }}">{{ item.Nombre }}</a></mat-card-title>
+                              <mat-card-subtitle>
+                                @if(item.Precio_rebajado_euros !== null) {
+                                    <span class="precio">{{ item.Precio_rebajado_euros }}€   </span>
+                                    <span class="precio_rebajado"><del>{{ item.Precio_euros }}</del>€</span>
+                                    
+                                } @else {
+            
+                                    <span class="precio">{{ item.Precio_euros }}€</span>
+                                }
+                            </mat-card-subtitle>
+                            </mat-card-header>
+                            <button class="btn-addtocart">
+                              <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
+                              <span>Añadir</span>
+                            </button>
+                        </mat-card>
+                    }
+
+                } @else {
+
+                    <span>No hay productos que podamos recomendarte.</span>
+                }
             </div>
         </div>
     </section>

@@ -58,15 +58,24 @@
 
             <mat-card class="superventas-card" appearance="outlined">
               @if(novedad.Marca.length > 0) {
-                <img mat-card-image src="{{ fileEndpoint + novedad.Imagen[0].Ruta_archivo }}" alt="{{ novedad.Imagen[0].Alt }}">
+                <img mat-card-image src="{{ fileEndpoint + novedad.Imagen[0].Ruta_archivo }}" alt="{{ novedad.Imagen[0].Alt }}" routerLink="/producto/{{ novedad.Id }}">
 
               } @else {
 
-                <img mat-card-image src="../../../assets/img/no_category.png" alt="sin imagen">
+                <img mat-card-image src="../../../assets/img/no_category.png" alt="sin imagen" routerLink="/producto/{{ novedad.Id }}">
               }
               <mat-card-header>
-                <mat-card-title><a routerLink="/producto"> {{ novedad.Nombre}}</a></mat-card-title>
-                <mat-card-subtitle> {{ novedad.Precio_euros }}€</mat-card-subtitle>
+                <mat-card-title><a routerLink="/producto/{{ novedad.Id }}"> {{ novedad.Nombre}}</a></mat-card-title>
+                @if(novedad.Precio_rebajado_euros) {
+                  <mat-card-subtitle>
+                     <span class="precio_tachado"><del>{{ novedad.Precio_euros }}</del>€</span>
+                     <br>
+                     {{ novedad.Precio_rebajado_euros }}€
+                  </mat-card-subtitle>
+                } @else {
+                  <mat-card-subtitle> {{ novedad.Precio_euros }}€</mat-card-subtitle>
+                }
+                
               </mat-card-header>
               <button class="btn-addtocart">
                 <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
@@ -83,7 +92,7 @@
       </div>
       <!-- ¿Esto es realmente necesario? -->
       <div class="btn-more-superventas">
-        <button mat-flat-button class="more-superventas">Ver más</button>
+        <button mat-flat-button class="more-superventas" routerLink="/productos">Ver más</button>
       </div>
       
     </section>
@@ -113,7 +122,7 @@
                 <img mat-card-image src="../../../assets/img/no_category.png" alt="sin imagen">
               }
               <mat-card-header>
-                <mat-card-title><a routerLink="/productos/{{ item.Slug }}">{{ item.Nombre }}</a></mat-card-title>
+                <mat-card-title><a routerLink="/productos/categoria/{{ item.Slug }}">{{ item.Nombre }}</a></mat-card-title>
               </mat-card-header>
             </mat-card>
           }
@@ -139,7 +148,7 @@
             <mat-card class="marca-card">
 
               @if(item.Imagen.length > 0) {
-                <img mat-card-image src="{{ fileEndpoint + item.Imagen[0].Ruta_archivo }}" alt="{{ item.Imagen[0].Alt }}" loading="lazy">
+                <img mat-card-image src="{{ fileEndpoint + item.Imagen[0].Ruta_archivo }}" alt="{{ item.Imagen[0].Alt }}" loading="lazy" routerLink="/productos/marca/{{ item.Id }}">
 
               } @else {
 

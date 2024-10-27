@@ -110,13 +110,43 @@ export class ProductosService {
   }
 
   /* PRODUCTOS */
+  // Obtenemos todos los productos, tanto los publicados como los que están en borrador
   getProductos() {
     return this.http.get<Apiresponse>(`${this.endpoint}/product`);
+  }
+
+  // Obtenemos los productos publicados
+  getProductosPublicados() {
+    return this.http.get<Apiresponse>(`${this.endpoint}/productospublicados`);
   }
 
   // Nos trae los últimos 5 productos publicados
   getProductosUltimasNovedades() {
     return this.http.get<Apiresponse>(`${this.endpoint}/novedades`);
+  }
+
+  // Obtener productos por el slug de la categoria
+  getProductsByCategory(slug: string) {
+    return this.http.get<Apiresponse>(`${this.endpoint}/productsByCategory/${slug}`);
+  }
+
+  // Obtener productos por el id de la marca
+  getProductsByBrand(id: number) {
+    return this.http.get<Apiresponse>(`${this.endpoint}/productsByBrand/${id}`);
+  }
+
+  // Obtenemos los productos relacionados en base a la categoria y al producto del body
+  getRelatedProducts(data: any) {
+    return this.http.post<Apiresponse>(`${this.endpoint}/relatedProducts`, data);
+  }
+
+  // Filtro de productos por categoria, marca y precio
+  getProductsByFilter(filtroForm: any) {
+    return this.http.post<Product[]>(`${this.endpoint}/filtrarProductos`, filtroForm).pipe(
+      map( (respuesta: any) => {
+        return respuesta.result;
+      })
+    );
   }
 
   getProducto(id: number) {

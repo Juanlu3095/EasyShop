@@ -1,7 +1,19 @@
+$maxMobile: 767px;
+$minTablet: 768px;
+$maxTablet: 1023px;
+
 // FICHA PRODUCTO
 .fichaproducto{
     background-color: var(--lightgray);
     padding: 5rem 10rem 5rem 10rem;
+
+    @media only screen and (max-width: $maxMobile){
+        padding: 1rem;
+    }
+
+    @media only screen and (min-width: $minTablet) and (max-width: $maxTablet){
+        padding: 1rem;
+    }
     
 }
 
@@ -12,10 +24,19 @@
     gap: 2rem;
     padding: 2rem;
     width: 100%;
+
+    @media only screen and (max-width: $maxMobile){
+        flex-direction: column;
+    }
+
 }
 
 .fichaproducto-col{
     width: 50%;
+
+    @media only screen and (max-width: $maxMobile){
+        width: 100%;
+    }
 }
 
 .titulo-producto{
@@ -25,6 +46,10 @@
 .precio{
     font-size: var(--lengthMd2);
     color: var(--darkblue);
+}
+
+.precio_rebajado{
+    color: var(--orangered);
 }
 
 .addtocart{
@@ -45,11 +70,23 @@
 .productos-relacionados{
     background-color: var(--lightgray);
     padding: 0 10rem 5rem 10rem;
+
+    @media only screen and (max-width: $maxMobile){
+        padding: 1rem;
+    }
+
+    @media only screen and (min-width: $minTablet) and (max-width: $maxTablet){
+        padding: 1rem;
+    }
 }
 
 .relacionados-container{
     display: flex;
     flex-direction: column;
+
+    @media only screen and (max-width: $maxMobile){
+        flex-direction: column;
+    }
 }
 
 .relacionados-container h2{
@@ -69,6 +106,10 @@
 
 .relacionados-card{
     width: 30%;
+
+    @media only screen and (max-width: $maxMobile){
+        width: 100%;
+    }
 }
 
 .relacionados-card mat-card-header{
@@ -79,6 +120,11 @@
 .relacionados-card mat-card-title, .categoria-card mat-card-title{
     font-size: var(--lengthMd2);
     margin:0;
+}
+
+.relacionados-card mat-card-title a{
+    text-decoration: none;
+    color: var(--black);
 }
 
 .relacionados-card mat-card-subtitle{
@@ -98,8 +144,12 @@
     color: var(--white);
     border-radius: 0.5rem;
     padding: 0.5rem 0;
-    margin: 1rem 5rem;
+    margin: 1rem 3rem;
     border: none;
+
+    @media only screen and (min-width: $minTablet) and (max-width: $maxTablet){
+        margin: 1rem 2rem 
+    }
 }
 
 .btn-addtocart span{
@@ -108,4 +158,9 @@
 
 .btn-addtocart mat-icon{
     font-size: 1.5rem;
+}
+
+// Permite traer los espacios en blanco de una columna de la base de datos
+.descripcion, .descripcion_corta {
+    white-space: pre-line;
 }
