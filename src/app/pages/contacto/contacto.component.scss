@@ -1,3 +1,9 @@
+$movilmax: 767px;
+$tabletmin: 768px;
+$tabletmax: 1023px;
+$portatilmin: 1024px;
+$portatilmax: 1350px;
+
 .contacto{
     margin: 5rem 10rem; 
 }
@@ -26,23 +32,79 @@ h1{
     margin-left: 1rem;
 }
 
-.form-field{
-    margin: 0 1rem;
+.input-list {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
 }
 
-.codigopostal-input textarea {
+.textarea-input textarea {
     resize: vertical; // Permite que el usuario cambie el tamaño manualmente
     overflow: hidden; // Oculta la barra de desplazamiento
 }
 
 .form-contacto{
-    margin-top: 4rem;
+    margin: 4rem 1rem
 }
 
 .form-contacto button{
     width: 30%;
-    margin: 2rem 2rem 1rem 2rem;
+    margin: 2rem 0 1rem 0;
     text-align: center;
     color: var(--white);
     background-color: var(--darkblue);
+}
+
+// MÓVIL
+@media only screen and (max-width: $movilmax) {
+    
+    .contacto-container{
+        flex-direction: column-reverse;
+    }
+
+    .datos-contacto, .formulario-contacto{
+        width: 100%;
+    }
+
+    .contacto{
+        margin: 2rem; 
+    }
+
+    .form-contacto button{
+        margin: 1rem 0;
+        
+    }
+}
+
+// TABLET
+@media only screen and (min-width: $tabletmin) and (max-width: $tabletmax) {
+    
+    .contacto-container{
+        flex-direction: column-reverse;
+    }
+
+    .datos-contacto, .formulario-contacto{
+        width: 100%;
+    }
+
+    .contacto{
+        margin: 5rem; 
+    }
+
+    .form-contacto button{
+        margin: 2rem 0;
+        
+    }
+}
+
+// PORTÁTIL
+@media only screen and (min-width: $portatilmin) and (max-width: $portatilmax) {
+    .contacto{
+        margin: 5rem; 
+    }
+
+    .form-contacto button{
+        margin: 1rem 0;
+        
+    }
 }

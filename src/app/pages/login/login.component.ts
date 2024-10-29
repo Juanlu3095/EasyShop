@@ -11,6 +11,7 @@ import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators } 
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { DialogService } from '../../services/dialog.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,13 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit{
 
-  constructor(private title: Title, private auth: AuthService, private _snackBar: MatSnackBar, private cookieService: CookieService, private router:Router) {}
+  constructor(
+    private title: Title,
+    private auth: AuthService,
+    private _snackBar: MatSnackBar,
+    private cookieService: CookieService,
+    private router: Router,
+    private dialogService: DialogService) {}
 
   botonDisabled:boolean = false; // Variable para evitar que se puedan enviar más solicitudes mientras se procesa otra para login
 
@@ -36,6 +43,7 @@ export class LoginComponent implements OnInit{
   });
 
   login() {
+    this.dialogService.openSpinner(); // Abrimos spinner
     if(this.loginForm.valid) {
       this.botonDisabled = true; // La función no se puede ejecutar más hasta que termine de procesarse, ya salga o no un error
       this.auth.loginAdmin(this.loginForm.value).subscribe({
@@ -44,16 +52,20 @@ export class LoginComponent implements OnInit{
             this.cookieService.set('TOKEN_A', respuesta.token, 1); // Guardamos el token si el login es correcto durante 1 día
             this.router.navigate(['/dashboard']);
             this.botonDisabled = false; 
+            this.dialogService.closeAll(); // Cerramos spinner
           }  
         },
         error: (error) => {
+          this.dialogService.closeAll(); // Cerramos spinner
           this._snackBar.open(error.error.message, 'Aceptar', {
             duration: 3000
           });
-          this.botonDisabled = false; 
+          this.botonDisabled = false;
+           
         }
       })
     } else {
+      this.dialogService.closeAll(); // Cerramos spinner
       this._snackBar.open('El email y/o contraseña no son válidos.', 'Aceptar', {
         duration: 3000
       });

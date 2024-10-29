@@ -70,7 +70,7 @@
 
         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
             <mat-icon aria-label="Icon menu" aria-hidden="false">menu</mat-icon>
-          </button>
+        </button>
           <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
             <button mat-menu-item>
                 <a href="/productos">Ver todo</a>
@@ -97,8 +97,11 @@
 
     <div class="container-bottom-mobile">
         <div class="search-control-mobile">
-            <input class="search-input-mobile" type="text" placeholder="Buscar producto..." #searchbar>
-            <input class="search-submit-mobile" type="submit" value="Buscar">
+            <form [formGroup]="searchForm" class="searchForm" (ngSubmit)="searchproduct()" ngNativeValidate>
+                <input class="search-input-mobile" type="text" placeholder="Buscar producto..." #searchbar formControlName="searchFormControl">
+                <input class="search-submit-mobile" type="submit" value="Buscar" (click)="searchproduct()">
+            </form>
+            
         </div>
     </div>
 </header>

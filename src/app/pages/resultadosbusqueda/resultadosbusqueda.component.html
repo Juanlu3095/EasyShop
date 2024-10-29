@@ -5,67 +5,44 @@
     <section class="resultados-busqueda">
         <h1>Resultados de la búsqueda para: {{ busqueda }}</h1>
 
+        <mat-paginator [length]="productos.length"
+                       [pageSize]="pageSize"
+                       [pageSizeOptions]="[5, 10, 20, 50]"
+                       aria-label="Select page"
+                       (page)="onPageChange($event)">
+        </mat-paginator>
+
         <div class="productos-busqueda">
 
-            <mat-card class="producto-card" appearance="outlined">
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-                <mat-card-header>
-                  <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
-                  <mat-card-subtitle>150€</mat-card-subtitle>
-                </mat-card-header>
-                <button class="btn-addtocart">
-                  <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-                  <span>Añadir</span>
-                </button>
-            </mat-card>
+          @if(productos && productos.length > 0) {
 
-            <mat-card class="producto-card" appearance="outlined">
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-                <mat-card-header>
-                  <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
-                  <mat-card-subtitle>150€</mat-card-subtitle>
-                </mat-card-header>
-                <button class="btn-addtocart">
-                  <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-                  <span>Añadir</span>
-                </button>
-            </mat-card>
+            @for (producto of productos; track producto.Id) {
 
-            <mat-card class="producto-card" appearance="outlined">
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+              <mat-card class="producto-card" appearance="outlined">
+                <img mat-card-image [src]="getSantizeUrl(endPointFile + producto.Imagen[0].Ruta_archivo)" alt="{{ producto.Imagen[0].Alt }}">
                 <mat-card-header>
-                  <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
-                  <mat-card-subtitle>150€</mat-card-subtitle>
-                </mat-card-header>
-                <button class="btn-addtocart">
-                  <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-                  <span>Añadir</span>
-                </button>
-            </mat-card>
+                  <mat-card-title><a routerLink="/producto/{{ producto.Id }}"> {{ producto.Nombre }}</a></mat-card-title>
+                  <mat-card-subtitle>
+                    @if(producto.Precio_rebajado_euros !== null) {
+                      <span class="precio">{{ producto.Precio_rebajado_euros }}€   </span>
+                      <span class="precio_rebajado"><del>{{ producto.Precio_euros }}</del>€</span>
 
-            <mat-card class="producto-card" appearance="outlined">
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-                <mat-card-header>
-                  <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
-                  <mat-card-subtitle>150€</mat-card-subtitle>
+                    } @else {
+                      <span class="precio">{{ producto.Precio_euros }}€</span>
+                    }
+                  </mat-card-subtitle>
                 </mat-card-header>
                 <button class="btn-addtocart">
                   <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
                   <span>Añadir</span>
                 </button>
-            </mat-card>
+              </mat-card>
+            }
 
-            <mat-card class="producto-card" appearance="outlined">
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-                <mat-card-header>
-                  <mat-card-title><a routerLink="/producto">Shiba Inu</a></mat-card-title>
-                  <mat-card-subtitle>150€</mat-card-subtitle>
-                </mat-card-header>
-                <button class="btn-addtocart">
-                  <mat-icon class="addtocart-icon" aria-label="Icon addtocart" aria-hidden="false" fontIcon="add_shopping_cart"></mat-icon>
-                  <span>Añadir</span>
-                </button>
-            </mat-card>
+          } @else {
+
+            <h3>No hay productos a mostrar.</h3>
+          }
 
         </div>
     </section>

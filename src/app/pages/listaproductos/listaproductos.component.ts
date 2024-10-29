@@ -33,7 +33,7 @@ export class ListaproductosComponent implements OnInit{
   marcaId: number | null;
   marca: Marca;
   marcas: Marca[];
-  productos: Product[];
+  productos: Product[] = [];
   endpointFile = environment.FilesEndpoint;
 
   @ViewChild('formFiltro') formfiltro: ElementRef;
@@ -76,7 +76,7 @@ export class ListaproductosComponent implements OnInit{
     .toLowerCase() // Convierte todo a minúsculas antes de hacer nada más
     .replace(/\s+(\w)|^\w/g, (match) => match.toUpperCase()) // Hace mayúscula cada palabra, incluyendo la primera
     .replace(/\s+/g, ''); // Elimina espacios
-   }
+  }
 
    // PAGINACIÓN
   paginatedData: Product[] = []; // El array que contendrá las ofertas por página seleccionada, se actualiza al cambiar de página con paginateData

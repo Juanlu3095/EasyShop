@@ -77,7 +77,7 @@
             <p>Rellena el siguiente formulario y participarás en el proceso de selección:</p>
 
             <form class="form-contacto" [formGroup]="jobForm" (ngSubmit)="inscripcion()">
-                <mat-grid-list class="input-list" cols="2" rowHeight="11:1">
+                <mat-grid-list class="input-list" cols="2" rowHeight="11:1" gutterSize="10px">
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
                         <mat-form-field class="nombre-input form-field" [style.width.%]="100" [style.gap.%]="10">
                             <mat-label>Nombre:</mat-label>

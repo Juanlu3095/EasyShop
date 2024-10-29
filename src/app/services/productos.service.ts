@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 import { Subject, tap, map } from 'rxjs';
 import { Productcategory } from '../models/productcategory';
@@ -143,6 +143,16 @@ export class ProductosService {
   // Filtro de productos por categoria, marca y precio
   getProductsByFilter(filtroForm: any) {
     return this.http.post<Product[]>(`${this.endpoint}/filtrarProductos`, filtroForm).pipe(
+      map( (respuesta: any) => {
+        return respuesta.result;
+      })
+    );
+  }
+
+  // Obtenemos productos por búsqueda
+  getProductosBySearch(busqueda: string) {
+    const params = new HttpParams().set('busqueda', busqueda);
+    return this.http.get<Product[]>(`${this.endpoint}/buscarProductos`, {params}).pipe(
       map( (respuesta: any) => {
         return respuesta.result;
       })

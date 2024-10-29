@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import { DialogService } from '../../services/dialog.service';
 
 @Component({
   selector: 'app-accesocliente',
@@ -40,27 +41,35 @@ export class AccesoclienteComponent implements OnInit{
 
   botonDisabled:boolean = false; // Variable para evitar que se puedan enviar más solicitudes mientras se procesa otra para login/registro
 
-  constructor(private title: Title, private _snackBar: MatSnackBar, private auth: AuthService, private cookieService: CookieService, private router:Router) {}
+  constructor(
+    private title: Title,
+    private _snackBar: MatSnackBar,
+    private auth: AuthService,
+    private cookieService: CookieService,
+    private router:Router,
+    private dialogService: DialogService) {}
 
   ngOnInit(): void {
     this.title.setTitle('Acceso < EasyShop');
   }
 
   login() {
+    this.dialogService.openSpinner(); // Abrimos spinner
     this.botonDisabled = true; // La función no se puede ejecutar más hasta que termine de procesarse, ya salga o no un error
 
     if(this.loginForm.valid) {
       this.auth.loginUser(this.loginForm.value).subscribe({
         next: (respuesta) => {
-          console.log(respuesta);
           if(respuesta.token) {
             this.cookieService.set('TOKEN_C', respuesta.token, 1); // Guardamos el token si el login es correcto durante 1 día
             this.router.navigate(['/mi-cuenta']);
+            this.dialogService.closeAll(); // Cerramos spinner
           } else {
             this.botonDisabled = false;
           }
         },
         error: (error) => {
+          this.dialogService.closeAll(); // Cerramos spinner
           this._snackBar.open(error.error.message, 'Aceptar', {
             duration: 3000
           });
@@ -76,23 +85,24 @@ export class AccesoclienteComponent implements OnInit{
   }
 
   registro() {
+    this.dialogService.openSpinner(); // Abrimos spinner
     this.botonDisabled = true; // La función no se puede ejecutar más hasta que termine de procesarse, ya salga o no un error
     
     let contrasena = this.registroForm.value.password ?? '';
     let contrasenaRepetir = this.registroForm.value.password_confirmation ?? '';
 
     if(this.registroForm.valid && contrasena === contrasenaRepetir) {
-      console.log('Registro válido:', this.registroForm.value);
+
       this.auth.registroUser(this.registroForm.value).subscribe({
         next: (respuesta) => {
-          console.log(respuesta);
+          this.dialogService.closeAll(); // Cerramos spinner
           this._snackBar.open('Se ha creado el usuario. Por favor, revise su email.', 'Aceptar', {
             duration: 5000
           });
           this.botonDisabled = false;
         },
         error: (error) => {
-          console.error(error);
+          this.dialogService.closeAll(); // Cerramos spinner
           this._snackBar.open('No se ha podido procesar su solicitud.', 'Aceptar', {
             duration: 3000
           });
@@ -101,12 +111,14 @@ export class AccesoclienteComponent implements OnInit{
       })
       
     } else if(this.registroForm.valid && contrasena !== contrasenaRepetir) {
+      this.dialogService.closeAll(); // Cerramos spinner
       this._snackBar.open('Ambos campos de contraseña deben coincidir.', 'Aceptar', {
         duration: 3000
       });
       this.botonDisabled = false;
 
     } else {
+      this.dialogService.closeAll(); // Cerramos spinner
       this._snackBar.open('Se ha producido un error.', 'Aceptar', {
         duration: 3000
       });

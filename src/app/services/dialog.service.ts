@@ -2,6 +2,7 @@ import { Injectable, TemplateRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../components/dialog/dialog.component';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { SpinnerComponent } from '../components/spinner/spinner.component';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,16 @@ export class DialogService {
     }); */
 
     return firstValueFrom(dialogRef.afterClosed()); // Convertimos el observable en una promesa, el cual se ejecuta al cerrar el modal
+  }
+
+  // Muestra la ventana con el spinner cargando
+  openSpinner() {
+    this.dialog.open(SpinnerComponent, { disableClose: true }) // true hace que no se pueda cerrar el dialog pulsando fuera del mismo
+  }
+
+  // Cerrar dialogs
+  closeAll() {
+    this.dialog.closeAll();
   }
 
 }
