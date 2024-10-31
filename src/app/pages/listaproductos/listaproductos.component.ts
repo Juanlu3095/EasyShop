@@ -39,10 +39,10 @@ export class ListaproductosComponent implements OnInit{
   @ViewChild('formFiltro') formfiltro: ElementRef;
 
   filtroForm = new FormGroup({
-    categoria: new FormControl(''),
-    marca: new FormControl(''),
-    preciomin: new FormControl(''),
-    preciomax: new FormControl(''),
+    categoria: new FormControl<number>(NaN), // Iniciamos en NaN porque la api debe recibir un dato de tipo numeric|nullable
+    marca: new FormControl<number>(NaN),
+    preciomin: new FormControl<number>(NaN),
+    preciomax: new FormControl<number>(NaN),
   })
 
   constructor(private activatedroute: ActivatedRoute, private title: Title, private productService: ProductosService) {}

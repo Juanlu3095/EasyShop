@@ -25,7 +25,7 @@
 
                   <h3>Categoría:</h3>
                     <select name="categoria" class="form-control categoria" id="categoria" placeholder="Categoria" formControlName="categoria" matNativeControl>
-                      <option value="" selected>Categoria</option>
+                      <option value="" selected>Todas las categorías</option>
                       @for (categoria of categorias; track categoria.Id) {
                           <option value="{{ categoria.Id }}">{{ categoria.Nombre }}</option>
                       }
@@ -33,7 +33,7 @@
 
                   <h3>Marca:</h3>
                     <select name="marca" class="form-control marca" id="marca" placeholder="Marca" formControlName="marca" matNativeControl>
-                      <option value="" selected>Marca</option>
+                      <option value="" selected>Todas las marcas</option>
                       @for (marca of marcas; track marca.Id) {
                           <option value="{{ marca.Id }}">{{ marca.Nombre}}</option>
                       }

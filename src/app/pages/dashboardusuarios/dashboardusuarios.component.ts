@@ -81,7 +81,6 @@ export class DashboardusuariosComponent implements OnInit, OnDestroy{
   getUsuarios() {
     this.usuarioService.getAllUsuarios().subscribe({
       next: (respuesta) => {
-        console.log(respuesta);
         this.usuarios = respuesta;
       },
       error: (error) => {

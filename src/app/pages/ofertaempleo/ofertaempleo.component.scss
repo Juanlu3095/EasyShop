@@ -1,3 +1,9 @@
+$movilmax: 767px;
+$tabletmin: 768px;
+$tabletmax: 1023px;
+$portatilmin: 1024px;
+$portatilmax: 1350px;
+
 .oferta-empleo{
     margin: 5rem 10rem; 
 }
@@ -33,4 +39,65 @@
 
 .detalle-item p{
     font-weight: 500;
+}
+
+// Formulario
+.form-contacto button {
+    color: white;
+    background-color: var(--darkblue);
+}
+
+.politica-input{
+    margin: 0 0 1rem 0;
+}
+
+// PORTÁTIL
+@media only screen and (min-width: $portatilmin) and (max-width: $portatilmax) {
+    .oferta-empleo{
+        margin: 5rem; 
+    }
+
+    .form-contacto button{
+        margin: 1rem 0;
+        
+    }
+
+}
+
+// TABLET
+@media only screen and (min-width: $tabletmin) and (max-width: $tabletmax) {
+    
+    .cuerpo-oferta{
+        width: 70%;
+    }
+
+    .detalles-oferta{
+        width: 30%;
+    }
+
+    .oferta-empleo{
+        margin: 5rem; 
+    }
+}
+
+// MÓVIL
+@media only screen and (max-width: $movilmax) {
+
+    .oferta{
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .cuerpo-oferta, .detalles-oferta{
+        width: 100%;
+    }
+
+    .oferta-empleo{
+        margin: 2rem; 
+    }
+    
+    .file-input input{
+        font-size: small;
+    }
 }

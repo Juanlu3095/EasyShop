@@ -1,4 +1,4 @@
-import { Component, OnInit, LOCALE_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, LOCALE_ID } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { registerLocaleData, CommonModule } from '@angular/common';
@@ -8,12 +8,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { OfertasempleoService } from '../../services/ofertasempleo.service';
 import { Ofertaempleo } from '../../models/ofertaempleo';
 import localeEs from '@angular/common/locales/es';
+import { ResponsivedesignService } from '../../services/responsivedesign.service';
+import { Subscription } from 'rxjs';
+import { DialogService } from '../../services/dialog.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 registerLocaleData(localeEs, 'es');
 
@@ -21,14 +26,16 @@ registerLocaleData(localeEs, 'es');
   selector: 'app-ofertaempleo',
   standalone: true,
   providers: [{provide: LOCALE_ID, useValue: 'es'}],
-  imports: [HeaderComponent, FooterComponent, MatFormFieldModule, MatGridListModule, MatInputModule, MatCardModule, MatSelectModule, MatCheckbox, CommonModule, ReactiveFormsModule],
+  imports: [HeaderComponent, FooterComponent, MatFormFieldModule, MatGridListModule, MatInputModule, MatCardModule, MatSelectModule, MatCheckbox, MatButtonModule, CommonModule, ReactiveFormsModule],
   templateUrl: './ofertaempleo.component.html',
   styleUrl: './ofertaempleo.component.scss'
 })
-export class OfertaempleoComponent implements OnInit{
+export class OfertaempleoComponent implements OnInit, OnDestroy{
 
   oferta: Ofertaempleo; // Se recibe sólo un registro, por lo que no es un array de valores
+  suscripcion: Subscription;
   idoferta: number | null;
+  rowHeight: string;
 
   jobForm = new FormGroup({
     nombre: new FormControl('', Validators.required),
@@ -44,18 +51,23 @@ export class OfertaempleoComponent implements OnInit{
     estado_candidatura: new FormControl('En proceso') // Hay que poner esto porque lo pide CvResource en Laravel y hay que darle un valor
   })
 
-  constructor(private title: Title, private ofertaempleoservice: OfertasempleoService, private activatedroute: ActivatedRoute) {}
+  constructor(
+    private title: Title,
+    private ofertaempleoservice: OfertasempleoService,
+    private activatedroute: ActivatedRoute,
+    private responsive: ResponsivedesignService,
+    private _snackbar: MatSnackBar,
+    private dialog: DialogService) {}
 
   ngOnInit(): void {
 
+    this.responsiveDesign();
     this.idoferta = Number(this.activatedroute.snapshot.paramMap.get('idoferta')); // Con Number convertimos el valor a tipo number
 
     if(this.idoferta) {
       this.ofertaempleoservice.getOferta(this.idoferta).subscribe({
         next: (respuesta) => {
-          console.log(respuesta);
           this.oferta = respuesta.data;
-          console.log('Ésta es la oferta:', this.oferta);
           this.title.setTitle(`${this.oferta.puesto} - Oferta de empleo`);
         },
         error: (error) => {
@@ -68,6 +80,35 @@ export class OfertaempleoComponent implements OnInit{
     
   }
 
+  ngOnDestroy(): void {
+    this.suscripcion.unsubscribe();
+  }
+
+  responsiveDesign() {
+    this.suscripcion = this.responsive.obtenerDispositivo().subscribe({
+      next: (dispositivo) => {
+        switch(dispositivo) {
+          case 'Desktop':
+            this.rowHeight = "25:1";
+            break;
+          case 'Portátil':
+            this.rowHeight = "12:1";
+            break;
+            case 'Tablet':
+              this.rowHeight = "7:1";
+
+              break;
+          default:
+            this.rowHeight = "4:1";
+            break;
+        }
+      },
+      error: (error) => {
+        console.error(error)
+      }
+    })
+  }
+
   inscripcion(){
     
     // Le damos la id de la oferta a job_id
@@ -76,7 +117,7 @@ export class OfertaempleoComponent implements OnInit{
     })
 
     if(this.jobForm.valid) {
-      console.log('Éstos son los datos del formulario: ', this.jobForm);
+      this.dialog.openSpinner();
 
       // Una vez tenemos los datos del formGroup y los del input de tipo file, los juntamos en un formData, el cual maneja archivos.
       let datos = new FormData();
@@ -87,7 +128,6 @@ export class OfertaempleoComponent implements OnInit{
       datos.append('pais', this.jobForm.value.pais ?? '');
       datos.append('ciudad', this.jobForm.value.ciudad ?? '');
       datos.append('incorporacion', this.jobForm.value.incorporacion ?? '');
-      //datos.append('ruta_cv', this.fileformData.get('files') as File); // Esta línea sobra
       datos.append('job_id', this.oferta.id.toString()); // Append obliga a usar string
       datos.append('estado_candidatura', 'En proceso');
 
@@ -101,20 +141,26 @@ export class OfertaempleoComponent implements OnInit{
     }
 
     // Mostrar los datos del FormData usando forEach
-    datos.forEach((value, key) => {
+    /* datos.forEach((value, key) => {
       if (value instanceof File) {
         console.log(`${key}:`, value); // Mostrar el nombre del archivo
       } else {
         console.log(`${key}:`, value); // Mostrar el valor del campo
       }
-    });
+    }); */
 
     this.ofertaempleoservice.postCv(datos).subscribe({
       next: (respuesta: any) => {
-        console.log('Respuesta OK', respuesta);
+        this.dialog.closeAll();
+        this._snackbar.open('Candidatura enviada.', 'Aceptar', {
+          duration: 3000
+        });
       },
       error: (error) => {
-        console.error('Ha habido un error', error);
+        this.dialog.closeAll();
+        this._snackbar.open('Ha ocurrido un error.', 'Aceptar', {
+          duration: 3000
+        });
       }
     })
     }
@@ -136,7 +182,7 @@ export class OfertaempleoComponent implements OnInit{
 
       this.fileformData.set("ruta_cv", file);
       
-      console.log('ola', this.fileformData.get('ruta_cv'));
+      //console.log('ola', this.fileformData.get('ruta_cv'));
 
     }
   }

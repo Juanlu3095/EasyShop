@@ -1,6 +1,6 @@
 <mat-sidenav-container class="sidenav-cart">
     <mat-sidenav>Start</mat-sidenav>
-    <mat-sidenav #sidenav mode="over" position="end">
+    <mat-sidenav #sidenav mode="over" position="end" fixedInViewport="true">
         <button class="close" (click)="closeSidenav()">X</button>
         <br><br>
         <mat-card class="producto-card" appearance="outlined">
@@ -19,7 +19,7 @@
         </div>
     </mat-sidenav>
     
-    <mat-sidenav-content>
+    <mat-sidenav-content [ngStyle]="{ 'height': sidenav.opened ? '100vh' : 'auto'}">
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 

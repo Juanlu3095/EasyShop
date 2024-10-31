@@ -97,7 +97,7 @@
 
     <div class="container-bottom-mobile">
         <div class="search-control-mobile">
-            <form [formGroup]="searchForm" class="searchForm" (ngSubmit)="searchproduct()" ngNativeValidate>
+            <form [formGroup]="searchForm" class="searchForm" ngNativeValidate>
                 <input class="search-input-mobile" type="text" placeholder="Buscar producto..." #searchbar formControlName="searchFormControl">
                 <input class="search-submit-mobile" type="submit" value="Buscar" (click)="searchproduct()">
             </form>

@@ -85,7 +85,7 @@ export class DashboardproductseditarComponent implements OnInit, OnDestroy{
         if(result != '') { // Result puede volverse vacío si damos al botón de 'cancelar'
           this.imagenElegida = result;
         }
-        console.log('resultado:', result);
+        //console.log('resultado:', result);
         this.editarproductoForm.patchValue({
           imagen_id: this.imagenElegida.id
         })
@@ -95,16 +95,13 @@ export class DashboardproductseditarComponent implements OnInit, OnDestroy{
 
   editarProducto() {
     if(this.editarproductoForm.valid) {
-      console.log('Hola este es el form: ', this.editarproductoForm.value)
       this.productService.updateProducto(this.idProducto, this.editarproductoForm.value).subscribe({
         next: (respuesta) => {
-          console.log(respuesta);
           this._snackBar.open('Producto modificado.', 'Aceptar', {
             duration: 3000
           });
         },
         error: (error) => {
-          console.error(error);
           this._snackBar.open('Ha ocurrido un error.', 'Aceptar', {
             duration: 3000
           });
@@ -119,7 +116,6 @@ export class DashboardproductseditarComponent implements OnInit, OnDestroy{
   getProduct() {
     this.productService.getProducto(this.idProducto).subscribe({
       next: (respuesta: Product) => {
-        console.log(respuesta);
         this.producto = respuesta;
 
         // Debemos primero comprobar que la respuesta de la api contiene imagen y no directamente 'producto' porque si no, no se asignan el resto de datos
@@ -166,7 +162,6 @@ export class DashboardproductseditarComponent implements OnInit, OnDestroy{
   getMarcas(){
     this.productService.getMarcas().subscribe({
       next: (respuesta) => {
-        console.log(respuesta);
         this.marcas = respuesta;
       },
       error: (error) => {
@@ -178,7 +173,6 @@ export class DashboardproductseditarComponent implements OnInit, OnDestroy{
   getCategorias(){
     this.productService.getCategorias().subscribe({
       next: (respuesta) => {
-        console.log(respuesta.data);
         this.categorias = respuesta.data;
       },
       error: (error) => {

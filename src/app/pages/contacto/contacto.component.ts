@@ -11,6 +11,7 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angula
 import { MensajescontactoService } from '../../services/mensajescontacto.service';
 import { ResponsivedesignService } from '../../services/responsivedesign.service';
 import { Subscription } from 'rxjs';
+import { DialogService } from '../../services/dialog.service';
 
 @Component({
   selector: 'app-contacto',
@@ -21,7 +22,12 @@ import { Subscription } from 'rxjs';
 })
 export class ContactoComponent implements OnInit, OnDestroy{
 
-  constructor(private title: Title, private mensajeService: MensajescontactoService, private _snackbar: MatSnackBar, private responsive: ResponsivedesignService) {}
+  constructor(
+    private title: Title,
+    private mensajeService: MensajescontactoService,
+    private _snackbar: MatSnackBar,
+    private responsive: ResponsivedesignService,
+    private dialog: DialogService) {}
 
   MensajeForm = new FormGroup({
     nombre: new FormControl('', Validators.required),
@@ -45,15 +51,16 @@ export class ContactoComponent implements OnInit, OnDestroy{
 
   enviarMensaje() {
     if (this.MensajeForm.valid) {
+      this.dialog.openSpinner();
       this.mensajeService.postMensaje(this.MensajeForm.value).subscribe({
         next: (respuesta) => {
-          console.log(respuesta);
+          this.dialog.closeAll();
           this._snackbar.open('Mensaje enviado.', 'Aceptar', {
             duration: 3000
           });
         },
         error: (error) => {
-          console.error(error);
+          this.dialog.closeAll();
           this._snackbar.open('Ha ocurrido un error.', 'Aceptar', {
             duration: 3000
           });

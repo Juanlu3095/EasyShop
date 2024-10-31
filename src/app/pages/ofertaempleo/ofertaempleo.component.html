@@ -77,50 +77,50 @@
             <p>Rellena el siguiente formulario y participarás en el proceso de selección:</p>
 
             <form class="form-contacto" [formGroup]="jobForm" (ngSubmit)="inscripcion()">
-                <mat-grid-list class="input-list" cols="2" rowHeight="11:1" gutterSize="10px">
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field class="nombre-input form-field" [style.width.%]="100" [style.gap.%]="10">
+                <mat-grid-list class="input-list" cols="2" [rowHeight]="rowHeight" gutterSize="10px">
+                    <mat-grid-tile [colspan]="1" [rowspan]="2">
+                        <mat-form-field class="nombre-input form-field" [style.width.%]="100">
                             <mat-label>Nombre:</mat-label>
                             <input type="text" matInput placeholder="" value="" formControlName="nombre" required>
                         </mat-form-field>
                     </mat-grid-tile>
 
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-grid-tile [colspan]="1" [rowspan]="2">
                         <mat-form-field class="apellidos-input form-field" [style.width.%]="100">
                             <mat-label>Apellidos:</mat-label>
                             <input type="text" matInput placeholder="" value="" formControlName="apellidos" required>
                         </mat-form-field>
                     </mat-grid-tile>
 
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field class="email-input form-field" [style.width.%]="100" [style.gap.%]="10">
+                    <mat-grid-tile [colspan]="1" [rowspan]="2">
+                        <mat-form-field class="email-input form-field" [style.width.%]="100">
                             <mat-label>Email:</mat-label>
                             <input type="email" matInput placeholder="" value="" formControlName="email" required>
                         </mat-form-field>
                     </mat-grid-tile>
 
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-grid-tile [colspan]="1" [rowspan]="2">
                         <mat-form-field class="telefono-input form-field" [style.width.%]="100">
                             <mat-label>Teléfono:</mat-label>
                             <input type="number" matInput placeholder="" value="" formControlName="telefono" required>
                         </mat-form-field>
                     </mat-grid-tile>
 
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-grid-tile [colspan]="1" [rowspan]="2">
                         <mat-form-field class="pais-input form-field" [style.width.%]="100">
                             <mat-label>País:</mat-label>
                             <input type="text" matInput placeholder="" value="" formControlName="pais" required>
                         </mat-form-field>
                     </mat-grid-tile>
 
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-grid-tile [colspan]="1" [rowspan]="2">
                         <mat-form-field class="ciudad-input form-field" [style.width.%]="100">
                             <mat-label>Ciudad:</mat-label>
                             <input type="text" matInput placeholder="" value="" formControlName="ciudad" required>
                         </mat-form-field>
                     </mat-grid-tile>
 
-                    <mat-grid-tile [colspan]="2" [rowspan]="1">
+                    <mat-grid-tile [colspan]="2" [rowspan]="2">
                         <mat-form-field class="incorporacion-input form-field" [style.width.%]="100">
                             <mat-label>¿Cuándo podrías incorporarte?</mat-label>
                             <mat-select formControlName="incorporacion">
@@ -131,20 +131,20 @@
                         </mat-form-field>
                     </mat-grid-tile>
 
-                    <mat-grid-tile [colspan]="2" [rowspan]="1">
-                        <mat-form-field class="file-input form-field" [style.width.%]="100">
+                    <mat-grid-tile [colspan]="2" [rowspan]="2">
+                        <mat-form-field class="file-input form-field" [style.width.%]="100" appearance="outline">
                             <mat-label></mat-label>
                             <input type="file" (change)="getFile($event)" name="ruta_cv" required>
                             <input hidden matInput>
                         </mat-form-field>
-                    </mat-grid-tile>
-
-                    <mat-grid-tile [colspan]="2" [rowspan]="1">
-                        <mat-checkbox matInput class="politica-input form-field" formControlName="politica">He leído y acepto la <a href="#">política de privacidad</a>.</mat-checkbox>
-                    </mat-grid-tile>
+                    </mat-grid-tile>                    
                 
                 </mat-grid-list>
 
+                <mat-checkbox matInput class="politica-input form-field" formControlName="politica">
+                    He leído y acepto la <a href="#">política de privacidad</a>.
+                </mat-checkbox>
+                <br>
                 <button mat-flat-button type="submit">Enviar</button>
             </form>
         </div>

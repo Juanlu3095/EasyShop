@@ -21,7 +21,7 @@
             <textarea matInput placeholder="Descripción de la imagen" formControlName="descripcion" ngDefaultControl required></textarea>
         </mat-form-field>
 
-        <mat-form-field class="file-input form-field" [style.width.%]="100">
+        <mat-form-field class="file-input form-field" [style.width.%]="100" appearance="outline">
             <mat-label></mat-label>
             <input type="file" (change)="getFile($event)" name="archivo" required>
             <input hidden matInput>

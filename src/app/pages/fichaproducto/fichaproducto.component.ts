@@ -55,7 +55,7 @@ export class FichaproductoComponent implements OnInit{
     })
   }
 
-  // Obtenemos productos relacionados: tendrán la misma categoría que el producto principal, pero se excluye el mismo
+  // Obtenemos productos relacionados: tendrán la misma categoría que el producto principal, pero se excluye el mismo con producto_id
   getProductosRelacionados() {
     let data = {
       categoria_id: this.producto.Categoria_id,
@@ -63,7 +63,6 @@ export class FichaproductoComponent implements OnInit{
     }
     this.productService.getRelatedProducts(data).subscribe({
       next: (respuesta) => {
-        console.log(respuesta);
         this.productosRelacionados = respuesta.data;
       },
       error: (error) => {

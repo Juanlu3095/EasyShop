@@ -9,6 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { ResponsivedesignService } from '../../services/responsivedesign.service';
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
+import { DialogService } from '../../services/dialog.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,7 +26,12 @@ export class DashboardComponent implements OnInit, OnDestroy{
   mode: MatDrawerMode; // Para señalar cómo mostrar el sidenav, si como side, over o push.
   sidenavWidth: number; // Para dar un ancho al sidenav.
 
-  constructor(private responsiveService: ResponsivedesignService, private cookieService: CookieService, private router: Router, private authService: AuthService) {}
+  constructor(
+    private responsiveService: ResponsivedesignService,
+    private cookieService: CookieService,
+    private router: Router,
+    private authService: AuthService,
+    private dialogService: DialogService) {}
 
   ngOnInit(): void {
     this.disenoResponsivo();
@@ -72,14 +78,16 @@ export class DashboardComponent implements OnInit, OnDestroy{
   }
 
   logout() {
+    this.dialogService.openSpinner();
     // Función para eliminar el token de la base de datos y del navegador
     this.authService.logoutAdmin().subscribe({
       next: (respuesta) => {
-        console.log(respuesta);
         this.cookieService.delete('TOKEN_A', '/'); // Para borrar la cookie, debe ir después de la petición de logout a laravel
+        this.dialogService.closeAll();
         this.router.navigate(['/iniciosesion']);
       },
       error: (error) => {
+        this.dialogService.closeAll();
         console.error(error);
       }
     })

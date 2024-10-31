@@ -71,7 +71,6 @@ export class HomepageComponent implements OnInit{
   getNovedades() {
     this.productService.getProductosUltimasNovedades().subscribe({
       next: (respuesta) => {
-        console.log(respuesta);
         this.novedades = respuesta.data;
       },
       error: (error) => {

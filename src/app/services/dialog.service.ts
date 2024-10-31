@@ -18,7 +18,7 @@ export class DialogService {
     });
 
     dialogRef.afterOpened().subscribe(() => {
-      console.log(title);
+      //console.log(title);
       
     });
 

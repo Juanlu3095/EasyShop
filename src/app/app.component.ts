@@ -4,11 +4,12 @@ import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 import { SidenavserviceService } from './services/sidenavservice.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatSidenavModule, MatCardModule, MatButtonModule],
+  imports: [RouterOutlet, MatSidenavModule, MatCardModule, MatButtonModule, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
