@@ -14,7 +14,8 @@ export interface Product {
     ISBN_EAN: string,
     Inventario: number,
     Ultima_modificacion: Date,
-    Imagen: Imagen[]
+    Imagen: Imagen[],
+    cantidad: number
 }
 
 interface Imagen {

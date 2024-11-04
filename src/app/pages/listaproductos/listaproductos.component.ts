@@ -17,6 +17,7 @@ import { Productcategory } from '../../models/productcategory';
 import { Marca } from '../../models/marca';
 import { Product } from '../../models/product';
 import { environment } from '../../../environments/environment.development';
+import { CarritoService } from '../../services/carrito.service';
 
 @Component({
   selector: 'app-listaproductos',
@@ -45,7 +46,7 @@ export class ListaproductosComponent implements OnInit{
     preciomax: new FormControl<number>(NaN),
   })
 
-  constructor(private activatedroute: ActivatedRoute, private title: Title, private productService: ProductosService) {}
+  constructor(private activatedroute: ActivatedRoute, private title: Title, private productService: ProductosService, private carrito: CarritoService) {}
 
   ngOnInit(): void {
     this.categoria = this.activatedroute.snapshot.firstChild?.params['categoria']; // Obtenemos la categoría de la ruta (se usa firstChild por ser una ruta child)
@@ -198,6 +199,11 @@ export class ListaproductosComponent implements OnInit{
         console.error(error);
       }
     })
+  }
+
+  // Añadimos el producto al carrito
+  addtocart(producto: Product) {
+    this.carrito.addNewProducto(producto);
   }
 
 }

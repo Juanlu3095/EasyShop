@@ -1,22 +1,45 @@
 <mat-sidenav-container class="sidenav-cart">
     <mat-sidenav>Start</mat-sidenav>
-    <mat-sidenav #sidenav mode="over" position="end" fixedInViewport="true">
+    <mat-sidenav #sidenav mode="over" position="end" fixedInViewport="true" [ngStyle]="{'min-width': '30vh'}">
         <button class="close" (click)="closeSidenav()">X</button>
         <br><br>
-        <mat-card class="producto-card" appearance="outlined">
-            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-            <mat-card-header>
-              <mat-card-title>Shiba Inu</mat-card-title>
-              <mat-card-subtitle>5 x 150€</mat-card-subtitle>
-            </mat-card-header>
-        </mat-card>
+        
+        @if(productos && productos.length > 0) {
 
-        <p class="subtotal"><strong>Subtotal:</strong> 750.00€</p>
+            @for(producto of productos; track producto.Id; let indice = $index) {
+            
+                <mat-card class="producto-card" appearance="outlined">
+                    <img mat-card-image src="{{ fileEndPoint + producto.Imagen[0].Ruta_archivo}}" alt="{{ producto.Imagen[0].Alt }}">
+                    <mat-card-header>
+                      <mat-card-title>{{ producto.Nombre }}</mat-card-title>
+                      <mat-card-subtitle>
+                        @if(producto.Precio_rebajado_euros) {
+                            <span>{{ producto.cantidad }} x {{ producto.Precio_rebajado_euros | currency: 'EUR' }}  </span>
+                            <span class="precio_tachado"><del>{{ producto.Precio_euros | currency: 'EUR' }}</del></span>
 
-        <div class="botones-carrito">
-            <button mat-stroked-button class="btn-carrito-item ver-carrito"><a class="txt-carrito" href="/carrito">Ver carrito</a></button>
-            <button mat-flat-button class="btn-carrito-item finalizar-compra"><a class="txt-finalizar-compra" href="/finalizar-compra">Finalizar compra</a></button>
-        </div>
+                        } @else {
+                            <span>{{ producto.cantidad }} x {{ producto.Precio_euros | currency: 'EUR' }}</span>
+                        }
+                        
+                    </mat-card-subtitle>
+                      <br>
+                      <button mat-flat-button color="warn" (click)="deleteProduct(indice)">Eliminar</button>
+                    </mat-card-header>
+                </mat-card>
+            }
+
+            <p class="subtotal"><strong>Subtotal:</strong> {{ subtotal | currency: 'EUR' }}</p>
+
+            <div class="botones-carrito">
+                <button mat-stroked-button class="btn-carrito-item ver-carrito"><a class="txt-carrito" href="/carrito">Ver carrito</a></button>
+                <button mat-flat-button class="btn-carrito-item finalizar-compra"><a class="txt-finalizar-compra" href="/finalizar-compra">Finalizar compra</a></button>
+            </div>
+
+        } @else {
+
+            <p class="text-center p-3">No hay productos en el carrito.</p>
+        }
+        
     </mat-sidenav>
     
     <mat-sidenav-content [ngStyle]="{ 'height': sidenav.opened ? '100vh' : 'auto'}">

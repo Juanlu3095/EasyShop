@@ -1,6 +1,18 @@
+.header-container{
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    height: auto;
+}
+
 button a{
     text-decoration: none !important;
     color: var(--darkblue);
+}
+
+.container-center{
+    background-color: white;
 }
 
 // DESKTOP

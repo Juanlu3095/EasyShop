@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIcon, MatIconRegistry, MatIconModule } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -10,6 +10,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { SidenavserviceService } from '../../services/sidenavservice.service';
 import { ProductosService } from '../../services/productos.service';
 import { Productcategory } from '../../models/productcategory';
+import { CarritoService } from '../../services/carrito.service';
+import { Subscription, map } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -18,13 +20,18 @@ import { Productcategory } from '../../models/productcategory';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit, OnDestroy{
+
+  suscripcion: Subscription[] = [];
+  cantidadCarrito: number;
+
   constructor(
     private iconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private sidenavService: SidenavserviceService,
     private router: Router,
-    private productService: ProductosService) 
+    private productService: ProductosService,
+    private carrito: CarritoService) 
   {
     this.iconRegistry.addSvgIcon('twitter', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/logo/twitter.svg'));
     this.iconRegistry.addSvgIcon('instagram', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/logo/instagram.svg')); 
@@ -49,10 +56,18 @@ export class HeaderComponent implements OnInit{
 
   ngOnInit(): void {
     this.getCategorias();
+    this.getCantidadCarrito();
+    this.suscripcion.push(this.carrito.refresh$.subscribe( () => {
+      this.openSidenav();
+    }))
+  }
+
+  ngOnDestroy(): void {
+    this.suscripcion.forEach((elemento) => { elemento.unsubscribe() });
   }
 
   getCategorias() {
-    this.productService.getCategorias().subscribe({
+     this.productService.getCategorias().subscribe({
       next: (respuesta) => {
         this.categorias = respuesta.data;
       },
@@ -60,6 +75,19 @@ export class HeaderComponent implements OnInit{
         console.error(error);
       }
     })
+  }
+
+  getCantidadCarrito() {
+    this.suscripcion.push(
+      this.carrito.productos
+      .pipe(map(productos => {
+  
+        // Con reduce sumamos los valores de todos los precios empezando desde 0. Con Number convertimos todo en números para poder sumar correctamente
+        return productos.reduce((prev, curr) => Number(prev) + Number(curr.cantidad), 0)
+      }))
+      .subscribe( cantidad => {
+        this.cantidadCarrito = cantidad;
+      })) 
   }
 
   toggleSidenav() {

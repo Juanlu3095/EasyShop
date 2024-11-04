@@ -13,6 +13,7 @@ import { environment } from '../../../environments/environment.development';
 import { NgOptimizedImage } from '@angular/common';
 import { Productcategory } from '../../models/productcategory';
 import { Product } from '../../models/product';
+import { CarritoService } from '../../services/carrito.service';
 
 @Component({
   selector: 'app-homepage',
@@ -31,7 +32,7 @@ export class HomepageComponent implements OnInit{
   novedades: Product[];
   fileEndpoint = environment.FilesEndpoint;
 
-  constructor(private router: Router, private newsletterService: NewsletterService, private productService: ProductosService){}
+  constructor(private router: Router, private newsletterService: NewsletterService, private productService: ProductosService, private carrito: CarritoService){}
 
   newsletterForm = new FormGroup({
     email: new FormControl('', Validators.compose([Validators.email, Validators.required])) // el nombre de formcontrol debe ser igual que el de la base de datos
@@ -57,7 +58,7 @@ export class HomepageComponent implements OnInit{
 
   ngOnInit(): void {
     // Para evitar que al pinchar en un link vaya a cualquier posición
-    this.router.events.subscribe((event) => {
+    this.router.events.subscribe((event) => { // No es necesario desuscribirse porque el componente se destruye al cambiar de página
       if (event instanceof NavigationEnd) {
         window.scrollTo(0, 0); // Scroll to top on navigation end
       }
@@ -99,5 +100,10 @@ export class HomepageComponent implements OnInit{
         console.error(error);
       }
     })
+  }
+
+  // Añadimos el producto al carrito
+  addtocart(producto: Product) {
+    this.carrito.addNewProducto(producto);
   }
 }

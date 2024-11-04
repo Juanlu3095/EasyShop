@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit{
         },
         error: (error) => {
           this.dialogService.closeAll(); // Cerramos spinner
-          this._snackBar.open(error.error.message, 'Aceptar', {
+          this._snackBar.open('Ha ocurrido un error.', 'Aceptar', {
             duration: 3000
           });
           this.botonDisabled = false;

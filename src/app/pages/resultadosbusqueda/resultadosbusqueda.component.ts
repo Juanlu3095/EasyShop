@@ -9,6 +9,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { ProductosService } from '../../services/productos.service';
 import { Product } from '../../models/product';
 import { environment } from '../../../environments/environment.development';
+import { CarritoService } from '../../services/carrito.service';
 
 @Component({
   selector: 'app-resultadosbusqueda',
@@ -19,7 +20,12 @@ import { environment } from '../../../environments/environment.development';
 })
 export class ResultadosbusquedaComponent implements OnInit{
 
-  constructor(private activatedroute: ActivatedRoute, private title: Title, private productService: ProductosService, private sanitizer: DomSanitizer) {}
+  constructor(
+    private activatedroute: ActivatedRoute,
+    private title: Title,
+    private productService: ProductosService,
+    private sanitizer: DomSanitizer,
+    private carrito: CarritoService) {}
 
   busqueda: string | null;
   productos: Product[] = []; // Iniciar esto vacío para que no salga el error de length
@@ -43,6 +49,11 @@ export class ResultadosbusquedaComponent implements OnInit{
     } else {
       console.error('Ha ocurrido un error');
     }
+  }
+
+  // Añadimos el producto al carrito
+  addtocart(producto: Product) {
+    this.carrito.addNewProducto(producto);
   }
 
   // Sanitizamos la url de la imagen obtenida de la consulta a la api por haber usado una peticón por GET y no por POST

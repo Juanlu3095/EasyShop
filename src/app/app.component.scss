@@ -17,6 +17,20 @@
     width: 40%;
 }
 
+.precio_tachado{
+    color: var(--orangered);
+}
+
+mat-card-header{
+    display: flex;
+    flex-direction: column;
+}
+
+.eliminar{
+    color: white;
+    background-color: var(--orangered);
+}
+
 // Color de fondo del contenido, ya que hereda de mat-sidenav-content el color --lightgray
 mat-sidenav-content{
     background-color: var(--white);
