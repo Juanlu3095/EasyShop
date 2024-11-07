@@ -26,7 +26,7 @@ export class CheckoutpageComponent implements OnInit{
   constructor(private title: Title) {}
 
   ngOnInit(): void {
-    this.title.setTitle('Finalizar compra');
+    this.title.setTitle('Finalizar compra | EasyShop');
   }
 
   /* Comprueba si el cupón es válido y lo añade a tu pedido con un observable */
@@ -37,5 +37,10 @@ export class CheckoutpageComponent implements OnInit{
   /* Comprueba el método de pago del radio button y procede al pago según el caso */
   pagar(){
     console.log(this.metodopago);
+  }
+
+  /* Obtenemos los productos del carrito */
+  getProductosCarrito() {
+    
   }
 }

@@ -47,7 +47,7 @@ export class CanalempleoComponent implements OnInit, OnDestroy{
   })
 
   ngOnInit(): void {
-    this.title.setTitle('Ofertas de empleo');
+    this.title.setTitle('Ofertas de empleo | EasyShop');
     this.disenoResponsivo();
     
     /* Obtenemos las categorías de empleo para el select del filtro */

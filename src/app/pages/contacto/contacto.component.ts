@@ -41,7 +41,7 @@ export class ContactoComponent implements OnInit, OnDestroy{
   rowHeight: string;
 
   ngOnInit(): void {
-    this.title.setTitle('Contacto');
+    this.title.setTitle('Contacto | EasyShop');
     this.responsiveDesign()
   }
 

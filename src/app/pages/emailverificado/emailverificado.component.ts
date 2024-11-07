@@ -16,6 +16,6 @@ export class EmailverificadoComponent {
   constructor(private title: Title) {}
  
   ngOnInit(): void {
-    this.title.setTitle('Email verificado < EasyShop');
+    this.title.setTitle('Email verificado | EasyShop');
   }
 }

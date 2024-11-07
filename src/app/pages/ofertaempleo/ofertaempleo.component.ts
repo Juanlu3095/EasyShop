@@ -68,7 +68,7 @@ export class OfertaempleoComponent implements OnInit, OnDestroy{
       this.ofertaempleoservice.getOferta(this.idoferta).subscribe({
         next: (respuesta) => {
           this.oferta = respuesta.data;
-          this.title.setTitle(`${this.oferta.puesto} - Oferta de empleo`);
+          this.title.setTitle(`${this.oferta.puesto} | Oferta de empleo`);
         },
         error: (error) => {
           console.error(error);

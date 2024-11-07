@@ -21,10 +21,10 @@ export class CarritoService {
 
   // Recuperamos nuestro BehaviorSubject desde fuera del servicio como un observable para suscribirnos al mismo
   get productos() {
-    return this._productos.asObservable(); // Cada vez que accedemos a este observable, lo que hacemos es ver el carrito, ya que lo iniciamos en el contructor con this.cart
+    return this._productos; // Cada vez que accedemos a este observable, lo que hacemos es ver el carrito, ya que lo iniciamos en el contructor con this.cart
   }
 
-  // Obtenemos el Observable
+  // Obtenemos el Observable para el matsnackbar
   get refresh$() {
     return this._refresh$.asObservable(); // asObservable() hace que los componentes que utilicen el getter no puedan emitir valores de vuelta usando next() -> Encapsulación
   }
@@ -45,16 +45,15 @@ export class CarritoService {
     .subscribe()
   }
 
-  addNewProducto(producto: Product) {
-    //this.productosCarrito = this.cart;
+  addNewProducto(producto: Product, cantidadProducto: number) {
 
     const productoExiste = this.productosCarrito.findIndex(item => item.Id === producto.Id); // La constante almacena el producto del array basado en la Id
     
     if(productoExiste >= 0) {
-      this.productosCarrito[productoExiste].cantidad++; // Buscamos el producto que se repite y le aumentamos la cantidad en 1
+      this.productosCarrito[productoExiste].cantidad = Number(this.productosCarrito[productoExiste].cantidad) + Number(cantidadProducto); // Buscamos el producto que se repite y le aumentamos la cantidad en 1
       console.log('carrito:', this.productosCarrito);
     } else {
-      let newItem: Product = { ...producto, cantidad: 1} // Si no iniciamos la cantidad en 1 aquí, nos saldrá NaN
+      let newItem: Product = { ...producto, cantidad: cantidadProducto} // Si no iniciamos la cantidad en 1 aquí, nos saldrá NaN
       this.productosCarrito.push(newItem); // Incluimos el nuevo producto que pasamos por parámetro al array
     }
 
@@ -80,5 +79,10 @@ export class CarritoService {
     
     // Anunciamos a nuestros suscriptores que se ha eliminado un producto y emitimos el array de productos actualizado:
     this._productos.next(this.productosCarrito);
+  }
+
+  // Actualizar carrito en la página del carrito
+  updateCarrito() {
+    
   }
 }

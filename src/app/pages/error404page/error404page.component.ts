@@ -16,6 +16,6 @@ export class Error404pageComponent implements OnInit{
   constructor(private title: Title) {}
 
   ngOnInit(): void {
-    this.title.setTitle('Página no encontrada - EasyShop');
+    this.title.setTitle('Página no encontrada | EasyShop');
   }
 }

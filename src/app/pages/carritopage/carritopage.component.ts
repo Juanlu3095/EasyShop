@@ -1,60 +1,99 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, LOCALE_ID } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { CarritoService } from '../../services/carrito.service';
+import { Subscription, map } from 'rxjs';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Product } from '../../models/product';
+import { environment } from '../../../environments/environment.development';
+import { CommonModule, registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+
+registerLocaleData(localeEs, 'es');
 
 @Component({
   selector: 'app-carritopage',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, MatTableModule, MatIconModule, MatButtonModule, MatCardModule, MatDividerModule, RouterLink],
+  providers: [{provide: LOCALE_ID, useValue: 'es'}],
+  imports: [HeaderComponent, FooterComponent, MatTableModule, MatIconModule, MatButtonModule, MatCardModule, MatDividerModule, MatInputModule, MatFormFieldModule, RouterLink, CommonModule, ReactiveFormsModule],
   templateUrl: './carritopage.component.html',
   styleUrl: './carritopage.component.scss'
 })
-export class CarritopageComponent implements OnInit{
+export class CarritopageComponent implements OnInit, OnDestroy{
 
-  constructor(private title: Title) {}
+  subtotal: number;
+  dataSource: MatTableDataSource<Product>;
+  cart: Product[];
+  displayedColumns: string[] = ['imagen', 'nombre', 'precio', 'cantidad', 'subtotal', 'acciones']; // Permite indicar las columnas a mostrar en el HTML
+
+  endPointFiles = environment.FilesEndpoint;
+  suscripcion: Subscription[] = [];
+
+  constructor(private title: Title, private carrito: CarritoService) {}
 
   ngOnInit(): void {
-    this.title.setTitle('Carrito');
+    this.title.setTitle('Carrito | EasyShop');
+    this.getCarrito();
+    this.getSubtotal();
+
+    this.suscripcion.push(this.carrito.productos.subscribe( () => {
+      this.getCarrito();
+    }))
   }
 
-  displayedColumns = [
-    'name',
-    'position',
-    'weight',
-    'symbol',
-    'position',
-    'weight',
-    'symbol',
-    'star',
-  ];
-  dataSource = ELEMENT_DATA;
+  ngOnDestroy(): void {
+    this.suscripcion.forEach(item => item.unsubscribe());
+  }
+
+  aumentarCantidad(indice: number) {
+    this.cart = this.carrito.cart;
+    this.cart[indice].cantidad++;
+    localStorage.setItem('cart', JSON.stringify(this.cart));
+    this.carrito.productos.next(this.cart) // Podemos emitir desde el componente porque get productos() no tiene asObservable(). Emitimos y recibimos el suscribe del ngOnInit, incluido en el header    
+    // No es necesario llamar a getSubtotal porque esta función ya está suscrita a get productos del servicio
+  }
+
+  dismimuirCantidad(indice: number) {
+    this.cart = this.carrito.cart;
+    if(this.cart[indice].cantidad > 1) { // Comprobamos que la cantidad no sea menor de 1
+      this.cart[indice].cantidad--;
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(this.cart));
+    this.carrito.productos.next(this.cart)
+  }
+
+  // Borramos el producto del array y actualizamos el array por habernos suscrito en el ngOnInit
+  deleteProduct(indice: number) {
+    this.carrito.deleteProducto(indice);
+  }
+
+  getCarrito() {
+    this.dataSource = new MatTableDataSource(this.carrito.cart);
+  }
+
+  getSubtotal() {
+    this.suscripcion.push(this.carrito.productos
+      .pipe(map(productos => {
+  
+        // Con reduce sumamos los valores de todos los precios empezando desde 0. Con Number convertimos todo en números para poder sumar correctamente
+        return productos.reduce((prev, curr) => Number(prev) + Number( curr.Precio_rebajado_euros? curr.Precio_rebajado_euros * curr.cantidad : curr.Precio_euros * curr.cantidad), 0)
+      }))
+      .subscribe( subtotal => {
+        this.subtotal = Number(subtotal.toFixed(2))
+      })) 
+  }
+
 }
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
 
 

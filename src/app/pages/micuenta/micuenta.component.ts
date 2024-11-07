@@ -16,7 +16,7 @@ export class MicuentaComponent implements OnInit{
   constructor(private title: Title, private auth: AuthService) {}
  
   ngOnInit(): void {
-    this.title.setTitle('Mi cuenta < EasyShop');
+    this.title.setTitle('Mi cuenta | EasyShop');
     this.obtenerUserData();
   }
 

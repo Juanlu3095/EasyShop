@@ -57,7 +57,7 @@ export class ListaproductosComponent implements OnInit{
     // Hay que comprobar que la categoría contenida en la variable 'categoria' existe en el back-end
     if(this.categoria) {
       let titulopage = this.toCamelCaseWithoutSpaces(this.categoria); // Ponemos la primera letra de categoria en mayúscula
-      this.title.setTitle(`${titulopage} < EasyShop`);
+      this.title.setTitle(`${titulopage} | EasyShop`);
       this.getProductosPorCategoria(); // Obtenemos marca por el slug de la categoría de la url
 
     } else if(this.marcaId) {
@@ -65,7 +65,7 @@ export class ListaproductosComponent implements OnInit{
       this.getProductosPorMarca(); // Obtenemos marca por la id de la url
       
     } else {
-      this.title.setTitle('Todos los productos < EasyShop');
+      this.title.setTitle('Todos los productos | EasyShop');
       this.getProductos();
     }
 
@@ -127,6 +127,7 @@ export class ListaproductosComponent implements OnInit{
       this.productService.getMarca(this.marcaId).subscribe({
         next: (respuesta) => {
           this.marca = respuesta
+          this.title.setTitle(`${this.marca.Nombre} | EasyShop`);
         },
         error: (error) => {
           console.error(error);
@@ -203,7 +204,7 @@ export class ListaproductosComponent implements OnInit{
 
   // Añadimos el producto al carrito
   addtocart(producto: Product) {
-    this.carrito.addNewProducto(producto);
+    this.carrito.addNewProducto(producto, 1);
   }
 
 }

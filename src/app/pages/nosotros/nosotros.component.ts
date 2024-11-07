@@ -15,6 +15,6 @@ export class NosotrosComponent implements OnInit{
   constructor(private title: Title) {}
 
   ngOnInit(): void {
-    this.title.setTitle('Nosotros');
+    this.title.setTitle('Nosotros | EasyShop');
   }
 }

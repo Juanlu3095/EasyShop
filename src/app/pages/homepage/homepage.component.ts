@@ -104,6 +104,6 @@ export class HomepageComponent implements OnInit{
 
   // Añadimos el producto al carrito
   addtocart(producto: Product) {
-    this.carrito.addNewProducto(producto);
+    this.carrito.addNewProducto(producto, 1);
   }
 }

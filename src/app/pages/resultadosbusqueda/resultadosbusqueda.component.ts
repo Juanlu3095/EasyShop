@@ -34,7 +34,7 @@ export class ResultadosbusquedaComponent implements OnInit{
   ngOnInit(): void {
     this.busqueda = this.activatedroute.snapshot.params['busqueda']; // Obtenemos las palabras de la búsqueda de la ruta
 
-    this.title.setTitle(`Resultados de la búsqueda para «${this.busqueda}»`);
+    this.title.setTitle(`Resultados de la búsqueda para «${this.busqueda}» | EasyShop`);
     
     if(this.busqueda) {
       this.productService.getProductosBySearch(this.busqueda).subscribe({
@@ -53,7 +53,7 @@ export class ResultadosbusquedaComponent implements OnInit{
 
   // Añadimos el producto al carrito
   addtocart(producto: Product) {
-    this.carrito.addNewProducto(producto);
+    this.carrito.addNewProducto(producto, 1);
   }
 
   // Sanitizamos la url de la imagen obtenida de la consulta a la api por haber usado una peticón por GET y no por POST

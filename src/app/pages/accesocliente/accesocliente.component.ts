@@ -50,7 +50,7 @@ export class AccesoclienteComponent implements OnInit{
     private dialogService: DialogService) {}
 
   ngOnInit(): void {
-    this.title.setTitle('Acceso < EasyShop');
+    this.title.setTitle('Acceso | EasyShop');
   }
 
   login() {

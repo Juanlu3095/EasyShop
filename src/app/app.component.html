@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-cart">
     <mat-sidenav>Start</mat-sidenav>
     <mat-sidenav #sidenav mode="over" position="end" fixedInViewport="true" [ngStyle]="{'min-width': '30vh'}">
-        <button class="close" (click)="closeSidenav()">X</button>
+        <button class="close btn" (click)="closeSidenav()">X</button>
         <br><br>
         
         @if(productos && productos.length > 0) {
