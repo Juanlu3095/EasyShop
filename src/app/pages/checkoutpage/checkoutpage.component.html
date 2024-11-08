@@ -109,11 +109,20 @@
                                 <p class="content-item-title">Subtotal</p>
                             </div>
                         <mat-divider></mat-divider>
+                        
+                        @for (item of this.pedido; track item.Id) {
+
                             <div class="content-item">
-                                <p>Perro bonito Mastodonte x 15</p>
-                                <p>150.00€</p>
+                                <p>{{ item.Nombre }} x {{ item.cantidad }}</p>
+                                <p>{{ item.Precio_rebajado_euros ? item.Precio_rebajado_euros * item.cantidad : item.Precio_euros * item.cantidad }} €</p>
                             </div>
-                        <mat-divider></mat-divider>
+                            <mat-divider></mat-divider>
+
+                        } @empty {
+
+                            <h3>No hay productos en el carrito.</h3>
+                        }
+                        
                             <div class="content-item">
                                 <p>Descuento</p>
                                 <p>-10.00€</p>

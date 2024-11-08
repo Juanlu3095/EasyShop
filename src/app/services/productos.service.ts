@@ -145,6 +145,15 @@ export class ProductosService {
     );
   }
 
+  // Obtenemos productos por Array de Ids
+  getProductosByIds(id: number | Array<number>) {
+    return this.http.get<Apiresponse>(`${this.endpoint}/obtenerProductosId/${id}`, this.headersService.createHeadersGeneric()).pipe(
+      map( (respuesta) => {
+        return respuesta.data
+      })
+    )
+  }
+
   getProducto(id: number) {
     return this.http.get<any>(`${this.endpoint}/product/${id}`, this.headersService.createHeadersGeneric()).pipe(
       map( (respuesta) => {
