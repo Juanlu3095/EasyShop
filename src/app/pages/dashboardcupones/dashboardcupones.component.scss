@@ -1,0 +1,24 @@
+.encabezado-cupones{
+    display: flex;
+    gap: 1rem; 
+    margin-bottom: 1rem;
+}
+
+.encabezado-cupones button{
+    border-color: var(--darkblue);
+}
+
+.caution{
+    color: red;
+}
+
+// FORMULARIOS
+.cupon-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+.input-full-width {
+    width: 100%;
+}

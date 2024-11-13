@@ -68,6 +68,10 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/dashboardeditarmarca/dashboardeditarmarca.component').then((m) => m.DashboardeditarmarcaComponent),
             },
             {
+                path: 'cupones',
+                loadComponent: () => import('./pages/dashboardcupones/dashboardcupones.component').then((m) => m.DashboardcuponesComponent),
+            },
+            {
                 path: 'empleos',
                 loadComponent: () => import('./pages/dashboardempleos/dashboardempleos.component').then((m) => m.DashboardempleosComponent),
             },

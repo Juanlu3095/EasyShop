@@ -11,7 +11,7 @@ export class DialogService {
 
   constructor(public dialog: MatDialog) { }
 
-  openDialog(html: TemplateRef<HTMLElement>, title?: string, btnClass?: string) {
+  openDialog(html: TemplateRef<HTMLElement>, title?: string, btnClass?: string) { // Le pasamos como parámetro la referencia del componente a abrir como modal(html)
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {html: html, title: title, btnClass: btnClass },
       width: '40vw',

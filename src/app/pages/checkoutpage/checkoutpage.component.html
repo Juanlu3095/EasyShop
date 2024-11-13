@@ -7,9 +7,9 @@
 
         <!-- CUPÓN -->
         <h3>Si tienes un cupón de descuento indícalo a continuación:</h3>
-        <form class="cuponForm">
-            <input type="text" class="form-control cupon" id="cupon" aria-describedby="cuponHelp" placeholder="Código de cupón">
-            <button mat-flat-button type="submit" class="submit">Aplicar cupón</button>
+        <form class="cuponForm" [formGroup]="cuponForm">
+            <input type="text" class="form-control cupon" id="cupon" aria-describedby="cuponHelp" placeholder="Código de cupón" formControlName="codigo">
+            <button mat-flat-button (click)="comprobarcupon()" class="submit">Aplicar cupón</button>
         </form>
 
         <div class="checkout-container">
@@ -123,14 +123,17 @@
                             <h3>No hay productos en el carrito.</h3>
                         }
                         
+                        @if(cupondescuento) {
                             <div class="content-item">
                                 <p>Descuento</p>
-                                <p>-10.00€</p>
+                                <p>-{{ (cupondescuento.Tipo == 'Fijo' ? cupondescuento.Descuento  : subtotal * (cupondescuento.Descuento / 100)) | currency:'EUR' }}</p>
                             </div>
+                        }
+                            
                         <mat-divider></mat-divider>
                             <div class="content-item">
                                 <p>Total</p>
-                                <p>140.00€ (incluye IVA)</p>
+                                <p>{{ total | currency:'EUR'}} (incluye IVA)</p>
                             </div>
                         <mat-divider></mat-divider>
                       </mat-card-content>
