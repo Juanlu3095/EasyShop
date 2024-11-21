@@ -72,6 +72,14 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/dashboardcupones/dashboardcupones.component').then((m) => m.DashboardcuponesComponent),
             },
             {
+                path: 'metodospago',
+                loadComponent: () => import('./pages/dashboardmetodospago/dashboardmetodospago.component').then((m) => m.DashboardmetodospagoComponent),
+            },
+            {
+                path: 'metodospago/transferencia',
+                loadComponent: () => import('./pages/dashboardmetodotransferencia/dashboardmetodotransferencia.component').then((m) => m.DashboardmetodotransferenciaComponent),
+            },
+            {
                 path: 'empleos',
                 loadComponent: () => import('./pages/dashboardempleos/dashboardempleos.component').then((m) => m.DashboardempleosComponent),
             },

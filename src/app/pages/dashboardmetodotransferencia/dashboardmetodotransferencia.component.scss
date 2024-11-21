@@ -1,0 +1,25 @@
+.form-metodopago form{
+    display: flex;
+    flex-direction: column;
+}
+
+.configuracion{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.conf-item{
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+.input-field{
+    width: 100%;
+}
+
+.guardar{
+    background-color: var(--darkblue);
+    color: white;
+}

@@ -1,0 +1,76 @@
+<main>
+    @if(metodopago) {
+
+        <section class="encabezado-productonuevo">
+            <h1>{{ metodopago.nombre }}</h1>
+            <a href="dashboard/metodospago">← Volver a la página anterior</a>
+        </section>
+    
+        <br><br>
+
+        <section class="form-metodopago">
+            <form [formGroup]="transferenciaForm">
+                <mat-checkbox class="checkbox" formControlName="activo">Activar/Desactivar transferencia bancaria directa</mat-checkbox>
+                <br>
+                <mat-form-field class="input-field">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput type="text" formControlName="nombre">
+                </mat-form-field>
+
+                <mat-form-field class="input-field">
+                    <mat-label>Descripción</mat-label>
+                    <textarea matInput type="textarea" formControlName="descripcion"></textarea>
+                </mat-form-field>
+
+                <mat-form-field class="input-field">
+                    <mat-label>Descripción para el cliente</mat-label>
+                    <textarea matInput type="textarea" formControlName="descripcion_cliente"></textarea>
+                </mat-form-field>
+
+                <br>
+                <h3>Configuración de la cuenta</h3>
+                <div class="configuracion">
+                    <div class="conf-item">
+                        <mat-form-field class="input-field">
+                            <mat-label>Nombre de la cuenta</mat-label>
+                            <input matInput type="text" formControlName="nombre_cuenta">
+                        </mat-form-field>
+
+                        <mat-form-field class="input-field">
+                            <mat-label>Número de la cuenta</mat-label>
+                            <input matInput type="number" formControlName="numero_cuenta">
+                        </mat-form-field>
+
+                        <mat-form-field class="input-field">
+                            <mat-label>Nombre del banco</mat-label>
+                            <input matInput type="text" formControlName="nombre_banco">
+                        </mat-form-field>
+                    </div>
+                    <div class="conf-item">
+                        <mat-form-field class="input-field">
+                            <mat-label>Código de clasificación</mat-label>
+                            <input matInput type="text" formControlName="codigo_clasificacion">
+                        </mat-form-field>
+
+                        <mat-form-field class="input-field">
+                            <mat-label>IBAN</mat-label>
+                            <input matInput type="text" formControlName="iban">
+                        </mat-form-field>
+
+                        <mat-form-field class="input-field">
+                            <mat-label>BIC/Swift</mat-label>
+                            <input matInput type="text" formControlName="bic_swift">
+                        </mat-form-field>
+                    </div>
+                </div>
+  
+            </form>
+            <br>
+            <button class="guardar" mat-stroked-button (click)="updateMetodopago()">Guardar cambios</button>
+        </section>
+        
+    } @else {
+        <p>El método de pago no existe.</p>
+    }
+
+</main>
