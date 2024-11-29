@@ -26,15 +26,20 @@ export class MetodospagoService {
     return this.http.get<Apiresponse>(`${this.endpoint}/metodopago`, this.headersService.createHeadersAdminAnyObject());
   }
 
+  getMetodosPagoDisponibles() {
+    return this.http.get<Apiresponse>(`${this.endpoint}/pagosdisponibles`, this.headersService.createHeadersGeneric());
+  }
+
   getMetodoPago(slug: string) {
     return this.http.get<Apiresponse>(`${this.endpoint}/metodopago/${slug}`, this.headersService.createHeadersAdmin());
   }
 
+  // Activamos o desactivamos el metodo de pago. Al usar Partial<Metodopago> SÓLO se enviará al backend lo que contenga el body
   updateActivado(slug: string, activo: number) {
     let body = {
       'activo': activo
     }
-    return this.http.put<Metodopago>(`${this.endpoint}/switchactivo/${slug}`, body, this.headersService.createHeadersAdmin()).pipe(
+    return this.http.patch<Partial<Metodopago>>(`${this.endpoint}/switchactivo/${slug}`, body, this.headersService.createHeadersAdmin()).pipe(
       tap(() => {
         this.refresh$.next()
       })

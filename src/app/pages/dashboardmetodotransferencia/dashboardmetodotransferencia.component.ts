@@ -18,7 +18,7 @@ import { Metodopago } from '../../models/metodopago';
 })
 export class DashboardmetodotransferenciaComponent implements OnInit{
 
-  metodopago: any;
+  metodopago: Metodopago;
   slug: string = 'transferencia' // String con el que identificamos el recurso
 
   transferenciaForm = new FormGroup({
@@ -46,6 +46,7 @@ export class DashboardmetodotransferenciaComponent implements OnInit{
       this.metodospagoService.getMetodoPago(this.slug).subscribe({
         next: (respuesta) => {
           this.metodopago = respuesta.data
+          console.log(respuesta)
           this.setTitle()
           
           // Inyectamos los valores del método de pago en el formulario
@@ -54,12 +55,12 @@ export class DashboardmetodotransferenciaComponent implements OnInit{
               nombre: this.metodopago.nombre,
               descripcion: this.metodopago.descripcion,
               descripcion_cliente: this.metodopago.descripcion_cliente,
-              nombre_cuenta: JSON.parse(this.metodopago.configuracion).nombre, // convertimos un objeto JSON en un objeto JS que podamos manipular
-              numero_cuenta: JSON.parse(this.metodopago.configuracion).numero,
-              nombre_banco: JSON.parse(this.metodopago.configuracion).nombre_banco,
-              codigo_clasificacion: JSON.parse(this.metodopago.configuracion).clasificacion,
-              iban: JSON.parse(this.metodopago.configuracion).iban,
-              bic_swift: JSON.parse(this.metodopago.configuracion).bic_swift,
+              nombre_cuenta: JSON.parse(this.metodopago.configuracion.toString()).nombre, // convertimos un objeto JSON en un objeto JS que podamos manipular
+              numero_cuenta: JSON.parse(this.metodopago.configuracion.toString()).numero, // Usamos toString() porque lo que transformamos es un objeto no un string, que es lo que pide
+              nombre_banco: JSON.parse(this.metodopago.configuracion.toString()).nombre_banco,
+              codigo_clasificacion: JSON.parse(this.metodopago.configuracion.toString()).clasificacion,
+              iban: JSON.parse(this.metodopago.configuracion.toString()).iban,
+              bic_swift: JSON.parse(this.metodopago.configuracion.toString()).bic_swift,
             })
         },
         error: (error) => {

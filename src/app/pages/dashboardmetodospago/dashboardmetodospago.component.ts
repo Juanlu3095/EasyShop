@@ -67,7 +67,9 @@ export class DashboardmetodospagoComponent implements OnInit, OnDestroy{
         
       },
       error: (error) => {
-        console.error(error);
+        this._snackBar.open('Ha ocurrido un error.', 'Aceptar', {
+          duration: 3000
+        });
       }
     })
   }

@@ -22,7 +22,7 @@ export class DashboardproductsComponent implements OnInit, OnDestroy{
   suscripcion: Subscription;
   productos: Product[];
   nombreProducto: string;
-  columns = ['Nombre', 'SKU', 'Inventario', 'Precio_euros', 'Precio_rebajado_euros', 'Ultima_modificacion']; // Columnas que rellenamos los datos con la api
+  columns = ['Nombre', 'Inventario', 'Precio_euros', 'Precio_rebajado_euros', 'Ultima_modificacion']; // Columnas que rellenamos los datos con la api
   displayedColumns = ['select',...this.columns, 'acciones']; // Columnas que vamos a mostrar, que incluyen p.ej. checkbox y acciones
   selectedIds: number[] = [];
 

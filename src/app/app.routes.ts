@@ -80,6 +80,14 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/dashboardmetodotransferencia/dashboardmetodotransferencia.component').then((m) => m.DashboardmetodotransferenciaComponent),
             },
             {
+                path: 'pedidos',
+                loadComponent: () => import('./pages/dashboardpedidos/dashboardpedidos.component').then((m) => m.DashboardpedidosComponent),
+            },
+            {
+                path: 'pedidos/:id',
+                loadComponent: () => import('./pages/dashboardpedidoseditar/dashboardpedidoseditar.component').then((m) => m.DashboardpedidoseditarComponent),
+            },
+            {
                 path: 'empleos',
                 loadComponent: () => import('./pages/dashboardempleos/dashboardempleos.component').then((m) => m.DashboardempleosComponent),
             },

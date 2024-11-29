@@ -13,7 +13,7 @@
         </form>
 
         <div class="checkout-container">
-            <form class="checkout-form">
+            <form class="checkout-form" [formGroup]="checkoutForm">
 
                 <!-- DETALLES DE FACTURACIÓN -->
                 <div class="checkout-container-item">
@@ -22,78 +22,79 @@
 
                     <mat-grid-list class="input-list" cols="2" rowHeight="5:1">
                         <mat-grid-tile [colspan]="1" [rowspan]="1">
-                            <mat-form-field class="nombre-input form-field" [style.width.%]="100" [style.gap.%]="10">
+                            <mat-form-field class="form-field" [style.width.%]="100" [style.gap.%]="10">
                                 <mat-label>Nombre:</mat-label>
-                                <input type="text" matInput placeholder="" value="" required>
+                                <input type="text" matInput formControlName="nombre" required>
                             </mat-form-field>
                         </mat-grid-tile>
 
                         <mat-grid-tile [colspan]="1" [rowspan]="1">
-                            <mat-form-field class="apellidos-input form-field" [style.width.%]="100">
+                            <mat-form-field class="form-field" [style.width.%]="100">
                                 <mat-label>Apellidos:</mat-label>
-                                <input type="text" matInput placeholder="" value="" required>
+                                <input type="text" matInput formControlName="apellidos" required>
                             </mat-form-field>
                         </mat-grid-tile>
 
                         <mat-grid-tile [colspan]="2" [rowspan]="1">
-                            <mat-form-field class="pais-input form-field" [style.width.%]="100">
+                            <mat-form-field class="form-field" [style.width.%]="100">
                                 <mat-label>País/Región:</mat-label>
-                                <input type="text" matInput placeholder="" value="" required>
+                                <input type="text" matInput formControlName="pais" required>
                             </mat-form-field>
                         </mat-grid-tile>
 
                         <mat-grid-tile [colspan]="2" [rowspan]="1">
-                            <mat-form-field class="direccion-input form-field" [style.width.%]="100">
+                            <mat-form-field class="form-field" [style.width.%]="100">
                                 <mat-label>Dirección de entrega:</mat-label>
-                                <input type="text" matInput placeholder="" value="" required>
+                                <input type="text" matInput formControlName="direccion" required>
                             </mat-form-field>
                         </mat-grid-tile>
 
                         <mat-grid-tile [colspan]="2" [rowspan]="1">
-                            <mat-form-field class="codigopostal-input form-field" [style.width.%]="100">
+                            <mat-form-field class="form-field" [style.width.%]="100">
                                 <mat-label>Código postal:</mat-label>
-                                <input type="number" matInput placeholder="" value="" required>
+                                <input type="number" matInput formControlName="codigopostal" required>
                             </mat-form-field>
                         </mat-grid-tile>
 
                         <mat-grid-tile [colspan]="1" [rowspan]="1">
-                            <mat-form-field class="codigopostal-input form-field" [style.width.%]="100">
+                            <mat-form-field class="form-field" [style.width.%]="100">
                                 <mat-label>Población:</mat-label>
-                                <input type="text" matInput placeholder="" value="" required>
+                                <input type="text" matInput formControlName="poblacion" required>
                             </mat-form-field>
                         </mat-grid-tile>
 
                         <mat-grid-tile [colspan]="1" [rowspan]="1">
-                            <mat-form-field class="codigopostal-input form-field" [style.width.%]="100">
+                            <mat-form-field class="form-field" [style.width.%]="100">
                                 <mat-label>Provincia:</mat-label>
-                                <input type="text" matInput placeholder="" value="" required>
+                                <input type="text" matInput formControlName="provincia" required>
                             </mat-form-field>
                         </mat-grid-tile>
 
                         <mat-grid-tile [colspan]="2" [rowspan]="1">
-                            <mat-form-field class="codigopostal-input form-field" [style.width.%]="100">
+                            <mat-form-field class="form-field" [style.width.%]="100">
                                 <mat-label>Teléfono:</mat-label>
-                                <input type="number" matInput placeholder="" value="" required>
+                                <input type="number" matInput formControlName="telefono" required>
                             </mat-form-field>
                         </mat-grid-tile>
 
                         <mat-grid-tile [colspan]="2" [rowspan]="1">
-                            <mat-form-field class="codigopostal-input form-field" [style.width.%]="100">
+                            <mat-form-field class="form-field" [style.width.%]="100">
                                 <mat-label>Correo electrónico:</mat-label>
-                                <input type="email" matInput placeholder="" value="" required>
+                                <input type="email" matInput formControlName="email" required>
                             </mat-form-field>
                         </mat-grid-tile>
 
-                        <mat-grid-tile [colspan]="2" [rowspan]="3" [colspan]="2">
-                            <mat-form-field class="codigopostal-input form-field" [style.width.%]="100">
+                        <mat-grid-tile [colspan]="2" [rowspan]="3">
+                            <mat-form-field class="form-field" [style.width.%]="100">
                                 <mat-label>Notas del pedido:</mat-label>
                                 <textarea  cdkTextareaAutosize
                                 #autosize="cdkTextareaAutosize"
                                 cdkAutosizeMinRows="7"
-                                cdkAutosizeMaxRows="10" type="text" matInput></textarea>
-                              </mat-form-field>
+                                cdkAutosizeMaxRows="10" type="textarea" matInput formControlName="notas"></textarea>
+                            </mat-form-field>
                         </mat-grid-tile>
-                    </mat-grid-list>
+                    </mat-grid-list> 
+                    
                 </div>
 
                 <!-- TU PEDIDO -->
@@ -142,9 +143,13 @@
                             <div class="metodo-pago">
                                 <h2 class="footer-title">Método de pago</h2>
 
-                                <mat-radio-group aria-labelledby="radio-group-label" class="radio-group">
-                                    <mat-radio-button class="radio-button" value="tarjeta">Tarjeta de crédito</mat-radio-button>
-                                    <mat-radio-button class="radio-button" value="transferencia">Transferencia bancaria directa</mat-radio-button>
+                                <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" formControlName="metodopago">
+                                    @for(metodopago of metodospago; track metodopago.slug) {
+                                        <mat-radio-button class="radio-button" value="{{ metodopago.slug }}">{{ metodopago.nombre }}</mat-radio-button>
+                                    }
+                                    @empty {
+                                        <p>No hay métodos de pago disponibles</p>
+                                    }
                                 </mat-radio-group>
                             </div>
                             <p class="datos-personales">
@@ -152,7 +157,7 @@
                                 <a routerLink="">política de privacidad</a>.
                             </p>
 
-                            <button mat-flat-button (click)="pagar()">Proceder al pago</button>
+                            <button mat-flat-button (click)="crearPedido()" *ngIf="metodospago.length > 0">Proceder al pago</button>
                         </mat-card-content>
                       </mat-card-footer>
                     </mat-card>

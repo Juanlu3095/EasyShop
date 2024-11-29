@@ -20,7 +20,7 @@ export class DashseleccionarimagenproductcategoryComponent implements OnInit{
 
   readonly dialogRef = inject(MatDialogRef<DashseleccionarimagenproductcategoryComponent>);
   //readonly data = inject<any>(MAT_DIALOG_DATA);
-  readonly imagenSeleccionada = signal(this.data.imagenSeleccionada);
+  readonly imagenSeleccionada = signal(this.data.imagenSeleccionada); // this.data viene del componente dashproducteditar donde abrimos el dialog pasando data
 
   columnImages = ['Archivo'];
   columns = ['Nombre', 'Estado']; // Columnas que rellenamos los datos con la api
@@ -51,7 +51,8 @@ export class DashseleccionarimagenproductcategoryComponent implements OnInit{
 
   seleccionarImagen(id: number) { // MUCHO OJO CON LAS MAYÚSCULAS EN EN LOS OBJETOS QUE NOS VIENEN DE LOS RESOURCES DE LARAVEL, DEBEN SER IGUALES A LOS DE TS
     const imagen = this.datos.find(({ Id }) => Id === id); // Busca en el array de datos el objeto con la id indicada como parámetro (id: number)
-    
+    // const imagen = this.datos.find(objeto => objeto.Id === id); // Lo mismo que lo de arriba pero no usamos el objeto { id }
+
     if (imagen) {
       this.imagenSeleccionada.set({ id: imagen.Id, nombre: imagen.Nombre, ruta: imagen.Archivo }); // Guarda la imagen seleccionada en la signal 
     }

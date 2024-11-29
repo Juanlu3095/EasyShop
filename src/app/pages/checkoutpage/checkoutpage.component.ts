@@ -21,6 +21,10 @@ import localeEs from '@angular/common/locales/es';
 import { CuponesService } from '../../services/cupones.service';
 import { Cupon } from '../../models/cupon';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MetodospagoService } from '../../services/metodospago.service';
+import { Metodopago } from '../../models/metodopago';
+import { PedidosService } from '../../services/pedidos.service';
+import { DialogService } from '../../services/dialog.service';
 
 registerLocaleData(localeEs, 'es');
 
@@ -34,10 +38,10 @@ registerLocaleData(localeEs, 'es');
 })
 export class CheckoutpageComponent implements OnInit, OnDestroy{
 
-  metodopago:string;
   carrito: Product[];
   pedido: Product[];
   cupondescuento: Cupon;
+  metodospago: Metodopago[] = [];
   subtotal: number; // Aplica para el precio total sin descuento
   total: number; // Aplica para el precio total con descuento
   suscripcion: Subscription;
@@ -46,16 +50,34 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
     codigo: new FormControl<string>('', Validators.required)
   })
 
+  checkoutForm = new FormGroup({
+    nombre: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1)])),
+    apellidos: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1)])),
+    pais: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1)])),
+    direccion: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1)])),
+    codigopostal: new FormControl<number | null>(null, Validators.compose([Validators.required, Validators.minLength(1)])),
+    poblacion: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1)])),
+    provincia: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1)])),
+    telefono: new FormControl<number | null>(null, Validators.compose([Validators.required, Validators.minLength(1)])),
+    email: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1), Validators.email])),
+    notas: new FormControl<string>('', Validators.compose([Validators.minLength(1)])),
+    metodopago: new FormControl<Partial<Metodopago>>({}, Validators.compose([Validators.required, Validators.minLength(1)])),
+  })
+
   constructor(
     private title: Title,
     private carritoService: CarritoService,
     private productoService: ProductosService,
     private cuponService: CuponesService,
-    private _snackbar: MatSnackBar ) {}
+    private metodospagoService: MetodospagoService,
+    private pedidosService: PedidosService,
+    private _snackbar: MatSnackBar,
+    private dialogService: DialogService ) {}
 
   ngOnInit(): void {
     this.title.setTitle('Finalizar compra | EasyShop');
     this.getProductosCarrito();
+    this.getMetodospagodisponibles()
 
     this.suscripcion = this.carritoService.productos.subscribe( () => {
       this.getProductosCarrito();
@@ -110,9 +132,66 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
     }
   }
 
+  getMetodospagodisponibles() {
+    this.metodospagoService.getMetodosPagoDisponibles().subscribe({
+      next: (respuesta) => {
+        this.metodospago = respuesta.data
+      },
+      error: (error) => {
+        this._snackbar.open('No se ha podido encontrar métodos de pago válidos.', 'Aceptar', {
+          duration: 3000
+        });
+      }
+    })
+  }
+
   /* Comprueba el método de pago del radio button y procede al pago según el caso */
-  pagar(){
-    console.log(this.metodopago);
+  crearPedido(){
+    if(this.checkoutForm.valid) {
+      this.dialogService.openSpinner();
+
+      let data = {
+        nombre: this.checkoutForm.value.nombre,
+        apellidos: this.checkoutForm.value.apellidos,
+        pais: this.checkoutForm.value.pais,
+        direccion: this.checkoutForm.value.direccion,
+        codigopostal: this.checkoutForm.value.codigopostal,
+        poblacion: this.checkoutForm.value.poblacion,
+        provincia: this.checkoutForm.value.provincia,
+        telefono: this.checkoutForm.value.telefono,
+        email: this.checkoutForm.value.email,
+        notas: this.checkoutForm.value.notas,
+        metodopago: this.checkoutForm.value.metodopago,
+        subtotal: this.subtotal,
+        nombre_descuento: this.cupondescuento ? this.cupondescuento.Nombre : null,
+        tipo_descuento: this.cupondescuento ? this.cupondescuento.Tipo : null,
+        descuento: this.cupondescuento ? this.cupondescuento.Descuento : null,
+        total: this.total,
+        productos: this.pedido.map(producto => ({ // Creamos un nuevo array con los datos del pedido
+          producto: producto.Id,
+          subtotal: producto.Precio_rebajado_euros ? producto.Precio_rebajado_euros : producto.Precio_euros,
+          cantidad: producto.cantidad,
+          total: producto.Precio_rebajado_euros ? producto.Precio_rebajado_euros * producto.cantidad : producto.Precio_euros * producto.cantidad,
+        }))
+      }
+      console.log(data);
+      this.pedidosService.postPedido(data).subscribe({
+        next: (respuesta) => {
+          this.dialogService.closeAll();
+          this._snackbar.open('Su pedido ha sido registrado.', 'Aceptar', {
+            duration: 3000
+          });
+        },
+        error: (error) => {
+          console.error(error)
+          this.dialogService.closeAll();
+          this._snackbar.open('No se ha podido procesar su pedido.', 'Aceptar', {
+            duration: 3000
+          });
+        }
+      })
+    }
+    
   }
 
   /* Obtenemos los productos del carrito */
