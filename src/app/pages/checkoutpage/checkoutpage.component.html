@@ -52,7 +52,7 @@
                         <mat-grid-tile [colspan]="2" [rowspan]="1">
                             <mat-form-field class="form-field" [style.width.%]="100">
                                 <mat-label>Código postal:</mat-label>
-                                <input type="number" matInput formControlName="codigopostal" required>
+                                <input type="number" matInput formControlName="codigo_postal" required>
                             </mat-form-field>
                         </mat-grid-tile>
 
@@ -143,7 +143,7 @@
                             <div class="metodo-pago">
                                 <h2 class="footer-title">Método de pago</h2>
 
-                                <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" formControlName="metodopago">
+                                <mat-radio-group aria-labelledby="radio-group-label" class="radio-group" formControlName="metodo_pago">
                                     @for(metodopago of metodospago; track metodopago.slug) {
                                         <mat-radio-button class="radio-button" value="{{ metodopago.slug }}">{{ metodopago.nombre }}</mat-radio-button>
                                     }

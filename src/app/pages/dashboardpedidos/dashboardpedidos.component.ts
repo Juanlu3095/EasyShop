@@ -50,6 +50,10 @@ export class DashboardpedidosComponent implements OnInit, OnDestroy{
     this.suscripcion.unsubscribe()
   }
 
+  nuevoPedido() {
+    this.router.navigate(['dashboard/nuevopedido'])
+  }
+
   editarPedido(id: number) {
     this.router.navigate(['dashboard/pedidos/', id])
   }

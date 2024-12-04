@@ -88,6 +88,10 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/dashboardpedidoseditar/dashboardpedidoseditar.component').then((m) => m.DashboardpedidoseditarComponent),
             },
             {
+                path: 'nuevopedido',
+                loadComponent: () => import('./pages/dashboardpedidosnuevo/dashboardpedidosnuevo.component').then((m) => m.DashboardpedidosnuevoComponent),
+            },
+            {
                 path: 'empleos',
                 loadComponent: () => import('./pages/dashboardempleos/dashboardempleos.component').then((m) => m.DashboardempleosComponent),
             },
@@ -147,6 +151,10 @@ export const routes: Routes = [
     {
         path: 'finalizar-compra',
         loadComponent: () => import('./pages/checkoutpage/checkoutpage.component').then((m) => m.CheckoutpageComponent),
+    },
+    {
+        path: 'informacion-transferencia',
+        loadComponent: () => import('./pages/detalletransferencia/detalletransferencia.component').then((m) => m.DetalletransferenciaComponent),
     },
     {
         path: 'nosotros',

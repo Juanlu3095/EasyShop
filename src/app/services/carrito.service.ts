@@ -67,7 +67,7 @@ export class CarritoService {
       
     }).onAction().pipe(
       tap(() => {
-        this._refresh$.next()
+        this._refresh$.next() // se emitirá este observable para abrir el sidebar del carrito del header
       })
     ).subscribe() // Al cerrarse el snackbar, se limpia la suscripción automáticamente por su propia lógica. Si no usamos este subscribe() no se emite el observable
   }
@@ -81,8 +81,10 @@ export class CarritoService {
     this._productos.next(this.productosCarrito);
   }
 
-  // Actualizar carrito en la página del carrito
-  updateCarrito() {
-    
+  // Borrar productos del carrito
+  deleteCarrito() {
+    localStorage.setItem('cart', '[]');
+    this.productosCarrito = []; // También hay que limpiar el array de productosCarrito, que es lo que se emite y no el localStorage como tal
+    this._productos.next(this.productosCarrito);
   }
 }

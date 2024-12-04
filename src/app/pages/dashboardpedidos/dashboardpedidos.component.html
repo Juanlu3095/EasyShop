@@ -2,7 +2,7 @@
     <section>
         <div class="encabezado-pedidos">
             <h1>Pedidos</h1>
-            <button mat-stroked-button>Añadir pedido</button>
+            <button mat-stroked-button (click)="nuevoPedido()">Añadir pedido</button>
         </div>
 
         <app-tablacompleta [columns]="columns" [displayedColumns]="displayedColumns" [data]="pedidos" [buttons]="botones"
@@ -22,7 +22,7 @@
 <!-- CONTENIDO DEL MODAL PARA ELIMINAR LA SELECCIÓN DE PEDIDOS -->
 <ng-template #contentEliminarSeleccion>
     <div>
-        ¿Estás seguro de querer los productos seleccionados?
+        ¿Estás seguro de querer los pedidos seleccionados?
         <br>
         <span class="caution">¡OJO! Si has pulsado el botón para seleccionar todo, se eliminarán todos los pedidos, incluidos aquellos que no aparezcan en la vista actual.</span>
     </div>

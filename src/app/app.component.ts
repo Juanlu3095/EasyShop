@@ -41,6 +41,8 @@ export class AppComponent implements OnInit, OnDestroy{
 
     this.suscripcion.push(this.carrito.productos.subscribe(productos => {
       this.productos = productos;
+      this.getCart();
+      this.getSubtotal();
     }));
 
     this.getSubtotal();

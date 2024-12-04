@@ -9,7 +9,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CarritoService } from '../../services/carrito.service';
@@ -55,13 +55,13 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
     apellidos: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1)])),
     pais: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1)])),
     direccion: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1)])),
-    codigopostal: new FormControl<number | null>(null, Validators.compose([Validators.required, Validators.minLength(1)])),
+    codigo_postal: new FormControl<number | null>(null, Validators.compose([Validators.required, Validators.minLength(1)])),
     poblacion: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1)])),
     provincia: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1)])),
     telefono: new FormControl<number | null>(null, Validators.compose([Validators.required, Validators.minLength(1)])),
     email: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1), Validators.email])),
     notas: new FormControl<string>('', Validators.compose([Validators.minLength(1)])),
-    metodopago: new FormControl<Partial<Metodopago>>({}, Validators.compose([Validators.required, Validators.minLength(1)])),
+    metodo_pago: new FormControl<Partial<Metodopago>>({}, Validators.compose([Validators.required, Validators.minLength(1)])),
   })
 
   constructor(
@@ -71,6 +71,7 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
     private cuponService: CuponesService,
     private metodospagoService: MetodospagoService,
     private pedidosService: PedidosService,
+    private router: Router,
     private _snackbar: MatSnackBar,
     private dialogService: DialogService ) {}
 
@@ -155,13 +156,13 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
         apellidos: this.checkoutForm.value.apellidos,
         pais: this.checkoutForm.value.pais,
         direccion: this.checkoutForm.value.direccion,
-        codigopostal: this.checkoutForm.value.codigopostal,
+        codigo_postal: this.checkoutForm.value.codigo_postal,
         poblacion: this.checkoutForm.value.poblacion,
         provincia: this.checkoutForm.value.provincia,
         telefono: this.checkoutForm.value.telefono,
         email: this.checkoutForm.value.email,
         notas: this.checkoutForm.value.notas,
-        metodopago: this.checkoutForm.value.metodopago,
+        metodo_pago: this.checkoutForm.value.metodo_pago,
         subtotal: this.subtotal,
         nombre_descuento: this.cupondescuento ? this.cupondescuento.Nombre : null,
         tipo_descuento: this.cupondescuento ? this.cupondescuento.Tipo : null,
@@ -181,6 +182,8 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
           this._snackbar.open('Su pedido ha sido registrado.', 'Aceptar', {
             duration: 3000
           });
+          this.carritoService.deleteCarrito();
+          this.router.navigate(['/informacion-transferencia']);
         },
         error: (error) => {
           console.error(error)

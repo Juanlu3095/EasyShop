@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 import { Subject, tap, map } from 'rxjs';
 import { HttpheadersService } from './httpheaders.service';
-import { Pedido } from '../models/pedido';
+import { Pedido, Pedidoitem } from '../models/pedido';
 
 type Apiresponse = { data: any }; // Ésta es la respuesta que recibimos de la api
 
@@ -48,9 +48,22 @@ export class PedidosService {
     )
   }
 
+  // Creación del pedido desde el admin
+  postPedidoAdmin(pedidoForm: any) {
+    return this.http.post<Apiresponse>(`${this.endpoint}/pedidosadmin`, pedidoForm, this.headersService.createHeadersAdmin()).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
+  }
+
   // Actualizar pedido, si añadimos productos al pedido, actualizar el precio
-  updatePedido(id: number) {
-    
+  updatePedido(id: number, editarPedidoForm: any) {
+    return this.http.put<Pedido>(`${this.endpoint}/pedidos/${id}`, editarPedidoForm, this.headersService.createHeadersAdmin()).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
   }
 
   deletePedido(id: number | Array<number>) {
@@ -63,23 +76,48 @@ export class PedidosService {
 
   // PEDIDOS ITEMS
 
-  getPedidoItemByOrderId(idOrder: number) {
-
+  // Obtenemos los items dependiendo del id del pedido
+  getPedidosItemByOrderId(idOrder: number) {
+    return this.http.get<Apiresponse>(`${this.endpoint}/pedidositem/${idOrder}`, this.headersService.createHeadersAdmin()).pipe(
+      map( (respuesta) => {
+        return respuesta.data
+      })
+    );
   }
 
+  // Obtenemos un item del pedido usando la id del item
   getPedidoItemById(id: number) {
-
+    return this.http.get<Apiresponse>(`${this.endpoint}/pedidoitem/${id}`, this.headersService.createHeadersAdmin()).pipe(
+      map( (respuesta) => {
+        return respuesta.data
+      })
+    );
   }
 
-  postPedidoItem(pedidoItemForm: any) { // Añade pedidoItem a un pedido existente
-
+  // Añadimos productos a un pedido existente
+  postPedidoItem(pedidoitem: any) { // Añade pedidoItem a un pedido existente
+    return this.http.post<Pedidoitem>(`${this.endpoint}/pedidoitem`, pedidoitem, this.headersService.createHeadersAdmin()).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
   }
 
-  editPedidoItem(idItem: number) {
-
+  updatePedidoItem(idItem: number, editarPedidoItemForm: any) {
+    return this.http.put<Pedidoitem>(`${this.endpoint}/pedidoitem/${idItem}`, editarPedidoItemForm, this.headersService.createHeadersAdmin()).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
   }
 
-  deletePedidoItem(idItem: number) {
-
+  deletePedidoItem(idItem: number | Array<number>) {
+    return this.http.delete<Apiresponse>(`${this.endpoint}/pedidoitem/${idItem}`, this.headersService.createHeadersAdmin()).pipe(
+      map( (respuesta) => {
+        this.refresh$.next();
+        return respuesta.data
+      })
+      
+    );
   }
 }
