@@ -170,6 +170,7 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
         total: this.total,
         productos: this.pedido.map(producto => ({ // Creamos un nuevo array con los datos del pedido
           producto: producto.Id,
+          nombre_producto: producto.Nombre,
           subtotal: producto.Precio_rebajado_euros ? producto.Precio_rebajado_euros : producto.Precio_euros,
           cantidad: producto.cantidad,
           total: producto.Precio_rebajado_euros ? producto.Precio_rebajado_euros * producto.cantidad : producto.Precio_euros * producto.cantidad,
@@ -182,6 +183,7 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
           this._snackbar.open('Su pedido ha sido registrado.', 'Aceptar', {
             duration: 3000
           });
+          localStorage.setItem('referencia_pedido', respuesta.data);
           this.carritoService.deleteCarrito();
           this.router.navigate(['/informacion-transferencia']);
         },
@@ -204,31 +206,34 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
     this.carrito.forEach(item => // Ver si usar aqui carritoService.cart en lugar de this.carrito da error
        arrayIds.push(item.Id)
     );
+    if(arrayIds.length > 0) {
 
-    this.productoService.getProductosByIds(arrayIds).subscribe({
-      next: (respuesta) => {
-        this.pedido = respuesta;
-        
-        // Encuentra los productos que coinciden entre los arrays this.carrito y this.pedido
-        /* const productosCoinciden = this.pedido.filter(itempedido => 
-          this.carrito.some(itemcarrito => itempedido.Id === itemcarrito.Id)
-        )
-        console.log('coincide:', productosCoinciden) */
-
-        //this.carrito.sort( (a,b) => a.Id - b.Id); // Ordena el carrito por Id en orden ascendente
-
-        // Añade la cantidad del carrito en localStorage al pedido que viene de la base de datos
-        this.pedido.forEach(item => {
-          item.cantidad = this.carrito.find(itemcarrito => itemcarrito.Id === item.Id)?.cantidad || 0;
-        })
-
-        this.getSubtotal();
-
-      },
-      error: (error) => {
-        console.error(error)
-      }
-    })
+      this.productoService.getProductosByIds(arrayIds).subscribe({
+        next: (respuesta) => {
+          this.pedido = respuesta;
+          
+          // Encuentra los productos que coinciden entre los arrays this.carrito y this.pedido
+          /* const productosCoinciden = this.pedido.filter(itempedido => 
+            this.carrito.some(itemcarrito => itempedido.Id === itemcarrito.Id)
+          )
+          console.log('coincide:', productosCoinciden) */
+  
+          //this.carrito.sort( (a,b) => a.Id - b.Id); // Ordena el carrito por Id en orden ascendente
+  
+          // Añade la cantidad del carrito en localStorage al pedido que viene de la base de datos
+          this.pedido.forEach(item => {
+            item.cantidad = this.carrito.find(itemcarrito => itemcarrito.Id === item.Id)?.cantidad || 0;
+          })
+  
+          this.getSubtotal();
+  
+        },
+        error: (error) => {
+          console.error(error)
+        }
+      })
+    }
+    
 
   }
 

@@ -19,7 +19,7 @@ export interface Pedido {
     Total: string,
     Nombre_descuento: string,
     Tipo_descuento: string,
-    Descuento: number,
+    Descuento: number | null,
     Fecha: Date,
     Productos: Pedidoitem[]
     

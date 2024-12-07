@@ -39,9 +39,9 @@ export class PedidosService {
     return this.http.get<Apiresponse>(`${this.endpoint}/estadospedido`, this.headersService.createHeadersAdmin());
   }
 
-  // Creamos el pedido desde el cliente
+  // Creamos el pedido desde el cliente. Esta función lleva la cabecera para cliente por si el usuario que hace el pedido está registrado. En la api no necesita autorización
   postPedido(pedido: any) {
-    return this.http.post<Pedido>(`${this.endpoint}/pedidos`, pedido, this.headersService.createHeadersClient()).pipe(
+    return this.http.post<Apiresponse>(`${this.endpoint}/pedidos`, pedido, this.headersService.createHeadersClient()).pipe(
       tap(() => {
         this.refresh$.next()
       })
@@ -117,7 +117,18 @@ export class PedidosService {
         this.refresh$.next();
         return respuesta.data
       })
-      
     );
+  }
+
+  // Reenviar email del pedido
+  enviarEmailPedido(idPedido: number) {
+    let body = {
+      id: idPedido
+    }
+    return this.http.post<Apiresponse>(`${this.endpoint}/emailpedido/`, body, this.headersService.createHeadersAdmin()).pipe(
+      map( (respuesta) => {
+        return respuesta.data
+      })
+    )
   }
 }

@@ -125,10 +125,14 @@ export class DashboardpedidosComponent implements OnInit, OnDestroy{
   getPedidos() {
     this.pedidoService.getPedidos().subscribe({
       next: (respuesta) => {
-        this.pedidos = respuesta.data;
+        this.pedidos = respuesta.data
       },
       error: (error) => {
-        console.error(error)
+        this._snackBar.open('No se ha podido obtener los pedidos.', 'Reintentar', {
+          duration: 3000
+        }).onAction().subscribe( () => {
+          this.getPedidos()
+        });
       }
     })
   }

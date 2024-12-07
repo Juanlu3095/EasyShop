@@ -111,12 +111,32 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
     this.title.setTitle('Editar pedido < EasyShop');
 
     this.suscripcion = this.pedidoService.refresh$.subscribe(() => {
+      this.getPedido(); // Lo necesitamos para que se actualice el subtotal, total y descuento
       this.getPedidoItems();
     })
   }
 
   ngOnDestroy(): void {
     this.suscripcion.unsubscribe()
+  }
+
+  // Envía el email con los datos del pedido y el pago al cliente. 
+  // Sirve tanto para pedidos con método de pago transferencia bancaria directa y pago con tarjeta
+  enviarEmail() {
+    this.pedidoService.enviarEmailPedido(this.idPedido).subscribe({
+      next: (respuesta) => {
+        this._snackBar.open('Email enviado.', 'Aceptar', {
+          duration: 3000
+        });
+        console.log(respuesta)
+      },
+      error: (error) => {
+        this._snackBar.open('No se ha podido enviar el email.', 'Aceptar', {
+          duration: 3000
+        });
+        console.error(error)
+      }
+    })
   }
 
   // Edita el pedido, no los items

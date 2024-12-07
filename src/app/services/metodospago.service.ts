@@ -23,7 +23,7 @@ export class MetodospagoService {
   }
 
   getMetodosPago() {
-    return this.http.get<Apiresponse>(`${this.endpoint}/metodopago`, this.headersService.createHeadersAdminAnyObject());
+    return this.http.get<Apiresponse>(`${this.endpoint}/metodopago`, this.headersService.createHeadersAdmin());
   }
 
   getMetodosPagoDisponibles() {
@@ -32,6 +32,10 @@ export class MetodospagoService {
 
   getMetodoPago(slug: string) {
     return this.http.get<Apiresponse>(`${this.endpoint}/metodopago/${slug}`, this.headersService.createHeadersAdmin());
+  }
+
+  getTransferencia() {
+    return this.http.get<Apiresponse>(`${this.endpoint}/transferencia`, this.headersService.createHeadersGeneric());
   }
 
   // Activamos o desactivamos el metodo de pago. Al usar Partial<Metodopago> SÓLO se enviará al backend lo que contenga el body

@@ -1,0 +1,40 @@
+$movilmax: 767px;
+$tabletmin: 768px;
+$tabletmax: 1023px;
+$portatilmin: 1024px;
+$portatilmax: 1350px;
+
+.info-transferencia{
+    margin: 5rem 10rem; 
+}
+
+h1{
+    text-align: center;
+    font-weight: bold;
+}
+
+.instrucciones{
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+// MÓVIL
+@media only screen and (max-width: $movilmax) {
+    .info-transferencia{
+        margin: 2rem; 
+    }
+}
+
+// TABLET
+@media only screen and (min-width: $tabletmin) and (max-width: $tabletmax) {
+    .info-transferencia{
+        margin: 5rem; 
+    }
+}
+
+// PORTÁTIL
+@media only screen and (min-width: $portatilmin) and (max-width: $portatilmax) {
+    .info-transferencia{
+        margin: 5rem; 
+    }
+}

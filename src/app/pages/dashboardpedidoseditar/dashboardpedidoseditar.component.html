@@ -126,6 +126,17 @@
 
                         <button mat-flat-button (click)="editarPedido()">Guardar</button>
                     </div>
+
+                    <div class="input-border">
+                        <p>Envía de nuevo el email con los datos del pedido y el pago al cliente:</p>
+                        <button mat-flat-button (click)="enviarEmail()">Enviar email</button>
+                    </div>
+
+                    <div class="input-border">
+                        <p><b>Subtotal</b>: {{ pedido.Subtotal }}€</p>
+                        <p><b>Descuento</b>: - {{ pedido.Descuento ?? 0 }}€</p>
+                        <p><b>Total</b>: {{ pedido.Total }}</p>
+                    </div>
                 </aside>
             </div>
         </form>

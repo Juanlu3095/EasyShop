@@ -77,6 +77,6 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   getCart() {
-    this.productos = JSON.parse(this.carrito.cart || '[]');
+    this.productos = this.carrito.cart || '[]';
   }
 }

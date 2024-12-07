@@ -2,13 +2,27 @@
 <app-header></app-header>
 
 <main>
-    <h1>Información del pago</h1>
+    <section class="info-transferencia">
+        <h1>Información del pago</h1>
 
-    <div class="detalle-container">
-        <p>Gracias por tu compra. A continuación se detalla la información para realizar el pago de tu pedido:</p>
-
+        @if(metodopago) {
+            <div class="detalle-container">
+                <p class="instrucciones">{{ metodopago.descripcion_cliente }}</p>
         
-    </div>
+                <p><b>Referencia del pedido</b>: #{{ referencia }}</p>
+                <p><b>Nombre de la cuenta</b>: {{ beneficiario }}</p>
+                <p><b>Banco</b>: {{ banco }}</p>
+                <p><b>IBAN</b>: {{ iban }}</p>
+                <p><b>BIC/SWIFT</b>: {{ bic_swift }}</p>
+                
+            </div>
+    
+        } @else {
+    
+            <p>Disculpa las molestias. En estos momentos no disponemos de los datos para proceder al pago.</p>
+        }
+    </section>
+    
 </main>
 
 <!-- FOOTER -->
