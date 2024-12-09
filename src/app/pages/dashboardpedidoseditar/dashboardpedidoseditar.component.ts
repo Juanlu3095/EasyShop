@@ -128,13 +128,11 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
         this._snackBar.open('Email enviado.', 'Aceptar', {
           duration: 3000
         });
-        console.log(respuesta)
       },
       error: (error) => {
         this._snackBar.open('No se ha podido enviar el email.', 'Aceptar', {
           duration: 3000
         });
-        console.error(error)
       }
     })
   }
@@ -144,14 +142,12 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
     if(this.editarpedidoForm.valid) {
       this.pedidoService.updatePedido(this.idPedido, this.editarpedidoForm.value).subscribe({
         next: (respuesta) => {
-          console.log(respuesta);
           this._snackBar.open('Pedido actualizado.', 'Aceptar', {
             duration: 3000
           });
         },
         error: (error) => {
-          console.error(error);
-          this._snackBar.open('Ha ocurrido un error.', 'Aceptar', {
+          this._snackBar.open('No se ha podido editar el pedido.', 'Aceptar', {
             duration: 3000
           });
         }
@@ -178,7 +174,9 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
         });
       },
       error: (error) => {
-        console.error(error);
+        this._snackBar.open('No se ha podido obtener el producto.', 'Aceptar', {
+          duration: 3000
+        });
       }
     });
 
@@ -190,13 +188,11 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
             this._snackBar.open('Producto editado.', 'Aceptar', {
               duration: 3000
             });
-            console.log(respuesta)
           },
           error: (error) => {
-            this._snackBar.open('Ha ocurrido un error.', 'Aceptar', {
+            this._snackBar.open('No se ha podido editar el producto.', 'Aceptar', {
               duration: 3000
             });
-            console.error(error)
           }
         })
       } else {
@@ -226,7 +222,7 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
             console.log(respuesta)
           },
           error: (error) => {
-            this._snackBar.open('Ha ocurrido un error.', 'Aceptar', {
+            this._snackBar.open('No se ha podido añadir el producto.', 'Aceptar', {
               duration: 3000
             });
             console.error(error)
@@ -264,7 +260,7 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
             console.log(respuesta)
           },
           error: (error) => {
-            this._snackBar.open('Ha ocurrido un error.', 'Aceptar', {
+            this._snackBar.open('No se ha podido eliminar el producto.', 'Aceptar', {
               duration: 3000
             });
             console.error(error)
@@ -293,13 +289,11 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
             this._snackBar.open('Productos eliminados del pedido.', 'Aceptar', {
               duration: 3000
             });
-            console.log(respuesta)
           },
           error: (error) => {
-            this._snackBar.open('Ha ocurrido un error.', 'Aceptar', {
+            this._snackBar.open('No se ha podido eliminar el/los producto/s.', 'Aceptar', {
               duration: 3000
             });
-            console.error(error)
           }
         })
       } else {
@@ -336,7 +330,9 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
         }
       },
       error: (error) => {
-        console.error(error)
+        this._snackBar.open('No se ha podido obtener el pedido.', 'Aceptar', {
+          duration: 3000
+        });
       }
     })
   }
@@ -345,11 +341,12 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
   getPedidoItems() {
     this.pedidoService.getPedidosItemByOrderId(this.idPedido).subscribe({
       next: (respuesta) => {
-        console.log('Items', respuesta);
         this.productosPedido = respuesta
       },
       error: (error) => {
-        console.error(error)
+        this._snackBar.open('No se ha podido obtener los productos.', 'Aceptar', {
+          duration: 3000
+        });
       }
     })
   }
@@ -394,7 +391,6 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
   getProductos() {
     this.productoService.getProductos().subscribe({
       next: (respuesta) => {
-        console.log(respuesta)
         this.productos = respuesta.data
       },
       error: (error) => {

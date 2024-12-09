@@ -103,8 +103,6 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
             let valorActual = Date.parse(dateActual.toDateString()); // Fecha actual en milisegundos
             let valorCaducidad = Date.parse(caducidad.toDateString()); // Fecha de caducidad del cupón en milisegundos
 
-            console.log('actual:', valorActual);
-            console.log('caducidad:', valorCaducidad);
             if(valorCaducidad > valorActual) {
               this.cupondescuento = respuesta.data;
               this.getSubtotal();
@@ -176,7 +174,7 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
           total: producto.Precio_rebajado_euros ? producto.Precio_rebajado_euros * producto.cantidad : producto.Precio_euros * producto.cantidad,
         }))
       }
-      console.log(data);
+      
       this.pedidosService.postPedido(data).subscribe({
         next: (respuesta) => {
           this.dialogService.closeAll();
@@ -188,7 +186,6 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
           this.router.navigate(['/informacion-transferencia']);
         },
         error: (error) => {
-          console.error(error)
           this.dialogService.closeAll();
           this._snackbar.open('No se ha podido procesar su pedido.', 'Aceptar', {
             duration: 3000
