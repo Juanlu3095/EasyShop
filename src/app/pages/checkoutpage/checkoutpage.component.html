@@ -157,7 +157,7 @@
                                 <a routerLink="">política de privacidad</a>.
                             </p>
 
-                            <button mat-flat-button (click)="crearPedido()" *ngIf="metodospago.length > 0">Proceder al pago</button>
+                            <button mat-flat-button (click)="crearPedido()" *ngIf="metodospago.length > 0" [disabled]="!this.pedido">Proceder al pago</button>
                         </mat-card-content>
                       </mat-card-footer>
                     </mat-card>

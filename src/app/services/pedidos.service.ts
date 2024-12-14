@@ -35,6 +35,23 @@ export class PedidosService {
     );
   }
 
+  getPedidosByUser() {
+    return this.http.get<Apiresponse>(`${this.endpoint}/pedidoscliente`, this.headersService.createHeadersClient()).pipe(
+      map( (respuesta) => {
+        return respuesta.data
+      })
+    );
+  }
+
+  // Obtenemos pedido por id para el cliente
+  getPedidoClient(id: number) {
+    return this.http.post<Apiresponse>(`${this.endpoint}/pedidocliente`, {idPedido: id}, this.headersService.createHeadersClient()).pipe(
+      map( (respuesta) => {
+        return respuesta.data
+      })
+    );
+  }
+
   getEstados() {
     return this.http.get<Apiresponse>(`${this.endpoint}/estadospedido`, this.headersService.createHeadersAdmin());
   }
@@ -79,6 +96,15 @@ export class PedidosService {
   // Obtenemos los items dependiendo del id del pedido
   getPedidosItemByOrderId(idOrder: number) {
     return this.http.get<Apiresponse>(`${this.endpoint}/pedidositem/${idOrder}`, this.headersService.createHeadersAdmin()).pipe(
+      map( (respuesta) => {
+        return respuesta.data
+      })
+    );
+  }
+
+  // Obtener los productos del pedido en el panel del cliente
+  getPedidoItemsClient(id: number) {
+    return this.http.post<Apiresponse>(`${this.endpoint}/pedidoitemclient`, {idPedido: id}, this.headersService.createHeadersClient()).pipe(
       map( (respuesta) => {
         return respuesta.data
       })

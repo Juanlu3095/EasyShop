@@ -3,12 +3,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpheadersService } from './httpheaders.service';
+import { Usuario } from '../models/usuario';
+import { Subject, tap } from 'rxjs';
 
 // Ésta es la respuesta que recibimos de la api
 type Apiresponse = {
   message: string,
   status: boolean,
-  token?: string
+  token?: string,
+  data?: Usuario
 }; 
 
 @Injectable({
@@ -16,8 +19,14 @@ type Apiresponse = {
 })
 export class AuthService {
 
+  private _refresh$ = new Subject<void>(); // Observable, no tiene valor explícito, sólo para avisar al componente de los cambios.
   constructor(private http: HttpClient, private httpheaders: HttpheadersService) { }
   public endpoint = environment.ApiEndpoint;
+
+  // Obtenemos el Observable
+  get refresh$() {
+    return this._refresh$;
+  }
 
   loginUser(loginForm: any) {
     return this.http.post<Apiresponse>(`${this.endpoint}/userlogin`, loginForm, this.httpheaders.createHeadersGeneric())
@@ -46,9 +55,18 @@ export class AuthService {
     return this.http.post<Apiresponse>(`${this.endpoint}/cerrarsesion`, {}, this.httpheaders.createHeadersAdmin())
   }
 
+  // Actualizar datos del usuario desde el panel de cliente
+  updateCliente(updateClientDataForm: any) {
+    return this.http.post<Apiresponse>(`${this.endpoint}/actualizarcliente`, updateClientDataForm, this.httpheaders.createHeadersClient()).pipe(
+      tap(() => {
+        this.refresh$.next()
+      })
+    )
+  }
+
   // Logout para los clientes, eliminando su correspondiente token
   logoutCliente() {
-
+    return this.http.post<Apiresponse>(`${this.endpoint}/cerrarsesioncliente`, {}, this.httpheaders.createHeadersClient())
   }
   
 }
