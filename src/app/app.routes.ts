@@ -119,6 +119,10 @@ export const routes: Routes = [
                 path: 'usuarios',
                 loadComponent: () => import('./pages/dashboardusuarios/dashboardusuarios.component').then((m) => m.DashboardusuariosComponent),
             },
+            {
+                path: 'ajustes',
+                loadComponent: () => import('./pages/dashboardajustes/dashboardajustes.component').then((m) => m.DashboardajustesComponent),
+            },
         ]
     },
     {
