@@ -88,7 +88,6 @@ export class DashboardComponent implements OnInit, OnDestroy{
       },
       error: (error) => {
         this.dialogService.closeAll();
-        console.error(error);
       }
     })
     

@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { Title } from '@angular/platform-browser';
@@ -17,6 +17,7 @@ import { DialogService } from '../../services/dialog.service';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-micuenta',
@@ -25,7 +26,7 @@ import { Router } from '@angular/router';
   templateUrl: './micuenta.component.html',
   styleUrl: './micuenta.component.scss'
 })
-export class MicuentaComponent implements OnInit{
+export class MicuentaComponent implements OnInit, OnDestroy{
 
   pedidos: Pedido[];
   pedido: Pedido;
@@ -33,6 +34,7 @@ export class MicuentaComponent implements OnInit{
   usuario: Usuario;
   columns: string[] = ['Id', 'Estado', 'Total', 'Fecha'];
   displayedColumns: string[] = [...this.columns, 'acciones'];
+  suscripcion: Subscription;
   
   @ViewChild('verPedido') modalPedido!: TemplateRef<HTMLElement>;
   @ViewChild('editarUsuario') editarUsuario!: TemplateRef<HTMLElement>;
@@ -62,9 +64,13 @@ export class MicuentaComponent implements OnInit{
     this.obtenerUserData();
     this.obtenerPedidos();
 
-    this.auth.refresh$.subscribe(() => {
+    this.suscripcion = this.auth.refresh$.subscribe(() => {
       this.obtenerUserData();
     })
+  }
+
+  ngOnDestroy(): void {
+    this.suscripcion.unsubscribe()
   }
 
   // Cerramos la sesión del usuario

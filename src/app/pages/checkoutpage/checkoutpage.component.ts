@@ -25,6 +25,7 @@ import { MetodospagoService } from '../../services/metodospago.service';
 import { Metodopago } from '../../models/metodopago';
 import { PedidosService } from '../../services/pedidos.service';
 import { DialogService } from '../../services/dialog.service';
+import { ResponsivedesignService } from '../../services/responsivedesign.service';
 
 registerLocaleData(localeEs, 'es');
 
@@ -44,7 +45,10 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
   metodospago: Metodopago[] = [];
   subtotal: number; // Aplica para el precio total sin descuento
   total: number; // Aplica para el precio total con descuento
-  suscripcion: Subscription;
+  rowHeight: string;
+  rowspan: number;
+  rowspanArea: number;
+  suscripcion: Subscription[] = [];
 
   cuponForm = new FormGroup({
     codigo: new FormControl<string>('', Validators.required)
@@ -66,6 +70,7 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
 
   constructor(
     private title: Title,
+    private responsive: ResponsivedesignService,
     private carritoService: CarritoService,
     private productoService: ProductosService,
     private cuponService: CuponesService,
@@ -77,16 +82,52 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.title.setTitle('Finalizar compra | EasyShop');
+    this.responsiveDesign();
     this.getProductosCarrito();
-    this.getMetodospagodisponibles()
+    this.getMetodospagodisponibles();
 
-    this.suscripcion = this.carritoService.productos.subscribe( () => {
+    this.suscripcion.push(this.carritoService.productos.subscribe( () => {
       this.getProductosCarrito();
-    })
+    }))
   }
 
   ngOnDestroy(): void {
-    this.suscripcion.unsubscribe();
+    this.suscripcion.forEach(item => item.unsubscribe());
+  }
+
+  responsiveDesign() {
+    this.suscripcion.push(this.responsive.obtenerDispositivo().subscribe({
+      next: (dispositivo) => {
+        switch(dispositivo) {
+          case 'Desktop':
+            this.rowHeight = "5:1";
+            this.rowspan = 1;
+            this.rowspanArea = 3;
+            break;
+          case 'Portátil':
+            this.rowHeight = "5:1";
+            this.rowspan = 1;
+            this.rowspanArea = 4;
+            break;
+          case 'Tablet':
+            this.rowHeight = "5:1";
+            this.rowspan = 1;
+            this.rowspanArea = 4;
+            break;
+          case 'Móvil':
+            this.rowHeight = "3:1";
+            this.rowspan = 1;
+            this.rowspanArea = 4;
+            break;
+          default:
+            this.rowHeight = "5:1";
+            break;
+        }
+      },
+      error: (error) => {
+        console.error(error)
+      }
+    }))
   }
 
   /* Comprueba si el cupón es válido y lo añade a tu pedido con un observable */

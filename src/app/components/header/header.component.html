@@ -24,12 +24,11 @@
         
         <div class="icon-action">
             <div class="icon-action-item">
-                <mat-icon aria-label="Icon account" aria-hidden="false" fontIcon="account_circle"></mat-icon>
-                <span><a href="/acceso">Cuenta</a></span>
-
-                <mat-icon aria-label="Icon wishlist" aria-hidden="false" fontIcon="favorite"></mat-icon>
-                <span>Favoritos</span>
-                
+                <div>
+                    <mat-icon aria-label="Icon account" class="account" aria-hidden="false" fontIcon="account_circle"></mat-icon>
+                    <span><a href="/acceso">Cuenta</a></span>
+                </div>
+            
                 <mat-icon aria-label="Icon cart" aria-hidden="false" fontIcon="shopping_cart" matBadge="{{ cantidadCarrito }}" (click)="openSidenav()"></mat-icon>    
             </div>
         </div>
@@ -59,8 +58,7 @@
         </div>
 
         <div class="icon-action-mobile">
-            <mat-icon aria-label="Icon account" aria-hidden="false" fontIcon="account_circle" routerLink="/acceso"></mat-icon>
-            <mat-icon aria-label="Icon wishlist" aria-hidden="false" fontIcon="favorite"></mat-icon>
+            <mat-icon aria-label="Icon account" class="account" aria-hidden="false" fontIcon="account_circle" routerLink="/acceso"></mat-icon>
             <mat-icon aria-label="Icon cart" aria-hidden="false" fontIcon="shopping_cart" matBadge="{{ cantidadCarrito }}" (click)="openSidenav()"></mat-icon>    
         </div>
     </mat-toolbar>

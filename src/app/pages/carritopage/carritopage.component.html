@@ -57,13 +57,6 @@
               </table>
           </div>
 
-          <div class="cupon">
-              <form class="cuponForm">
-                  <input type="text" class="form-control cupon" id="cupon" aria-describedby="cuponHelp" placeholder="Código de cupón" required>
-                  <button mat-flat-button type="submit" class="submit">Aplicar cupón</button>
-              </form>
-          </div>
-
         } @else {
           <h3>No hay productos en el carrito.</h3>
         }
@@ -83,11 +76,6 @@
                         <div class="content-item">
                             <p class="content-item-title">Subtotal</p>
                             <p>{{ subtotal | currency: "EUR" }}</p>
-                        </div>
-                    <mat-divider></mat-divider>
-                        <div class="content-item">
-                            <p class="content-item-title">Descuento</p>
-                            <p>-10.00€</p>
                         </div>
                     <mat-divider></mat-divider>
                         <div class="content-item">

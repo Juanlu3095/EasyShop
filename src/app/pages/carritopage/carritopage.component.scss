@@ -70,24 +70,6 @@ th{
     cursor: pointer;
 }
 
-.cupon{
-    margin: 1rem 0;
-}
-
-.cuponForm{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
-    width: 30%;
-}
-
-.cuponForm button{
-    background-color: var(--darkblue) !important;
-    color: var(--white) !important;
-    width: 80%;
-}
-
 /* Total carrito */
 .total-carrito{
     width: 100%;
