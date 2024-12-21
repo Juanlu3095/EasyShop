@@ -185,6 +185,21 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/ayuda/ayuda.component').then((m) => m.AyudaComponent),
     },
     {
+        path: 'aviso-legal',
+        loadComponent: () => import('./pages/avisolegal/avisolegal.component').then((m) => m.AvisolegalComponent),
+    },
+    {
+        path: 'politica-de-cookies',
+        loadComponent: () => import('./pages/politicacookies/politicacookies.component').then((m) => m.PoliticacookiesComponent),
+    },
+    {
+        path: 'politica-de-privacidad',
+        loadComponent: () => import('./pages/politicaprivacidad/politicaprivacidad.component').then((m) => m.PoliticaprivacidadComponent),
+    },{
+        path: 'envio-y-devoluciones',
+        loadComponent: () => import('./pages/envioydevoluciones/envioydevoluciones.component').then((m) => m.EnvioydevolucionesComponent),
+    },
+    {
         path: '**',
         loadComponent: () => import('./pages/error404page/error404page.component').then((m) => m.Error404pageComponent),
     },

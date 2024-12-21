@@ -36,14 +36,14 @@ $portatilMax: 1350px;
 .filtroProductos select{
     background: #fff url('https://www.freeiconspng.com/uploads/arrow-up-icon-23.png') no-repeat;
     background-size: 15px;
-    background-position:  right 10px center;
+    background-position: right 10px center;
 
 }
 
 .submit{
     margin-top: 1rem;
-    background-color: var(--darkblue);
-    color: var(--white);
+    background-color: var(--darkblue) !important;
+    color: var(--white) !important;
 }
 
 /* LISTADO PRODUCTOS */
