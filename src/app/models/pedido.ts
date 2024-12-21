@@ -20,6 +20,8 @@ export interface Pedido {
     Nombre_descuento: string,
     Tipo_descuento: string,
     Descuento: number | null,
+    Metodoenvio_id: number,
+    Gastos_envio: number,
     Fecha: Date,
     Productos: Pedidoitem[]
     

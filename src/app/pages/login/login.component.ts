@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit{
             duration: 3000
           });
           this.botonDisabled = false;
-           
+          console.error(error)
         }
       })
     } else {

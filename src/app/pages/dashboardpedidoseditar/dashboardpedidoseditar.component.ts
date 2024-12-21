@@ -21,6 +21,8 @@ import { TableButton } from '../../models/tablebutton';
 import { Subscription } from 'rxjs';
 import { ProductosService } from '../../services/productos.service';
 import { Product } from '../../models/product';
+import { MetodosenvioService } from '../../services/metodosenvio.service';
+import { Metodoenvio } from '../../models/metodoenvio';
 
 @Component({
   selector: 'app-dashboardpedidoseditar',
@@ -34,6 +36,7 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
   pedido: Pedido;
   usuarios: Usuario[];
   metodospago: Metodopago[];
+  metodosenvio: Metodoenvio[];
   estadospedido: Estadopedido[];
   productosPedido: Pedidoitem[];
   productoPedido: Pedidoitem; // Para el modal para eliminar un producto del pedido
@@ -74,6 +77,8 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
     nombre_descuento: new FormControl<string | null>(null, Validators.minLength(1)),
     tipo_descuento: new FormControl<string | null>(null, Validators.minLength(1)),
     descuento: new FormControl<number | null>(null, Validators.min(1)),
+    metodo_envio: new FormControl<number>(1, Validators.compose([Validators.required, Validators.min(1)])),
+    gastos_envio: new FormControl<number>(0, Validators.compose([Validators.min(0), Validators.required])),
   });
 
   nuevoProductoPedidoForm = new FormGroup({
@@ -92,6 +97,7 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
     private pedidoService: PedidosService,
     private userService: UsuariosService,
     private metodopagoService: MetodospagoService,
+    private metodoenvioService: MetodosenvioService,
     private productoService: ProductosService,
     private dialogService: DialogService,
     private activatedRoute: ActivatedRoute,
@@ -104,6 +110,7 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.getUsers();
     this.getMetodopagos();
+    this.getMetodosenvio();
     this.getEstadosPedido();
     this.getPedido();
     this.getPedidoItems();
@@ -219,13 +226,11 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
             this._snackBar.open('Producto añadido.', 'Aceptar', {
               duration: 3000
             });
-            console.log(respuesta)
           },
           error: (error) => {
             this._snackBar.open('No se ha podido añadir el producto.', 'Aceptar', {
               duration: 3000
             });
-            console.error(error)
           }
         })
       } else {
@@ -242,11 +247,12 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
     // Obtenemos la marca con la id que pasamos por parámetro
     this.pedidoService.getPedidoItemById(id).subscribe({
       next: (respuesta: Pedidoitem) => {
-        console.log(respuesta)
         this.nombreProducto = respuesta.Producto;
       },
       error: (error) => {
-        console.error(error);
+        this._snackBar.open('No se ha podido obtener el producto.', 'Aceptar', {
+          duration: 3000
+        });
       }
     });
 
@@ -257,13 +263,11 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
             this._snackBar.open('Producto eliminado.', 'Aceptar', {
               duration: 3000
             });
-            console.log(respuesta)
           },
           error: (error) => {
             this._snackBar.open('No se ha podido eliminar el producto.', 'Aceptar', {
               duration: 3000
             });
-            console.error(error)
           }
         })
       } else {
@@ -326,6 +330,8 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
             nombre_descuento: this.pedido.Nombre_descuento,
             tipo_descuento: this.pedido.Tipo_descuento,
             descuento: this.pedido.Descuento,
+            metodo_envio: this.pedido.Metodoenvio_id,
+            gastos_envio: this.pedido.Gastos_envio
           })
         }
       },
@@ -356,7 +362,6 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
     this.pedidoService.getEstados().subscribe({
       next: (respuesta) => {
         this.estadospedido = respuesta.data;
-        
       },
       error: (error) => {
         console.error(error)
@@ -381,6 +386,18 @@ export class DashboardpedidoseditarComponent implements OnInit, OnDestroy{
     this.metodopagoService.getMetodosPagoDisponibles().subscribe({
       next: (respuesta) => {
         this.metodospago = respuesta.data
+      },
+      error: (error) => {
+        console.error(error)
+      }
+    })
+  }
+
+  // Obtenemos los métodos de envío
+  getMetodosenvio() {
+    this.metodoenvioService.getMetodosenvio().subscribe({
+      next: (respuesta) => {
+        this.metodosenvio = respuesta.data
       },
       error: (error) => {
         console.error(error)

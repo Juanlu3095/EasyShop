@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { Title } from '@angular/platform-browser';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CarritoService } from '../../services/carrito.service';
@@ -26,6 +27,8 @@ import { Metodopago } from '../../models/metodopago';
 import { PedidosService } from '../../services/pedidos.service';
 import { DialogService } from '../../services/dialog.service';
 import { ResponsivedesignService } from '../../services/responsivedesign.service';
+import { MetodosenvioService } from '../../services/metodosenvio.service';
+import { Metodoenvio } from '../../models/metodoenvio';
 
 registerLocaleData(localeEs, 'es');
 
@@ -33,7 +36,7 @@ registerLocaleData(localeEs, 'es');
   selector: 'app-checkoutpage',
   standalone: true,
   providers: [{provide: LOCALE_ID, useValue: 'es'}],
-  imports: [HeaderComponent, FooterComponent, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatGridListModule, MatCardModule, MatRadioModule, MatButtonModule, RouterLink, CommonModule],
+  imports: [HeaderComponent, FooterComponent, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatDividerModule, MatGridListModule, MatCardModule, MatRadioModule, MatButtonModule, RouterLink, CommonModule],
   templateUrl: './checkoutpage.component.html',
   styleUrl: './checkoutpage.component.scss'
 })
@@ -43,6 +46,8 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
   pedido: Product[];
   cupondescuento: Cupon;
   metodospago: Metodopago[] = [];
+  metodosenvio: Metodoenvio[] = [];
+  gastosenvio: number = 0;
   subtotal: number; // Aplica para el precio total sin descuento
   total: number; // Aplica para el precio total con descuento
   rowHeight: string;
@@ -65,6 +70,7 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
     telefono: new FormControl<number | null>(null, Validators.compose([Validators.required, Validators.minLength(1)])),
     email: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1), Validators.email])),
     notas: new FormControl<string>('', Validators.compose([Validators.minLength(1)])),
+    metodo_envio: new FormControl<number>(1, Validators.compose([Validators.required ,Validators.min(1), Validators.max(2)])),
     metodo_pago: new FormControl<Partial<Metodopago>>({}, Validators.compose([Validators.required, Validators.minLength(1)])),
   })
 
@@ -76,6 +82,7 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
     private cuponService: CuponesService,
     private metodospagoService: MetodospagoService,
     private pedidosService: PedidosService,
+    private metodosenvioService: MetodosenvioService,
     private router: Router,
     private _snackbar: MatSnackBar,
     private dialogService: DialogService ) {}
@@ -85,6 +92,7 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
     this.responsiveDesign();
     this.getProductosCarrito();
     this.getMetodospagodisponibles();
+    this.getMetodosenvio();
 
     this.suscripcion.push(this.carritoService.productos.subscribe( () => {
       this.getProductosCarrito();
@@ -130,6 +138,15 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
     }))
   }
 
+  // Comprobar gastos de envio
+  comprobarGastosenvio(event: MatSelectChange) {
+
+    // Buscamos el metodo de envio en el array metodosenvio con la id que nos devuelve event.value y obtenemos el precio
+    let metodoenvio = this.metodosenvio.find(metodoenvio => metodoenvio.Id === event.value); // event.value contiene la id del metodo de envio
+    this.gastosenvio = metodoenvio?.Precio ?? 0;
+    this.getSubtotal(); //Actualizamos el precio total
+  }
+
   /* Comprueba si el cupón es válido y lo añade a tu pedido con un observable */
   comprobarcupon(){
     if(this.cuponForm.valid) {
@@ -172,6 +189,19 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
     }
   }
 
+  getMetodosenvio() {
+    this.metodosenvioService.getMetodosenvio().subscribe({
+      next: (respuesta) => {
+        this.metodosenvio = respuesta.data
+      },
+      error: (error) => {
+        this._snackbar.open('No se ha podido encontrar métodos de envío válidos.', 'Aceptar', {
+          duration: 3000
+        });
+      }
+    })
+  }
+
   getMetodospagodisponibles() {
     this.metodospagoService.getMetodosPagoDisponibles().subscribe({
       next: (respuesta) => {
@@ -206,6 +236,8 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
         nombre_descuento: this.cupondescuento ? this.cupondescuento.Nombre : null,
         tipo_descuento: this.cupondescuento ? this.cupondescuento.Tipo : null,
         descuento: this.cupondescuento ? this.cupondescuento.Descuento : null,
+        metodo_envio: this.checkoutForm.value.metodo_envio ?? 1,
+        gastos_envio: this.gastosenvio ?? 0,
         total: this.total,
         productos: this.pedido.map(producto => ({ // Creamos un nuevo array con los datos del pedido
           producto: producto.Id,
@@ -280,13 +312,13 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
     this.subtotal = this.pedido.reduce((prev, curr) => Number(prev) + Number( curr.Precio_rebajado_euros? curr.Precio_rebajado_euros * curr.cantidad : curr.Precio_euros * curr.cantidad), 0);
 
     if(this.cupondescuento && this.cupondescuento.Tipo == 'Fijo'){
-      this.total = Number(this.subtotal) - Number(this.cupondescuento.Descuento);
+      this.total = Number(this.subtotal) - Number(this.cupondescuento.Descuento) + Number(this.gastosenvio);
       
     } else if(this.cupondescuento && this.cupondescuento.Tipo == 'Porcentual') {
-      this.total = this.subtotal - this.subtotal * this.cupondescuento.Descuento / 100;
+      this.total = this.subtotal + Number(this.gastosenvio) - this.subtotal * this.cupondescuento.Descuento / 100;
 
     } else {
-      this.total = this.subtotal;
+      this.total = this.subtotal + Number(this.gastosenvio);
     }
   }
 }

@@ -84,6 +84,17 @@
                             </mat-form-field>
                         </mat-grid-tile>
 
+                        <mat-grid-tile [colspan]="2" [rowspan]="rowspan">
+                            <mat-form-field class="form-field" [style.width.%]="100">
+                                <mat-label>Método de envío:</mat-label>
+                                <mat-select formControlName="metodo_envio" (selectionChange)="comprobarGastosenvio($event)">
+                                    @for (metodoenvio of metodosenvio; track metodoenvio.Id) {
+                                      <mat-option [value]="metodoenvio.Id">{{metodoenvio.Nombre}}</mat-option>
+                                    }
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+
                         <mat-grid-tile [colspan]="2" [rowspan]="rowspanArea">
                             <mat-form-field class="form-field" [style.width.%]="100">
                                 <mat-label>Notas del pedido:</mat-label>
@@ -129,8 +140,14 @@
                                 <p>Descuento</p>
                                 <p>-{{ (cupondescuento.Tipo == 'Fijo' ? cupondescuento.Descuento  : subtotal * (cupondescuento.Descuento / 100)) | currency:'EUR' }}</p>
                             </div>
+                            <mat-divider></mat-divider>
                         }
-                            
+
+                        <div class="content-item">
+                            <p>Gastos de envío</p>
+                            <p>{{ gastosenvio | currency:'EUR' }}</p>
+                        </div>
+                          
                         <mat-divider></mat-divider>
                             <div class="content-item">
                                 <p>Total</p>

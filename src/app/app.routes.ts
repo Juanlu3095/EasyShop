@@ -80,6 +80,10 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/dashboardmetodotransferencia/dashboardmetodotransferencia.component').then((m) => m.DashboardmetodotransferenciaComponent),
             },
             {
+                path: 'metodosenvio',
+                loadComponent: () => import('./pages/dashboardmetodosenvio/dashboardmetodosenvio.component').then((m) => m.DashboardmetodosenvioComponent),
+            },
+            {
                 path: 'pedidos',
                 loadComponent: () => import('./pages/dashboardpedidos/dashboardpedidos.component').then((m) => m.DashboardpedidosComponent),
             },
@@ -175,6 +179,10 @@ export const routes: Routes = [
     {
         path: 'empleos/:idoferta',
         loadComponent: () => import('./pages/ofertaempleo/ofertaempleo.component').then((m) => m.OfertaempleoComponent),
+    },
+    {
+        path: 'ayuda',
+        loadComponent: () => import('./pages/ayuda/ayuda.component').then((m) => m.AyudaComponent),
     },
     {
         path: '**',

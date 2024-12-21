@@ -98,6 +98,20 @@
                         </mat-form-field>
 
                         <mat-form-field class="example-full-width">
+                            <mat-label>Método de envío</mat-label>
+                            <mat-select required formControlName="metodo_envio" ngDefaultControl>
+                                @for(metodoenvio of metodosenvio; track metodoenvio) {
+                                    <mat-option [value]="metodoenvio.Id">{{ metodoenvio.Nombre }}</mat-option>
+                                }    
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Gastos de envío</mat-label>
+                            <input matInput required type="number" formControlName="gastos_envio">
+                        </mat-form-field>
+
+                        <mat-form-field class="example-full-width">
                             <mat-label>Estado</mat-label>
                             <mat-select required formControlName="estado" ngDefaultControl>
                                 @for(estado of estadospedido; track estado.id) {
@@ -134,7 +148,8 @@
 
                     <div class="input-border">
                         <p><b>Subtotal</b>: {{ pedido.Subtotal }}€</p>
-                        <p><b>Descuento</b>: - {{ pedido.Descuento ?? 0 }}€</p>
+                        <p><b>Gastos de envío</b>: {{ pedido.Gastos_envio }}€</p>
+                        <p><b>Descuento</b>: - {{ pedido.Tipo_descuento == 'Porcentual' ? pedido.Subtotal * (pedido.Descuento ?? 0) / 100 : pedido.Descuento || 0}}€</p>
                         <p><b>Total</b>: {{ pedido.Total }}</p>
                     </div>
                 </aside>
