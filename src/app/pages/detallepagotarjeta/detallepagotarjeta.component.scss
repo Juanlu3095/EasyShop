@@ -1,0 +1,45 @@
+$movilmax: 767px;
+$tabletmin: 768px;
+$tabletmax: 1023px;
+$portatilmin: 1024px;
+$portatilmax: 1350px;
+
+.info-pagotarjeta{
+    margin: 5rem 10rem; 
+}
+
+h1{
+    text-align: center;
+    font-weight: bold;
+}
+
+.detalle-container{
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.icon {
+    width: 10%;
+    margin: 1rem 0;
+}
+
+// MÓVIL
+@media only screen and (max-width: $movilmax) {
+    .info-pagotarjeta{
+        margin: 2rem; 
+    }
+}
+
+// TABLET
+@media only screen and (min-width: $tabletmin) and (max-width: $tabletmax) {
+    .info-pagotarjeta{
+        margin: 5rem; 
+    }
+}
+
+// PORTÁTIL
+@media only screen and (min-width: $portatilmin) and (max-width: $portatilmax) {
+    .info-pagotarjeta{
+        margin: 5rem; 
+    }
+}

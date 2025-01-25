@@ -1,0 +1,28 @@
+<!-- HEADER -->
+<app-header></app-header>
+
+<main>
+    <section class="info-pagotarjeta">
+        <h1>Resultado del pago</h1>
+
+        <div class="detalle-container">
+            @if(resultado == 'ok') {
+                <img src="../../../assets/img/ok.png" class="icon" alt="ok">
+                <h3>¡Gracias por su compra!</h3>
+                <p>Le hemos enviado a su email la factura de su pedido.</p>
+        
+            } @else if(resultado == 'error') {
+                <img src="../../../assets/img/error.png" class="icon" alt="error">
+                <h3>Ha ocurrido un error</h3>
+                <p>Parece que no se ha podido procesar el pago. Por favor, contacte con nosotros lo antes posible para darle un solución.</p>
+
+            } @else {
+                <p>Un momento, por favor...</p>
+            }
+        </div>
+    </section>
+    
+</main>
+
+<!-- FOOTER -->
+<app-footer></app-footer>

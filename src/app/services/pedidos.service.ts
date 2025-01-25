@@ -74,6 +74,23 @@ export class PedidosService {
     )
   }
 
+  // Creación del pedido desde el cliente con pago con tarjeta
+  pagoTarjeta(pedido: any) {
+    return this.http.post<Apiresponse>(`${this.endpoint}/pagotarjeta`, pedido, this.headersService.createHeadersClient())
+  }
+
+  // Envio de los datos a redsys
+  redsys(htmlForm: string) {
+    const container = document.createElement('div'); // Creamos el div
+    container.innerHTML = htmlForm; // Al div le añadimos el HTML del form que nos viene de Laravel
+    document.body.appendChild(container); // Inserta el formulario HTML en el DOM. S no se hace esto sólo existe en memoria y no en la página
+
+    const form = container.querySelector('form'); 
+    if (form) { // Comprobamos que el form se haya insertado en el DOM correctamente
+      form.submit(); // Envía el formulario automáticamente como si pulsáramos el botón Submit.
+    }
+  }
+
   // Actualizar pedido, si añadimos productos al pedido, actualizar el precio
   updatePedido(id: number, editarPedidoForm: any) {
     return this.http.put<Pedido>(`${this.endpoint}/pedidos/${id}`, editarPedidoForm, this.headersService.createHeadersAdmin()).pipe(

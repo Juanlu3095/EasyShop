@@ -165,6 +165,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/detalletransferencia/detalletransferencia.component').then((m) => m.DetalletransferenciaComponent),
     },
     {
+        path: 'resultado-del-pago/:resultado',
+        loadComponent: () => import('./pages/detallepagotarjeta/detallepagotarjeta.component').then((m) => m.DetallepagotarjetaComponent),
+    },
+    {
         path: 'nosotros',
         loadComponent: () => import('./pages/nosotros/nosotros.component').then((m) => m.NosotrosComponent),
     },

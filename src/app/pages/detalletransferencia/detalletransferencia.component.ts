@@ -23,7 +23,7 @@ export class DetalletransferenciaComponent implements OnInit{
   referencia: number | null;
 
   constructor(private title: Title, private metodopagoService: MetodospagoService, private _matsnackbar: MatSnackBar) {
-    this.title.setTitle('Detalle del pago < Easyshop')
+    this.title.setTitle('Detalle del pago | Easyshop')
   }
 
   ngOnInit(): void {

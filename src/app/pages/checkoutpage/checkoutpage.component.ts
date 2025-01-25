@@ -71,7 +71,7 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
     email: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1), Validators.email])),
     notas: new FormControl<string>('', Validators.compose([Validators.minLength(1)])),
     metodo_envio: new FormControl<number>(1, Validators.compose([Validators.required ,Validators.min(1), Validators.max(2)])),
-    metodo_pago: new FormControl<Partial<Metodopago>>({}, Validators.compose([Validators.required, Validators.minLength(1)])),
+    metodo_pago: new FormControl<string>('', Validators.compose([Validators.required, Validators.minLength(1)])),
   })
 
   constructor(
@@ -248,23 +248,44 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
         }))
       }
       
-      this.pedidosService.postPedido(data).subscribe({
-        next: (respuesta) => {
-          this.dialogService.closeAll();
-          this._snackbar.open('Su pedido ha sido registrado.', 'Aceptar', {
-            duration: 3000
-          });
-          localStorage.setItem('referencia_pedido', respuesta.data);
-          this.carritoService.deleteCarrito();
-          this.router.navigate(['/informacion-transferencia']);
-        },
-        error: (error) => {
-          this.dialogService.closeAll();
-          this._snackbar.open('No se ha podido procesar su pedido.', 'Aceptar', {
-            duration: 3000
-          });
-        }
-      })
+      if (this.checkoutForm.value.metodo_pago == 'transferencia') {
+        this.pedidosService.postPedido(data).subscribe({
+          next: (respuesta) => {
+            this.dialogService.closeAll();
+            this._snackbar.open('Su pedido ha sido registrado.', 'Aceptar', {
+              duration: 3000
+            });
+            localStorage.setItem('referencia_pedido', respuesta.data);
+            this.carritoService.deleteCarrito();
+            this.router.navigate(['/informacion-transferencia']);
+          },
+          error: (error) => {
+            this.dialogService.closeAll();
+            this._snackbar.open('No se ha podido procesar su pedido.', 'Aceptar', {
+              duration: 3000
+            });
+          }
+        })
+
+      } else if (this.checkoutForm.value.metodo_pago == 'tarjeta') { // FALTA BORRAR LOS PRODUCTOS DEL CARRITO
+          this.pedidosService.pagoTarjeta(data).subscribe({
+            next: (respuesta: any) => {
+              this.dialogService.closeAll();
+              
+              if(respuesta) { // En la respuesta nos viene el formulario a enviar a Redsys
+                this.carritoService.deleteCarrito();
+                this.pedidosService.redsys(respuesta.form)
+              } else {
+                this.router.navigate(['/resultado-del-pago/error']);
+              }
+            },
+            error: (error) => {
+              this.dialogService.closeAll();
+              console.error(error)
+            }
+          })
+      }
+      
     }
     
   }
