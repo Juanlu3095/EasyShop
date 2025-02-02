@@ -24,7 +24,7 @@ import { Router } from '@angular/router';
 export class DashboardproductsnuevoComponent implements OnInit{
 
   imagenElegida: {id: number, nombre: string, ruta: File};
-  archivoEndpoint = environment.FilesEndpoint;
+  archivoEndpoint = environment.DriveEndpoint;
   categorias: Productcategory[];
   marcas: Marca[];
 

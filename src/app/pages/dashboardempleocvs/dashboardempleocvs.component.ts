@@ -3,7 +3,6 @@ import { registerLocaleData, CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatCardModule } from '@angular/material/card';
-import { MatButton } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -25,7 +24,7 @@ registerLocaleData(localeEs, 'es');
   selector: 'app-dashboardempleocvs',
   standalone: true,
   providers: [{provide: LOCALE_ID, useValue: 'es'}],
-  imports: [CommonModule, MatCardModule, MatButton, MatFormFieldModule, MatInputModule, MatDialogModule, TablacompletaComponent],
+  imports: [CommonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatDialogModule, TablacompletaComponent],
   templateUrl: './dashboardempleocvs.component.html',
   styleUrl: './dashboardempleocvs.component.scss'
 })
@@ -38,7 +37,7 @@ export class DashboardempleocvsComponent implements OnInit{
   columns: string[] = ['Nombre', 'Apellidos', 'Fecha', 'Candidatura']; // Permite indicar las columnas a mostrar en el HTML, deben coincidir con el Resource de Laravel
   displayedColumns = ['select',...this.columns, 'acciones']; // Columnas que vamos a mostrar, que incluyen p.ej. checkbox y acciones
   selectedIds: number[] = [];
-  public fileEndpoint = environment.FilesEndpoint;
+  public fileEndpoint = environment.DriveDownloadEndpoint;
 
   // Botones para las acciones de la tabla
   public botones: TableButton[] = [

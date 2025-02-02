@@ -30,7 +30,7 @@ export class DashboardmediaComponent implements OnInit, OnDestroy{
   suscripcion: Subscription[] = [];
   cols: number;
   rowHeight: string;
-  storageEndpoint = environment.FilesEndpoint;
+  storageEndpoint = environment.DriveEndpoint;
 
   ngOnInit(): void {
     this.disenoResponsivo();
@@ -104,6 +104,7 @@ export class DashboardmediaComponent implements OnInit, OnDestroy{
   getImagenes() {
     this.suscripcion.push(this.imageService.getImages().subscribe({
       next: (respuesta) => {
+        console.log(respuesta.data)
         this.imagenes = respuesta.data;
         this.imagenesFiltradas = this.imagenes;
       },

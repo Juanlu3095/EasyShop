@@ -29,7 +29,7 @@ export class ResultadosbusquedaComponent implements OnInit{
 
   busqueda: string | null;
   productos: Product[] = []; // Iniciar esto vacío para que no salga el error de length
-  endPointFile = environment.FilesEndpoint;
+  endPointFile = environment.DriveEndpoint;
 
   ngOnInit(): void {
     this.busqueda = this.activatedroute.snapshot.params['busqueda']; // Obtenemos las palabras de la búsqueda de la ruta

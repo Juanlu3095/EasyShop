@@ -26,7 +26,7 @@ import { Subscription } from 'rxjs';
 export class DashboardproductseditarComponent implements OnInit, OnDestroy{
 
   imagenElegida: {id: number, nombre: string, ruta: string};
-  archivoEndpoint = environment.FilesEndpoint;
+  archivoEndpoint = environment.DriveEndpoint;
   categorias: Productcategory[];
   marcas: Marca[];
   idProducto: number;

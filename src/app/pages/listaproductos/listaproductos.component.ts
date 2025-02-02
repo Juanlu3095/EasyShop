@@ -35,7 +35,7 @@ export class ListaproductosComponent implements OnInit{
   marca: Marca;
   marcas: Marca[];
   productos: Product[] = [];
-  endpointFile = environment.FilesEndpoint;
+  endpointFile = environment.DriveEndpoint;
 
   @ViewChild('formFiltro') formfiltro: ElementRef;
 

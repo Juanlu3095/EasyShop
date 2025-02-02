@@ -42,7 +42,7 @@ export class TablacompletaComponent<T> implements OnChanges, OnInit{
   @ViewChild(MatSort) sort: MatSort; // Hace referencia a mat-sort en el HTML
   @ViewChild('btnDangerAll', { static: false }) botonEliminarTodo: ElementRef;
 
-  storageEndpoint = environment.FilesEndpoint;
+  storageEndpoint = environment.DriveEndpoint;
 
   // Actualizamos los datos en el HTML
   ngOnChanges(changes: SimpleChanges): void {

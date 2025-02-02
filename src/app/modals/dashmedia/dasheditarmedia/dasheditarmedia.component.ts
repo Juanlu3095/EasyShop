@@ -27,7 +27,7 @@ registerLocaleData(localeEs, 'es');
 export class DasheditarmediaComponent implements OnInit{
 
   imagen: Image;
-  storageEndpoint = environment.FilesEndpoint;
+  storageEndpoint = environment.DriveEndpoint;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {id: number}, private imageService: ImagenService, private _snackBar: MatSnackBar) {}
 

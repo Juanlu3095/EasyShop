@@ -35,7 +35,7 @@ export class CarritopageComponent implements OnInit, OnDestroy{
   cart: Product[];
   displayedColumns: string[] = ['imagen', 'nombre', 'precio', 'cantidad', 'subtotal', 'acciones']; // Permite indicar las columnas a mostrar en el HTML
 
-  endPointFiles = environment.FilesEndpoint;
+  endPointFiles = environment.DriveEndpoint;
   suscripcion: Subscription[] = [];
 
   constructor(private title: Title, private carrito: CarritoService) {}

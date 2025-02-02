@@ -22,7 +22,7 @@ import { Marca } from '../../models/marca';
 })
 export class DashboardeditarmarcaComponent implements OnInit, OnDestroy{
 
-  FileEndpoint = environment.FilesEndpoint;
+  FileEndpoint = environment.DriveEndpoint;
   marca: Marca;
   idMarca: number;
   imagenElegida: {id: number, nombre: string};

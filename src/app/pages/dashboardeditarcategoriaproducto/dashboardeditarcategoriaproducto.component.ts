@@ -22,7 +22,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class DashboardeditarcategoriaproductoComponent implements OnInit, OnDestroy{
 
-  FileEndpoint = environment.FilesEndpoint;
+  FileEndpoint = environment.DriveEndpoint;
   categoria: Productcategory;
   idCategoria: number;
   imagenElegida: {id: number, nombre: string};

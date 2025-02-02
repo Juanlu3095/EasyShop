@@ -30,7 +30,7 @@ export class HomepageComponent implements OnInit{
   marcas: Marca[];
   categorias: Productcategory[];
   novedades: Product[];
-  fileEndpoint = environment.FilesEndpoint;
+  fileEndpoint = environment.DriveEndpoint;
 
   constructor(private router: Router, private newsletterService: NewsletterService, private productService: ProductosService, private carrito: CarritoService){}
 
@@ -45,7 +45,6 @@ export class HomepageComponent implements OnInit{
       console.log(this.newsletterForm);
       this.newsletterService.postNewsletter(this.newsletterForm.value).subscribe({
         next: (respuesta) => {
-          console.log(respuesta);
           this.emailguardado = true;
         },
         error: (error) => {

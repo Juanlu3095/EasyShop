@@ -26,10 +26,8 @@
                     <form [formGroup]="addtocartForm">
                         <label for="cantidad" class="form-label">Cantidad:</label>
                         <input type="number" class="form-control" id="cantidad" min="1" value="{{ quantity || 1}}" formControlName="cantidad" required>
+                        <br>
                         <button mat-stroked-button class="submit addtocart" (click)="addtocart(producto)">Agregar al carrito</button>
-                        <button mat-mini-fab class="btn-fav">
-                            <mat-icon aria-hidden="false">favorite</mat-icon>
-                        </button>
                         <br><br>
                     </form>
                         <button mat-flat-button routerLink="/finalizar-compra" class="btn-checkout">Finalizar compra</button>

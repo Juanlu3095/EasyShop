@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, OnDestroy{
   cart: Product[] | null;
   subtotal: number;
   cantidadCarrito: number;
-  fileEndPoint = environment.FilesEndpoint;
+  fileEndPoint = environment.DriveEndpoint;
   suscripcion: Subscription[] = []; // Debe manejar la desuscripción de dos observables, como un array
 
   @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;

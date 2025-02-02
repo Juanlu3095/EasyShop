@@ -50,6 +50,7 @@ export class DashnuevamediaComponent {
 
         this.imageService.postImage(datos).subscribe({
           next: (respuesta: any) => {
+            console.log(respuesta)
             this._snackBar.open('Imagen creada.', 'Aceptar', {
               duration: 3000
             })

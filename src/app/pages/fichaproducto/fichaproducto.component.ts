@@ -27,7 +27,7 @@ export class FichaproductoComponent implements OnInit{
   idProducto: number;
   producto: Product;
   productosRelacionados: Product[] = [];
-  endPointFile = environment.FilesEndpoint;
+  endPointFile = environment.DriveEndpoint;
 
   constructor(private title: Title, private productService: ProductosService, private activatedRoute: ActivatedRoute, private route: Router, private carrito: CarritoService) {}
 
