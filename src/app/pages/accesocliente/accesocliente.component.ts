@@ -15,6 +15,7 @@ import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators, A
 import { AuthService } from '../../services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { DialogService } from '../../services/dialog.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-accesocliente',
@@ -39,6 +40,8 @@ export class AccesoclienteComponent implements OnInit{
     consentimiento: new FormControl(false, Validators.requiredTrue)
   });
 
+  backEndPoint: string = environment.BackEndPoint;
+  baseUrl: string = environment.BaseUrl;
   botonDisabled:boolean = false; // Variable para evitar que se puedan enviar más solicitudes mientras se procesa otra para login/registro
 
   constructor(

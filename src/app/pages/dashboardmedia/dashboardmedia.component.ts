@@ -11,7 +11,7 @@ import { ResponsivedesignService } from '../../services/responsivedesign.service
 import { Subscription } from 'rxjs';
 import { DashnuevamediaComponent } from '../../modals/dashmedia/dashnuevamedia/dashnuevamedia.component';
 import { Image } from '../../models/image';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { DasheditarmediaComponent } from '../../modals/dashmedia/dasheditarmedia/dasheditarmedia.component';
 
 @Component({

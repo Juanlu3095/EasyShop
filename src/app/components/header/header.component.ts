@@ -12,7 +12,7 @@ import { ProductosService } from '../../services/productos.service';
 import { Productcategory } from '../../models/productcategory';
 import { CarritoService } from '../../services/carrito.service';
 import { Subscription, map } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-header',

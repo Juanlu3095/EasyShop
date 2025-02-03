@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Image } from '../models/image';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { Subject, tap } from 'rxjs';
 import { HttpheadersService } from './httpheaders.service';
 

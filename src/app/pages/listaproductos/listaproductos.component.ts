@@ -16,7 +16,7 @@ import { ProductosService } from '../../services/productos.service';
 import { Productcategory } from '../../models/productcategory';
 import { Marca } from '../../models/marca';
 import { Product } from '../../models/product';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { CarritoService } from '../../services/carrito.service';
 
 @Component({

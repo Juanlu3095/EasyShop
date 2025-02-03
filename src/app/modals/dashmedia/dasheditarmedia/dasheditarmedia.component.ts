@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Image } from '../../../models/image';
 import { ImagenService } from '../../../services/imagen.service';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 import localeEs from '@angular/common/locales/es';
 
 registerLocaleData(localeEs, 'es');

@@ -11,7 +11,7 @@
 
                 <!-- Descripción de la oferta -->
                 <div class="cuerpo-oferta">
-                    <a href="/empleos">← Volver a la página anterior</a>
+                    <a [href]="baseUrl + '/empleos'">← Volver a la página anterior</a>
         
                     <h2>Descripción</h2>
         
@@ -142,7 +142,7 @@
                 </mat-grid-list>
 
                 <mat-checkbox matInput class="politica-input form-field" formControlName="politica">
-                    He leído y acepto la <a href="#">política de privacidad</a>.
+                    He leído y acepto la <a [href]="baseUrl + '/politica-de-privacidad'">política de privacidad</a>.
                 </mat-checkbox>
                 <br>
                 <button mat-flat-button type="submit">Enviar</button>

@@ -19,6 +19,7 @@ import { ResponsivedesignService } from '../../services/responsivedesign.service
 import { Subscription } from 'rxjs';
 import { DialogService } from '../../services/dialog.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from '../../../environments/environment';
 
 registerLocaleData(localeEs, 'es');
 
@@ -32,6 +33,7 @@ registerLocaleData(localeEs, 'es');
 })
 export class OfertaempleoComponent implements OnInit, OnDestroy{
 
+  baseUrl: string = environment.BaseUrl;
   oferta: Ofertaempleo; // Se recibe sólo un registro, por lo que no es un array de valores
   suscripcion: Subscription;
   idoferta: number | null;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { Ofertaempleo } from '../models/ofertaempleo';
 import { Jobcategory } from '../models/jobcategory';
 import { Provincias } from '../models/provincias';

@@ -8,7 +8,7 @@ import { DashseleccionarimagenproductcategoryComponent } from '../../modals/dash
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { Productcategory } from '../../models/productcategory';
 import { Marca } from '../../models/marca';
 import { ProductosService } from '../../services/productos.service';

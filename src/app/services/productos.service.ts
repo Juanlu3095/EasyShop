@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { Subject, tap, map } from 'rxjs';
 import { Productcategory } from '../models/productcategory';
 import { Marca } from '../models/marca';

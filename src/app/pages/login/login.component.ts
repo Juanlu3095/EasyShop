@@ -12,6 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { DialogService } from '../../services/dialog.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,9 @@ import { DialogService } from '../../services/dialog.service';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit{
+
+  baseUrl: string = environment.BaseUrl;
+  backEndPoint: string = environment.BackEndPoint;
 
   constructor(
     private title: Title,

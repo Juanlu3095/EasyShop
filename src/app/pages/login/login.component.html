@@ -39,11 +39,11 @@
 
     <div class="links">
 
-        <p><a href="http://localhost:8000/forgot-password">¿Has olvidado tu contraseña?</a></p>
+        <p><a [href]="backEndPoint + '/forgot-password'">¿Has olvidado tu contraseña?</a></p>
         <p><a href="">← Volver a EasyShop</a></p>
     </div>
 
     <div class="politica">
-        <a href="">Política de privacidad</a>
+        <a [href]="baseUrl + '/politica-de-privacidad'">Política de privacidad</a>
     </div>
 </section>

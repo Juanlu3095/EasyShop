@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { Title } from '@angular/platform-browser';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-politicaprivacidad',
@@ -11,6 +12,8 @@ import { Title } from '@angular/platform-browser';
   styleUrl: './politicaprivacidad.component.scss'
 })
 export class PoliticaprivacidadComponent implements OnInit{
+
+  baseUrl: string = environment.BaseUrl;
 
   constructor(private title: Title) {}
 

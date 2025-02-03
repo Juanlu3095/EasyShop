@@ -16,7 +16,7 @@ import { TableButton } from '../../models/tablebutton';
 import { DasheditarcvComponent } from '../../modals/dashcv/dasheditarcv/dasheditarcv.component';
 import { DasheliminarcvComponent } from '../../modals/dashcv/dasheliminarcv/dasheliminarcv.component';
 import { DasheliminarseleccioncvComponent } from '../../modals/dashcv/dasheliminarseleccioncv/dasheliminarseleccioncv.component';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 registerLocaleData(localeEs, 'es');
 

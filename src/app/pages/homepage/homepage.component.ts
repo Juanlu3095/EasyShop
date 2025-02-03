@@ -9,7 +9,7 @@ import { RouterLink, Router, NavigationEnd } from '@angular/router';
 import { NewsletterService } from '../../services/newsletter.service';
 import { ProductosService } from '../../services/productos.service';
 import { Marca } from '../../models/marca';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { NgOptimizedImage } from '@angular/common';
 import { Productcategory } from '../../models/productcategory';
 import { Product } from '../../models/product';

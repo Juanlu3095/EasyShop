@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { Product } from './models/product';
 import { CarritoService } from './services/carrito.service';
-import { environment } from '../environments/environment.development';
+import { environment } from '../environments/environment';
 import { map, Subscription } from 'rxjs';
 import localeEs from '@angular/common/locales/es';
 
@@ -29,6 +29,7 @@ export class AppComponent implements OnInit, OnDestroy{
   subtotal: number;
   cantidadCarrito: number;
   fileEndPoint = environment.DriveEndpoint;
+  baseUrl: string = environment.BaseUrl;
   suscripcion: Subscription[] = []; // Debe manejar la desuscripción de dos observables, como un array
 
   @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;

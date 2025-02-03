@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { HttpheadersService } from './httpheaders.service';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 
 type Apiresponse = { data: any }; // Ésta es la respuesta que recibimos de la api

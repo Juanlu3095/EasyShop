@@ -10,7 +10,7 @@ import { Title } from '@angular/platform-browser';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductosService } from '../../services/productos.service';
 import { Product } from '../../models/product';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { CarritoService } from '../../services/carrito.service';
 
 @Component({
