@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-footer',
@@ -11,4 +12,5 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class FooterComponent {
 
+  baseUrl: string = environment.BaseUrl;
 }

@@ -3,7 +3,7 @@
     <div class="buscar-ayuda">
       <h2>¿Tienes dudas?</h2>
       <p>Visita nuestra página de ayuda al cliente.<br>Estaremos encantados de ayudarte.</p>
-      <button mat-flat-button><a class="btn-ayuda" href="/ayuda">Ir al centro de ayuda</a></button>
+      <button mat-flat-button><a class="btn-ayuda" [href]="baseUrl + '/ayuda'">Ir al centro de ayuda</a></button>
     </div>
     <div class="buscar-ayuda">
       <img src="assets/img/gameon.jpg" class="d-block w-100" alt="...">
@@ -35,10 +35,10 @@
   <div class="datolist">
     <h3>Atención al cliente</h3>
     <ul>
-      <li class="atencion-item"><a class="item-link" href="/nosotros">Nosotros</a></li>
-      <li class="atencion-item"><a class="item-link" href="/contacto">Contacto</a></li>
-      <li class="atencion-item"><a class="item-link" href="/ayuda">Ayuda</a></li>
-      <li class="atencion-item"><a class="item-link" href="/empleos">Canal de empleo</a></li>
+      <li class="atencion-item"><a class="item-link" [href]="baseUrl + '/nosotros'">Nosotros</a></li>
+      <li class="atencion-item"><a class="item-link" [href]="baseUrl + '/contacto'">Contacto</a></li>
+      <li class="atencion-item"><a class="item-link" [href]="baseUrl + '/ayuda'">Ayuda</a></li>
+      <li class="atencion-item"><a class="item-link" [href]="baseUrl + '/empleos'">Canal de empleo</a></li>
     </ul>
   </div>
 
