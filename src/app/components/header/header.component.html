@@ -8,8 +8,8 @@
             <mat-icon class="rrss-item" aria-hidden="false" aria-hidden="false" aria-label="Icon Instagram" svgIcon="instagram"></mat-icon>
         </div>
         <nav class="menu">
-            <a class="menu-item" href="/nosotros">Nosotros</a>
-            <a class="menu-item" href="/contacto">Contacto</a>
+            <a class="menu-item" [href]="baseUrl + '/nosotros'">Nosotros</a>
+            <a class="menu-item" [href]="baseUrl + '/contacto'">Contacto</a>
         </nav>
     </mat-toolbar>
 
@@ -26,7 +26,7 @@
             <div class="icon-action-item">
                 <div>
                     <mat-icon aria-label="Icon account" class="account" aria-hidden="false" fontIcon="account_circle"></mat-icon>
-                    <span><a href="/acceso">Cuenta</a></span>
+                    <span><a [href]="baseUrl + '/acceso'">Cuenta</a></span>
                 </div>
             
                 <mat-icon aria-label="Icon cart" aria-hidden="false" fontIcon="shopping_cart" matBadge="{{ cantidadCarrito }}" (click)="openSidenav()"></mat-icon>    
@@ -35,11 +35,11 @@
     </div>
 
     <div class="container-bottom">
-        <a class="category-item" href="/productos">Ver todo</a>
+        <a class="category-item" [href]="baseUrl + '/productos'">Ver todo</a>
         @if (categorias) {
 
             @for (item of categorias; track item.Id) {
-                <a class="category-item" href="/productos/categoria/{{ item.Slug }}">{{ item.Nombre }}</a>
+                <a class="category-item" [href]=" baseUrl + '/productos/categoria/{{ item.Slug }}'">{{ item.Nombre }}</a>
             }
         }
         
@@ -71,7 +71,7 @@
         </button>
           <mat-menu #menu="matMenu" yPosition="below" xPosition="before">
             <button mat-menu-item>
-                <a href="/productos">Ver todo</a>
+                <a [href]="baseUrl + '/productos'">Ver todo</a>
             </button>
 
             @if (categorias) {
@@ -79,16 +79,16 @@
                 @for(categoria of categorias; track categoria.Id) {
 
                     <button mat-menu-item>
-                        <a href="/productos/categoria/{{ categoria.Slug }}">{{ categoria.Nombre }}</a>
+                        <a [href]="baseUrl + '/productos/categoria/{{ categoria.Slug }}'">{{ categoria.Nombre }}</a>
                     </button>
                 }
                 
             }
             <button mat-menu-item>
-                <a href="/nosotros">Nosotros</a>
+                <a [href]="baseUrl + '/nosotros'">Nosotros</a>
             </button>
             <button mat-menu-item>
-                <a href="/contacto">Contacto</a>
+                <a [href]="baseUrl + '/contacto'">Contacto</a>
             </button>
           </mat-menu>
     </div>
@@ -98,8 +98,7 @@
             <form [formGroup]="searchForm" class="searchForm" ngNativeValidate>
                 <input class="search-input-mobile" type="text" placeholder="Buscar producto..." #searchbar formControlName="searchFormControl">
                 <input class="search-submit-mobile" type="submit" value="Buscar" (click)="searchproduct()">
-            </form>
-            
+            </form>          
         </div>
     </div>
 </header>

@@ -12,6 +12,7 @@ import { ProductosService } from '../../services/productos.service';
 import { Productcategory } from '../../models/productcategory';
 import { CarritoService } from '../../services/carrito.service';
 import { Subscription, map } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-header',
@@ -22,6 +23,7 @@ import { Subscription, map } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy{
 
+  baseUrl: string = environment.BaseUrl;
   suscripcion: Subscription[] = [];
   cantidadCarrito: number;
 
