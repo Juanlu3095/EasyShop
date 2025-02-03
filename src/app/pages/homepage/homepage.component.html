@@ -8,10 +8,10 @@
       <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="../../../assets/img/gaming.png" class="d-block w-100" alt="setup gaming">
+            <img src="assets/img/gaming.png" class="d-block w-100" alt="setup gaming">
           </div>
           <div class="carousel-item">
-            <img src="../../../assets/img/doblepantalla.png" class="d-block w-100" alt="alternativa setup gaming">
+            <img src="assets/img/doblepantalla.png" class="d-block w-100" alt="alternativa setup gaming">
           </div>
         </div>
       </div>
@@ -20,12 +20,12 @@
     <section class="ofertas espacioResponsive">
       <div class="oferta-item">
         <a routerLink="/productos">
-          <img src="../../../assets/img/ofertas.png" class="d-block w-100" alt="ofertas">
+          <img src="assets/img/ofertas.png" class="d-block w-100" alt="ofertas">
         </a>
       </div>
       <div class="oferta-item">
         <a routerLink="/productos/categoria/ordenadores">
-          <img src="../../../assets/img/retro.png" class="d-block w-100" alt="pc retro">
+          <img src="assets/img/retro.png" class="d-block w-100" alt="pc retro">
         </a>
       </div>
     </section>
@@ -66,7 +66,7 @@
 
               } @else {
 
-                <img mat-card-image src="../../../assets/img/no_category.png" alt="sin imagen" routerLink="/producto/{{ novedad.Id }}">
+                <img mat-card-image src="assets/img/no_category.png" alt="sin imagen" routerLink="/producto/{{ novedad.Id }}">
               }
               <mat-card-header>
                 <mat-card-title><a routerLink="/producto/{{ novedad.Id }}"> {{ novedad.Nombre}}</a></mat-card-title>
@@ -108,7 +108,7 @@
       <div class="categorias-list">
 
         <mat-card class="categoria-card">
-          <img mat-card-image src="../../../assets/img/todo_categorias.jpg" alt="Todas las categorías" class="d-block w-60">
+          <img mat-card-image src="assets/img/todo_categorias.jpg" alt="Todas las categorías" class="d-block w-60">
           <mat-card-header>
             <mat-card-title><a routerLink="/productos">Ver todo</a></mat-card-title>
           </mat-card-header>
@@ -123,7 +123,7 @@
                 <img mat-card-image src="{{ fileEndpoint + item.Imagen[0].Ruta_archivo }}" alt="{{ item.Imagen[0].Alt }}">
 
               } @else {
-                <img mat-card-image src="../../../assets/img/no_category.png" alt="sin imagen">
+                <img mat-card-image src="assets/img/no_category.png" alt="sin imagen">
               }
               <mat-card-header>
                 <mat-card-title><a routerLink="/productos/categoria/{{ item.Slug }}">{{ item.Nombre }}</a></mat-card-title>
@@ -156,7 +156,7 @@
 
               } @else {
 
-                <img mat-card-image src="../../../assets/img/no_category.png" alt="sin imagen">
+                <img mat-card-image src="assets/img/no_category.png" alt="sin imagen">
               }
             </mat-card>
           }
