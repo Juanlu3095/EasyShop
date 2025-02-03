@@ -5,5 +5,5 @@ export const environment = {
     FilesEndpoint: 'http://localhost:8000/storage/',
     DriveEndpoint: 'https://drive.google.com/thumbnail?id=',
     DriveDownloadEndpoint: 'https://drive.google.com/file/d/',
-    BaseUrl: '/EasyShop'
+    BaseUrl: ''
 };
