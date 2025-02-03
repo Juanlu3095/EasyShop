@@ -74,7 +74,6 @@ export class DashboardempleocvsComponent implements OnInit{
   
           this.empleoService.getCVsPorOferta(this.ofertaEmpleo.id).subscribe({
             next: (response: any) => {
-              console.log(response);
               this.cvs = response;
             },
             error: (error) => {

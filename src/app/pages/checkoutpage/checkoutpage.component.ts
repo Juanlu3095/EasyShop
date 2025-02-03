@@ -267,7 +267,7 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
           }
         })
 
-      } else if (this.checkoutForm.value.metodo_pago == 'tarjeta') { // FALTA BORRAR LOS PRODUCTOS DEL CARRITO
+      } else if (this.checkoutForm.value.metodo_pago == 'tarjeta') {
           this.pedidosService.pagoTarjeta(data).subscribe({
             next: (respuesta: any) => {
               this.dialogService.closeAll();
@@ -281,7 +281,9 @@ export class CheckoutpageComponent implements OnInit, OnDestroy{
             },
             error: (error) => {
               this.dialogService.closeAll();
-              console.error(error)
+              this._snackbar.open('No se ha podido procesar su pedido.', 'Aceptar', {
+                duration: 3000
+              });
             }
           })
       }
