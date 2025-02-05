@@ -104,7 +104,6 @@ export class DashboardmediaComponent implements OnInit, OnDestroy{
   getImagenes() {
     this.suscripcion.push(this.imageService.getImages().subscribe({
       next: (respuesta) => {
-        console.log(respuesta.data)
         this.imagenes = respuesta.data;
         this.imagenesFiltradas = this.imagenes;
       },

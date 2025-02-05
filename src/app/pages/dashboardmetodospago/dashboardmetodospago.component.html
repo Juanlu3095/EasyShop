@@ -17,7 +17,10 @@
                     <div class="desc-metodopago">
                         <p>{{ item.descripcion }}</p>
                     </div>
-                    <button class="modificar" mat-stroked-button routerLink="{{ item.slug }}">Modificar</button>
+                    <!-- Como la configuración de la tarjeta está en las variables de entorno, no es necesario el botón -->
+                    @if (item.slug != 'tarjeta') {
+                        <button class="modificar" mat-stroked-button routerLink="{{ item.slug }}">Modificar</button>
+                    }
                 </div>
 
             }

@@ -199,7 +199,8 @@ export const routes: Routes = [
     {
         path: 'politica-de-privacidad',
         loadComponent: () => import('./pages/politicaprivacidad/politicaprivacidad.component').then((m) => m.PoliticaprivacidadComponent),
-    },{
+    },
+    {
         path: 'envio-y-devoluciones',
         loadComponent: () => import('./pages/envioydevoluciones/envioydevoluciones.component').then((m) => m.EnvioydevolucionesComponent),
     },
