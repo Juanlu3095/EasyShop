@@ -39,7 +39,7 @@
         @if (categorias) {
 
             @for (item of categorias; track item.Id) {
-                <a class="category-item" [href]=" baseUrl + '/productos/categoria/{{ item.Slug }}'">{{ item.Nombre }}</a>
+                <a class="category-item" [href]=" baseUrl + '/productos/categoria/' + item.Slug ">{{ item.Nombre }}</a>
             }
         }
         
