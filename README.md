@@ -41,3 +41,11 @@ En su página de inicio, EasyShop incorpora un formulario para que los clientes 
 ## Formulario de contacto
 
 EasyShop ofrece un formulario para que los clientes envien sus preguntas a los administradores del sitio.
+
+## Github actions para el Front
+
+Este proyecto esta automatizado para desplegar el Front en Github Pages al realizar un push con git.
+
+## Docker para el Back
+
+Este proyecto utiliza Docker para automatizar el despliegue de la API en Render al realizar un push con git.
