@@ -60,7 +60,6 @@ export class LoginComponent implements OnInit{
           }  
         },
         error: (error) => {
-          console.error(error)
           this.dialogService.closeAll(); // Cerramos spinner
           this._snackBar.open('Ha ocurrido un error.', 'Aceptar', {
             duration: 3000
